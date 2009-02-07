@@ -7,7 +7,7 @@
 
   <p>The device has a hardware address of <%=@device.mac%>.<br/>
   <%="Its network interface appears to be manufactured by &ldquo;#{@device.manufacturer.name}&rdquo;." if @device.manufacturer %><br/>
-  It first appeared on our network <%=time_ago_in_words(@device.appearances.first.created_at)%> ago.</p>
+  It first appeared on our network <%=time_ago_in_words(@device.appearances.first.first_seen_at)%> ago.</p>
 
   <p>If you are the owner of this device, please <%=link_to 'click here',
       confirm_device_for_person_url(@device.person, :key => @device.confirmation_key, :device_id => @device) %>

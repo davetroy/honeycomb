@@ -2,7 +2,7 @@
   <%=render :partial => 'appearances/appearance', :locals => {:appearance => @device.appearances.last}%>
   <p>This device has a hardware address of <%=@device.mac%>.<br/>
   <%="Its network interface appears to be manufactured by &ldquo;#{@device.manufacturer.name}&rdquo;." if @device.manufacturer %><br/>
-  It first appeared on our network <%=time_ago_in_words(@device.appearances.first.created_at)%> ago.</p>
+  It first appeared on our network <%=time_ago_in_words(@device.appearances.first.first_seen_at)%> ago.</p>
 
 <% form_for :person, @person, :url => assign_device_path do |f| %>
   To claim this device, enter your primary email address:<br/>

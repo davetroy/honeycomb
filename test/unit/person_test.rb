@@ -8,7 +8,7 @@ class PersonTest < ActiveSupport::TestCase
   end
 
   test "Check for valid gravatar" do
-    assert_equal "http://www.gravatar.com/avatar/6d4009aa8f8bc36460151e118dab51da.jpg", people(:dave).gravatar_url
-    assert_equal "http://www.gravatar.com/avatar/df4e55573bf5caeaf5f0bb075294aa3b.jpg", people(:mikeb).gravatar_url
+    assert_equal "http://www.gravatar.com/avatar/6d4009aa8f8bc36460151e118dab51da.jpg?s=91", people(:dave).gravatar_url
+    assert_equal "http://www.gravatar.com/avatar/df4e55573bf5caeaf5f0bb075294aa3b.jpg?s=91", people(:mikeb).gravatar_url
   end
 end
