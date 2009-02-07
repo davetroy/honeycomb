@@ -1,10 +1,13 @@
-Feb  7 15:17:58 honey dhcpd: DHCPACK on 192.168.1.109 to 00:16:cb:be:b0:ac (Michael-Brenner-MBP) via eth0
-Feb  7 15:17:59 honey dhcpd: DHCPACK on 192.168.1.116 to 00:17:f2:e6:e2:79 (steve-mac) via eth0
-Feb  7 15:17:59 honey dhcpd: DHCPACK on 192.168.1.113 to 00:1b:63:c8:50:55 (teflon) via eth0
-Feb  7 15:20:01 honey dhcpd: DHCPACK on 192.168.1.110 to 00:19:d2:6d:0c:d6 (CILANTRO) via eth0
-Feb  7 15:29:13 honey dhcpd: DHCPACK on 192.168.1.199 to 00:0b:82:00:3c:15 via eth0
-Feb  7 15:33:01 honey dhcpd: DHCPACK on 192.168.1.135 to 00:14:a5:7c:4b:d3 (presauger) via eth0
-Feb  7 15:33:03 honey dhcpd: DHCPACK on 192.168.1.135 to 00:14:a5:7c:4b:d3 (presauger) via eth0
-Feb  7 15:35:39 honey dhcpd: DHCPACK on 192.168.1.129 to 00:13:02:1c:13:cb (GERSHMANLAPTOP) via eth0
-Feb  7 15:41:03 honey dhcpd: DHCPACK on 192.168.1.129 to 00:13:02:1c:13:cb (GERSHMANLAPTOP) via eth0
-Feb  7 21:28:50 honey dhcpd: DHCPACK on 192.168.1.199 to 00:0b:82:00:3c:15 via eth0
+Feb  6 15:17:58 honey dhcpd: DHCPACK on 192.168.1.109 to 00:16:cb:be:b0:ac (Michael-Brenner-MBP) via eth0
+Feb  6 15:17:59 honey dhcpd: DHCPACK on 192.168.1.116 to 00:17:f2:e6:e2:79 (steve-mac) via eth0
+Feb  6 15:17:59 honey dhcpd: DHCPACK on 192.168.1.113 to 00:1b:63:c8:50:55 (teflon) via eth0
+Feb  6 15:20:01 honey dhcpd: DHCPACK on 192.168.1.110 to 00:19:d2:6d:0c:d6 (CILANTRO) via eth0
+Feb  6 15:29:13 honey dhcpd: DHCPACK on 192.168.1.199 to 00:0b:82:00:3c:15 via eth0
+Feb  6 15:33:01 honey dhcpd: DHCPACK on 192.168.1.135 to 00:14:a5:7c:4b:d3 (presauger) via eth0
+Feb  6 15:33:03 honey dhcpd: DHCPACK on 192.168.1.135 to 00:14:a5:7c:4b:d3 (presauger) via eth0
+Feb  6 15:35:39 honey dhcpd: DHCPACK on 192.168.1.129 to 00:13:02:1c:13:cb (GERSHMANLAPTOP) via eth0
+Feb  6 15:41:03 honey dhcpd: DHCPACK on 192.168.1.129 to 00:13:02:1c:13:cb (GERSHMANLAPTOP) via eth0
+Feb  6 21:28:50 honey dhcpd: DHCPACK on 192.168.1.199 to 00:0b:82:00:3c:15 via eth0
+Feb  7 03:28:50 honey dhcpd: DHCPACK on 192.168.1.199 to 00:0b:82:00:3c:15 via eth0
+Feb  7 09:28:50 honey dhcpd: DHCPACK on 192.168.1.199 to 00:0b:82:00:3c:15 via eth0
+Feb  7 15:28:50 honey dhcpd: DHCPACK on 192.168.1.199 to 00:0b:82:00:3c:15 via eth0
