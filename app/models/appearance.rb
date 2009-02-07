@@ -4,6 +4,7 @@ class Appearance < ActiveRecord::Base
   
   validates_presence_of :device_id
   
+  before_save { |record| record.day_number = (Time.now.to_i / 86400) -  STARTING_DAY }
   after_save { |record| record.device.update_attribute(:appearance_id, record.id) }
   
   named_scope :current, :conditions => ['created_at >= ? AND updated_at > NOW() - INTERVAL 5 MINUTE', Time.today]
