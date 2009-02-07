@@ -16,7 +16,7 @@ class Appearance < ActiveRecord::Base
     # Feb  6 15:17:58 honey dhcpd: DHCPACK on 192.168.1.109 to 00:16:cb:be:b0:ac (Michael-Brenner-MBP) via eth0
     appeared_at, ip, mac, name = line.match(/^(.*?) honey dhcpd: DHCPACK on ([\d\.]+) to ([\w\:]+)\s?\(?(.*?)\)? via/).captures
     saw = Time.parse(appeared_at)
-    saw_on_day_number = (saw.to_i / 86400) - START_DAY
+    saw_on_day_number = (saw.to_i / 86400) - STARTING_DAY
     
     device = Device.find_by_mac(mac) || Device.create(:mac => mac, :name => name)
     if appearance = find_by_device_id_and_day_number(device.id, saw_on_day_number)
