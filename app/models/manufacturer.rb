@@ -3,5 +3,6 @@ class Manufacturer < ActiveRecord::Base
   
   validates_uniqueness_of :mac_identifier
   
-  before_save { |record| record.name.capitalize_words! }
+  before_save { |record| record.name = record.name.titleize }
+  
 end

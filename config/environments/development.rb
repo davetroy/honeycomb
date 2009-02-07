@@ -15,3 +15,7 @@ config.action_controller.perform_caching             = false
 
 # Don't care if the mailer can't send
 config.action_mailer.raise_delivery_errors = false
+
+# For URL generation in ActionMailer
+DEFAULT_HOST = 'localhost'
+DEFAULT_PORT = '3000'

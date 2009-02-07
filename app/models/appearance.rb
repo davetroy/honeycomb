@@ -11,15 +11,23 @@ class Appearance < ActiveRecord::Base
 
   def self.parse(line)
     # Feb  6 15:17:58 honey dhcpd: DHCPACK on 192.168.1.109 to 00:16:cb:be:b0:ac (Michael-Brenner-MBP) via eth0
-    appeared_at, ip, mac, name = line.match(/^(.*?) honey dhcpd: DHCPACK on ([\d\.]+) to ([\w\:]+) \((.*?)\)/).captures
+    appeared_at, ip, mac, name = line.match(/^(.*?) honey dhcpd: DHCPACK on ([\d\.]+) to ([\w\:]+)\s?\(?(.*?)\)? via/).captures
     
     device = Device.find_by_mac(mac) || Device.create(:mac => mac, :name => name)
     if appearance = today.find_by_device_id(device)
-      appearance.update_attributes(:ip_address => ip, :name => name)
+      appearance.update_attribute(:ip_address, ip)
+      device.update_attribute(:name, name)
     else
       appearance = device.appearances.create(:created_at => Time.parse(appeared_at), :ip_address => ip)
     end
     appearance
   end
 
+  def image
+    device.image
+  end
+  
+  def show_name
+    device.person ? device.person.show_name : 'Unidentified User'
+  end
 end

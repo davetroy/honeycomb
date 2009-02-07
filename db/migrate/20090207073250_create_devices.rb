@@ -5,7 +5,7 @@ class CreateDevices < ActiveRecord::Migration
       t.string :mac
       t.integer :appearance_id
       t.integer :person_id
-
+      t.boolean :person_verified, :default => false
       t.timestamps
     end
   end

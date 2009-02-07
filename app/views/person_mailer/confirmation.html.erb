@@ -1,0 +1,17 @@
+<style type="text/css">
+<%= render :file=>"../../public/stylesheets/honeycomb.css", :use_full_path=>true %>
+</style>
+<p><strong>Behold!</strong> Beehive Baltimore sees a new device on its network which has been claimed by this email address:</p>
+<div id="single_device_appearance">
+  <%=render :partial => 'appearances/appearance', :locals => {:appearance => @device.appearances.last}%>
+
+  <p>The device has a hardware address of <%=@device.mac%>.<br/>
+  <%="Its network interface appears to be manufactured by &ldquo;#{@device.manufacturer.name}&rdquo;." if @device.manufacturer %><br/>
+  It first appeared on our network <%=time_ago_in_words(@device.appearances.first.created_at)%> ago.</p>
+
+  <p>If you are the owner of this device, please <%=link_to 'click here',
+      confirm_device_for_person_url(@device.person, :key => @device.confirmation_key, :device_id => @device) %>
+      to confirm this claim.</p>
+
+  <p>Also, if you don't see your picture in the box to the left, it means you also need to setup a <a href="http://gravatar.com">Gravatar</a> for this email address so we can show you in our directory!</p>
+</div>
