@@ -1,0 +1,11 @@
+apple:
+  mac_identifier: "00:1b:63"
+  name: "Apple Computer Inc."
+
+intel:
+  mac_identifier: "00:13:02"
+  name: "Intel Corporate"
+
+grandstream:
+  mac_identifier: "00:0b:82"
+  name: "Grandstream Networks, Inc."

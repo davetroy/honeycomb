@@ -1,0 +1,20 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+dave:
+  first_name: David
+  last_name: Troy
+  email: dave@roundhousetech.com
+
+hive:
+  first_name: Beehive
+  last_name: Baltimore
+  email: info@beehivebaltimore.org
+
+greg:
+  first_name: Greg
+  last_name: Gershman
+
+mikeb:
+  first_name: Mike
+  last_name: Brenner
+

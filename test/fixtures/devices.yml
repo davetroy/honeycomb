@@ -1,0 +1,22 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+teflon:
+  name: teflon
+  mac: 00:1b:63:c8:50:55
+  person: dave
+
+budgetone:
+  name: budgetone
+  mac: 00:0b:82:00:3c:15
+  person: hive
+
+dell_laptop:
+  name: GERSHMANLAPTOP
+  mac: 00:13:02:1c:13:cb
+  person: greg
+
+mike_laptop:
+  name: "Michael-Brenner-MBP"
+  mac: 00:16:cb:be:b0:ac
+  person: mikeb
+
