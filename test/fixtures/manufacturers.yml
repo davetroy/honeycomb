@@ -9,3 +9,7 @@ intel:
 grandstream:
   mac_identifier: "00:0b:82"
   name: "Grandstream Networks, Inc."
+
+apple2:
+  mac_identifier: "00:16:cb"
+  name: "Apple Computer Inc."

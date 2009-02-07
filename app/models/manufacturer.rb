@@ -1,5 +1,5 @@
 class Manufacturer < ActiveRecord::Base
-  has_many :manufacturers, :finder_sql => ['SELECT * FROM devices WHERE LEFT(mac,8)=mac_identifier']
+  has_many :devices, :finder_sql => 'SELECT * FROM devices WHERE LEFT(mac,8)=\'#{mac_identifier}\''
   
   validates_uniqueness_of :mac_identifier
   
