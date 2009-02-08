@@ -26,3 +26,5 @@ config.action_controller.perform_caching             = true
 # For URL generation in ActionMailer
 DEFAULT_HOST = 'hive.beehivebaltimore.org'
 DEFAULT_PORT = '80'
+
+config.gem "daemons"
