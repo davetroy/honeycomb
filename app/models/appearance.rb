@@ -35,7 +35,7 @@ class Appearance < ActiveRecord::Base
   def self.refresh
     today.each do |a|
       ping_result = %x[#{PING_COMMAND} #{a.ip_address}]
-      a.update_attribute(:saw_at => Time.now) if ping_result[/\s0% packet loss/]
+      a.update_attribute(:saw_at, Time.now) if ping_result[/\s0% packet loss/]
     end
   end
   
