@@ -5,8 +5,6 @@ logfile = (ENV["RAILS_ENV"]=='production' ? '/var/log/messages' : File.dirname(_
 
 require File.dirname(__FILE__) + "/../../config/environment"
 
-Appearance.connection.execute("TRUNCATE TABLE appearances")
-
 $running = true; Signal.trap("TERM") { $running = false }
 
 while ($running) do
