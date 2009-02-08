@@ -11,6 +11,7 @@ class Appearance < ActiveRecord::Base
   
   named_scope :current, :conditions => 'last_seen_at > NOW() - INTERVAL 5 MINUTE'
   named_scope :today, :conditions => ['last_seen_at >= ?', Time.today]
+  named_scope :recent, :conditions => ['day_number > ?', Time.day_number-5], :order => 'id DESC'
 
   def self.parse(line)
     # Feb  6 15:17:58 honey dhcpd: DHCPACK on 192.168.1.109 to 00:16:cb:be:b0:ac (Michael-Brenner-MBP) via eth0

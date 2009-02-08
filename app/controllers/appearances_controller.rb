@@ -1,7 +1,7 @@
 class AppearancesController < ApplicationController
   
   def index
-    @appearances = Appearance.find(:all)
+    @appearances = Appearance.recent
   end
   
 end
