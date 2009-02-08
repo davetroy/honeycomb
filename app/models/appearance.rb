@@ -32,6 +32,7 @@ class Appearance < ActiveRecord::Base
     store(Time.parse(appeared_at), ip, mac, name)
   end
   
+  # Keep pinging people and see if they are still online
   def self.refresh
     today.each do |a|
       ping_result = %x[#{PING_COMMAND} #{a.ip_address}]
