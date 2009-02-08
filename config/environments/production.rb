@@ -28,3 +28,5 @@ DEFAULT_HOST = 'hive.beehivebaltimore.org'
 DEFAULT_PORT = '80'
 
 config.gem "daemons"
+
+PING_COMMAND = '/bin/ping -c1 -t2'

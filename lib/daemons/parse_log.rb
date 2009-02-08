@@ -16,4 +16,5 @@ while ($running) do
     end
   end
   sleep 60
+  Appearance.refresh
 end

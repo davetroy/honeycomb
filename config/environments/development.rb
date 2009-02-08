@@ -19,3 +19,5 @@ config.action_mailer.raise_delivery_errors = false
 # For URL generation in ActionMailer
 DEFAULT_HOST = 'localhost'
 DEFAULT_PORT = '3000'
+
+PING_COMMAND = '/sbin/ping -c1 -t2'

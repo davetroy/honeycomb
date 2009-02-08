@@ -18,14 +18,21 @@ class Appearance < ActiveRecord::Base
     saw = Time.parse(appeared_at)
     saw_on_day_number = (saw.to_i / 86400) - STARTING_DAY
     
-    device = Device.find_by_mac(mac) || Device.create(:mac => mac, :name => name)
+    device = Device.find_or_create_by_mac(mac)
+    device.update_attribute(:name, name) unless name.blank?
     if appearance = find_by_device_id_and_day_number(device.id, saw_on_day_number)
       appearance.update_attributes(:saw_at => saw, :ip_address => ip)
-      device.update_attribute(:name, name) unless name.blank?
     else
       appearance = device.appearances.create(:saw_at => saw, :ip_address => ip)
     end
     appearance
+  end
+  
+  def self.refresh
+    today.each do |a|
+      ping_result = %x[#{PING_COMMAND} #{a.ip_address}]
+      a.update_attribute(:saw_at => Time.now) if ping_result[/\s0% packet loss/]
+    end
   end
 
   def image
