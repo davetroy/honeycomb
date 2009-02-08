@@ -15,6 +15,7 @@ while ($running) do
       Appearance.parse(l.chomp)
     end
   end
-  sleep 60
+  Appearance.discover
   Appearance.refresh
+  sleep 60
 end

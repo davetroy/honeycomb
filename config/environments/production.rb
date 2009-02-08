@@ -30,3 +30,5 @@ DEFAULT_PORT = '80'
 config.gem "daemons"
 
 PING_COMMAND = '/bin/ping -c1 -t2'
+ARP_COMMAND = '/sbin/arp'
+NMAP_COMMAND = '/usr/bin/nmap'
