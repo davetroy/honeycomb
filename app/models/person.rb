@@ -20,8 +20,9 @@ class Person < ActiveRecord::Base
   end
 
   def self.by_day(day_number=Time.day_number)
-    #Person.find_by_sql(['select distinct p.id,p.email,p.first_name,p.last_name,min(first_seen_at) first_seen_at,max(last_seen_at) last_seen_at,count(d.id) device_count FROM appearances a, people p, devices d where a.device_id=d.id and d.person_id=p.id and day_number=? group by email', day_number])    
-    Person.find(:all, :select => 'id, email, min(first_seen_at) first_seen_at, max(last_seen_at) last_seen_at, count(devices.id) device_count', :group => 'people.id', :include => [:appearances, :devices])
+    summary_sql = "select distinct p.id,min(first_seen_at) first_seen_at,max(last_seen_at) last_seen_at,count(DISTINCT d.id) device_count FROM appearances a, people p, devices d where a.device_id=d.id and d.person_id=p.id and day_number=#{day_number} group by email"
+    Person.connection.select_all(summary_sql).map { |s| s.merge(:person => Person.find(s.delete('id'))) }
+    #Person.find(:all, :select => 'id, email, min(first_seen_at) first_seen_at, max(last_seen_at) last_seen_at, count(devices.id) device_count', :group => 'people.id', :include => [:appearances, :devices])
   end
   
 end

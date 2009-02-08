@@ -14,7 +14,10 @@ class PersonTest < ActiveSupport::TestCase
   
   test "Check to see that People.by_day works" do
     Appearance.create(:device_id => devices(:teflon).id, :saw_at => Time.now, :ip_address => '192.168.1.110')
-    p Person.by_day
+    Appearance.create(:device_id => devices(:teflon).id, :saw_at => 10.minutes.ago, :ip_address => '192.168.1.110')
+    summary = Person.by_day
+    assert_equal 1, summary.size
+    assert_equal 1, summary.first['device_count'].to_i
   end
   
 end
