@@ -2,8 +2,7 @@ class PeopleController < ApplicationController
   
   def confirm_device_for
     if (@person = Person.find(params[:id])) && (@device = Device.find(params[:device_id]))
-      @device.person_verified = true if (@device.person_id = @person.id && @device.confirmation_key == params[:key])
-      @device.save
+      @device.update_attribute(:person_verified, true) if (@device.person_id == @person.id && @device.confirmation_key == params[:key])
       flash.now[:notice] = "Device #{@device.mac} has been claimed by #{@person.email}!"
       session[:authenticated] = 1
     end
