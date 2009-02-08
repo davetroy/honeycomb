@@ -45,8 +45,10 @@ class Appearance < ActiveRecord::Base
     %x[#{NMAP_COMMAND} -sP 192.168.1.0/24]
     arplist = %x[#{ARP_COMMAND} -a].split(/\n/)
     arplist.each do |l|
-      ip, mac = l.match(/^\? \(([\d\.]+)\) at ([\w:]+)/).captures
-      store(Time.now, ip, mac) if ip && mac
+      if matches = l.match(/^\? \(([\d\.]+)\) at ([\w:]+)/)
+        ip, mac = matches.captures
+        store(Time.now, ip, mac) if ip && mac
+      end
     end
   end
 
