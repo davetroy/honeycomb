@@ -1,6 +1,6 @@
 class Device < ActiveRecord::Base
   belongs_to :person
-  has_many :appearances, :order => :first_seen_at
+  has_many :appearances, :order => 'first_seen_at'
   has_one :manufacturer, :foreign_key => 'mac_identifier', :primary_key => :manufacturer_id
   #has_one :current_appearance, :primary_key => 'appearance_id'
   
