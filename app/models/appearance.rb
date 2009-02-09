@@ -10,7 +10,7 @@ class Appearance < ActiveRecord::Base
   after_save { |record| record.device.update_attribute(:appearance_id, record.id) }
   
   named_scope :current, :conditions => 'last_seen_at > NOW() - INTERVAL 5 MINUTE'
-  named_scope :today, :conditions => ['last_seen_at >= ?', Time.today]
+  named_scope :today, :conditions => ['day_number=?', Time.day_number]
   named_scope :recent, :order => 'id DESC'
 
   def self.store(saw, ip, mac, name=nil)
