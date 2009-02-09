@@ -10,15 +10,13 @@ class Appearance < ActiveRecord::Base
   after_save { |record| record.device.update_attribute(:appearance_id, record.id) }
   
   named_scope :current, :conditions => 'last_seen_at > NOW() - INTERVAL 5 MINUTE'
-  named_scope :today, :conditions => ['day_number=?', Time.day_number]
+  named_scope :today, :conditions => ['day_number=?', Time.now.day_number]
   named_scope :recent, :order => 'id DESC'
 
   def self.store(saw, ip, mac, name=nil)
-    saw_on_day_number = (saw.to_i / 86400) - Time::STARTING_DAY
-    
     device = Device.find_or_create_by_mac(mac)
     device.update_attribute(:name, name) unless name.blank?
-    if appearance = find_by_device_id_and_day_number(device.id, saw_on_day_number)
+    if appearance = find_by_device_id_and_day_number(device.id, saw.day_number)
       appearance.update_attributes(:saw_at => saw, :ip_address => ip)
     else
       appearance = device.appearances.create(:saw_at => saw, :ip_address => ip)
@@ -62,7 +60,7 @@ class Appearance < ActiveRecord::Base
   end
     
   def set_timefields
-    self.day_number = (saw_at.to_i / 86400) - Time::STARTING_DAY
+    self.day_number = saw_at.day_number
     self.first_seen_at = saw_at if first_seen_at.nil? || saw_at < first_seen_at
     self.last_seen_at = saw_at if last_seen_at.nil? || saw_at > last_seen_at
   end
