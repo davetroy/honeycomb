@@ -74,5 +74,4 @@ Rails::Initializer.run do |config|
   # config.active_record.observers = :cacher, :garbage_collector, :forum_observer
 end
 
-STARTING_DAY = (Time.parse('2009-2-1').to_i / 86400)
 ActionController::Base.asset_host = "http://#{DEFAULT_HOST}:#{DEFAULT_PORT}"
