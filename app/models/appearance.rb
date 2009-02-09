@@ -14,7 +14,7 @@ class Appearance < ActiveRecord::Base
   named_scope :recent, :order => 'id DESC'
 
   def self.store(saw, ip, mac, name=nil)
-    saw_on_day_number = (saw.to_i / 86400) - STARTING_DAY
+    saw_on_day_number = (saw.to_i / 86400) - Time::STARTING_DAY
     
     device = Device.find_or_create_by_mac(mac)
     device.update_attribute(:name, name) unless name.blank?
@@ -62,7 +62,7 @@ class Appearance < ActiveRecord::Base
   end
     
   def set_timefields
-    self.day_number = (saw_at.to_i / 86400) - STARTING_DAY
+    self.day_number = (saw_at.to_i / 86400) - Time::STARTING_DAY
     self.first_seen_at = saw_at if first_seen_at.nil? || saw_at < first_seen_at
     self.last_seen_at = saw_at if last_seen_at.nil? || saw_at > last_seen_at
   end
