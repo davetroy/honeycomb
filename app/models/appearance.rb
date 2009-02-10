@@ -27,7 +27,7 @@ class Appearance < ActiveRecord::Base
   def self.parse(line)
     # Feb  6 15:17:58 honey dhcpd: DHCPACK on 192.168.1.109 to 00:16:cb:be:b0:ac (Michael-Brenner-MBP) via eth0
     appeared_at, ip, mac, name = line.match(/^(.*?) honey dhcpd: DHCPACK on ([\d\.]+) to ([\w\:]+)\s?\(?(.*?)\)? via/).captures
-    store(Time.parse(appeared_at), ip, mac, name)
+    store(Time.parse(appeared_at).utc, ip, mac, name)
   end
   
   # Keep pinging people and see if they are still online
