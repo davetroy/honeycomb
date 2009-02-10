@@ -1,7 +1,7 @@
 class AppearancesController < ApplicationController
   
   def index
-    @appearances = Appearance.recent
+    @appearances = Appearance.today
   end
   
 end
