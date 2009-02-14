@@ -21,3 +21,5 @@ DEFAULT_HOST = 'localhost'
 DEFAULT_PORT = '3000'
 
 PING_COMMAND = '/sbin/ping -c1 -t2'
+
+DHCP_LOG = File.dirname(__FILE__) + '/../db/data/dhcplog.txt'
