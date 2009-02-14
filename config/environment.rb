@@ -75,3 +75,5 @@ Rails::Initializer.run do |config|
 end
 
 ActionController::Base.asset_host = "http://#{DEFAULT_HOST}:#{DEFAULT_PORT}"
+
+Time::STARTING_DAY = (Time.parse('2009-2-1 0:0:0 UTC').to_i / 86400)
