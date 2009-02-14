@@ -1,6 +1,6 @@
 <div class="appearance">
   <%=image_tag(url_for(appearance.image))%><br/>
-  <%=controller.respond_to?(:controller_name) ? link_to(truncate(appearance.show_name, :length => 20), claim_device_url(appearance.device)) : appearance.device.mac %>
+  <%=appearance.device.person_verified ? appearance.show_name : link_to(truncate(appearance.show_name, :length => 20), claim_device_url(appearance.device)) %>
   <%="*" unless appearance.device.person_verified %><br/>
   <%=appearance.ip_address%><br/>
   <%=appearance.device.name%><br/>
