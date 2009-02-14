@@ -17,4 +17,4 @@ options = YAML.load(
   )).result).with_symbols!
 options[:dir_mode] = options[:dir_mode].to_sym
 
-Daemons.run File.dirname(__FILE__) + '/parse_log.rb', options
+Daemons.run File.dirname(__FILE__) + '/net_monitor.rb', options
