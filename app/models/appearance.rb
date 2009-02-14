@@ -9,8 +9,8 @@ class Appearance < ActiveRecord::Base
   before_save :set_timefields
   after_save { |record| record.device.update_attribute(:appearance_id, record.id) }
   
-  named_scope :current, lambda { :conditions => ['last_seen_at > ?', 5.minutes.ago] }
-  named_scope :today, lambda { :conditions => ['day_number=?', Time.now.day_number] }
+  named_scope :current, lambda { { :conditions => ['last_seen_at > ?', 5.minutes.ago] } }
+  named_scope :today, lambda { { :conditions => ['day_number=?', Time.now.day_number] } }
   named_scope :recent, :order => 'id DESC'
 
   def self.store(saw, ip, mac, name=nil)
