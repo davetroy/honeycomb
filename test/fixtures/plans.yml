@@ -1,0 +1,13 @@
+worker:
+  price: 175
+  period: M
+  days_per_week: 3
+  deposit: 175
+  name: "Worker Bee"
+
+basic:
+  price: 25
+  period: M
+  days_per_week: 0
+  deposit: 25
+  name: "Basic"
