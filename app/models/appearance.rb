@@ -59,7 +59,7 @@ class Appearance < ActiveRecord::Base
     # determine if appearance is billable (match an active membership?)
     # membership generates the bill
     m = self.device.person.memberships.find(:all, :conditions => ['start_date <= ? AND (end_date IS NULL OR end_date > ?)', saw_at, saw_at]).first
-    m.bill_appearance(self)
+    m.invoice_appearance(self)
   end
 
   def image

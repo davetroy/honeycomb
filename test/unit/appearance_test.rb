@@ -16,5 +16,5 @@ class AppearanceTest < ActiveSupport::TestCase
     assert_equal "CILANTRO", appearance.device.name
     assert_nil appearance.device.person
   end
-
+  
 end

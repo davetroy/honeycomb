@@ -1,7 +1,7 @@
 class Membership < ActiveRecord::Base
   belongs_to :person
   belongs_to :plan
-  has_many :bills
+  has_many :invoices
 
   before_save :set_defaults
   after_create :do_billing
@@ -19,7 +19,7 @@ class Membership < ActiveRecord::Base
     monthcount = 0
     bill_date = base_date
     while (bill_date <= stop_date)
-      bills.create(:amount => plan.price, :created_at => bill_date)
+      invoices.create(:amount => plan.price, :created_at => bill_date)
       monthcount += 1
       bill_date = base_date + monthcount.month
     end
