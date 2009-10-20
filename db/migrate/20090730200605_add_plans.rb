@@ -19,7 +19,7 @@ class AddPlans < ActiveRecord::Migration
       t.datetime :billed_through
     end
     
-    create_table :bills do |t|
+    create_table :invoices do |t|
       t.integer :person_id
       t.integer :membership_id
       t.integer :amount
@@ -36,6 +36,6 @@ class AddPlans < ActiveRecord::Migration
   def self.down
     drop_table :plans
     drop_table :memberships
-    drop_table :bills
+    drop_table :invoices
   end
 end
