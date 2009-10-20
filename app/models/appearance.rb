@@ -7,10 +7,10 @@ class Appearance < ActiveRecord::Base
   attr_accessor :saw_at
   
   before_save :set_timefields
-  after_save { |record| record.device.update_attribute(:appearance_id, record.id) }
+  after_save :record_billing
   
   named_scope :current, { :conditions => ['last_seen_at > ?', 5.minutes.ago] }
-  named_scope :today, { :conditions => ['day_number=?', Time.now.day_number] }
+  named_scope :today, lambda { { :conditions => ['day_number=?', Time.now.day_number] } }
   named_scope :recent, :order => 'id DESC'
 
   def self.store(saw, ip, mac, name=nil)
@@ -49,6 +49,14 @@ class Appearance < ActiveRecord::Base
         store(Time.now, ip, mac) if ip && mac
       end
     end
+  end
+  
+  def record_billing
+    self.device.update_attribute(:appearance_id, self.id)
+    # determine if appearance is billable (match an active membership?)
+    # membership generates the bill
+    m = self.device.person.memberships.find(:all, :conditions => ['start_date <= ? AND (end_date IS NULL OR end_date > ?)', saw_at, saw_at]).first
+    m.bill_appearance(self)
   end
 
   def image
