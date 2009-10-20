@@ -7,7 +7,7 @@ class Appearance < ActiveRecord::Base
   attr_accessor :saw_at
   
   before_save :set_timefields
-  after_save :record_billing
+  #after_save :record_billing
   
   named_scope :current, lambda { { :conditions => ['last_seen_at > ?', 2.minutes.ago] } }
   named_scope :today, lambda { { :conditions => ['day_number=?', Time.now.day_number] } }
