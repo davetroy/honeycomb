@@ -7,15 +7,15 @@ class Membership < ActiveRecord::Base
   after_create :do_billing
   
   named_scope :active, lambda { { :conditions => ['start_date <= ? AND ((end_date IS NULL) OR (end_date > ?))', Time.now, Time.now] } }
-  named_scope :unbilled, lambda { { :conditions => ['(billed_through < ?) OR (billed_through IS NULL)', Time.today] } }
+  named_scope :unbilled, lambda { { :conditions => ['(billed_through < ?) OR (billed_through IS NULL)', Time.now] } }
   
   def set_defaults
-    self.start_date ||= Time.today
+    self.start_date ||= Time.now
   end
 
   def do_billing
     base_date = billed_through || start_date
-    stop_date = end_date || Time.today
+    stop_date = end_date || Time.now
     monthcount = 0
     bill_date = base_date
     while (bill_date <= stop_date)
