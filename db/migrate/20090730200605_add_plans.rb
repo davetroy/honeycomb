@@ -30,6 +30,17 @@ class AddPlans < ActiveRecord::Migration
       t.integer :person_id
       t.timestamps
     end
+
+    create_table :people_prizes do |t|
+      t.integer :person_id
+      t.integer :prize_id
+      t.timestamps
+    end
+
+    create_table :prizes do |t|
+      t.string :name
+      t.timestamps
+    end
     
   end
 
@@ -38,5 +49,7 @@ class AddPlans < ActiveRecord::Migration
     drop_table :memberships
     drop_table :invoices
     drop_table :payments
+    drop_table :people_prizes
+    drop_table :prizes
   end
 end
