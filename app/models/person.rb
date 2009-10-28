@@ -38,7 +38,7 @@ class Person < ActiveRecord::Base
   
   # Return true if *any* plan that this person is on has an anniversary today.
   def is_anniversary_day?
-    memberships.select {|m| m.is_anniversary_day?}.size > 0
+    memberships.active.select {|m| m.is_anniversary_day?}.size > 0
   end
 
 end
