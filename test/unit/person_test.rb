@@ -20,4 +20,16 @@ class PersonTest < ActiveSupport::TestCase
     assert_equal 1, summary.first['device_count'].to_i
   end
   
+  test "Ensure anniversary day is not a week ago" do
+    dave = people(:dave)
+    dave.memberships.create(:plan => plans(:worker), :start_date => Date.today - 1.week)
+    assert_equal false, dave.is_anniversary_day?
+  end
+
+  test "Ensure anniversary day is computed correctly for last month" do
+    dave = people(:dave)
+    dave.memberships.create(:plan => plans(:worker), :start_date => Date.parse("12/#{Date.today.day}/2008"))
+    assert_equal true, dave.is_anniversary_day?
+  end
+  
 end

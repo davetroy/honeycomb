@@ -28,4 +28,13 @@ class Membership < ActiveRecord::Base
   def bill_appearance(a)
     p "billing appearance"
   end
+  
+  def anniversary_day
+    self.start_date.day
+  end
+
+  def is_anniversary_day?
+    anniversary_day == Date.today.day
+  end
+
 end

@@ -36,4 +36,9 @@ class Person < ActiveRecord::Base
     #Person.find(:all, :select => 'id, email, min(first_seen_at) first_seen_at, max(last_seen_at) last_seen_at, count(devices.id) device_count', :group => 'people.id', :include => [:appearances, :devices])
   end
   
+  # Return true if *any* plan that this person is on has an anniversary today.
+  def is_anniversary_day?
+    memberships.select {|m| m.is_anniversary_day?}.size > 0
+  end
+
 end
