@@ -1,0 +1,18 @@
+Honeycomb passively monitors DHCP leases and gives users an opportunity to claim devices by hardware MAC address. It then monitors subsequent usage and can show current or historical usage information.
+
+
+*Developer Information*
+To get running, first build your db:
+* create a database.yml with your favorite db as development
+* rake db:create
+* rake db:migrate:reset
+* rake db:load:manufacturers
+
+Now to populate the 'appearances' with some test data from a fake log:
+* RAILS_ENV=development lib/daemons/net_monitor_ctl start
+
+
+Made available under the MIT License
+(C) 2009 David C. Troy, dave@roundhousetech.com
+
+

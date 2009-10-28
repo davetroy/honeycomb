@@ -1,6 +1,0 @@
-Honeycomb passively monitors DHCP leases and gives users an opportunity to claim devices by hardware MAC address. It then monitors subsequent usage and can show current or historical usage information.
-
-Made available under the MIT License
-(C) 2009 David C. Troy, dave@roundhousetech.com
-
-
