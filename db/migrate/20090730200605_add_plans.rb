@@ -37,5 +37,6 @@ class AddPlans < ActiveRecord::Migration
     drop_table :plans
     drop_table :memberships
     drop_table :invoices
+    drop_table :payments
   end
 end
