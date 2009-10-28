@@ -25,7 +25,7 @@ class Membership < ActiveRecord::Base
     end
   end
 
-  def bill_appearance(a)
+  def invoice_appearance(a)
     p "billing appearance"
   end
   
