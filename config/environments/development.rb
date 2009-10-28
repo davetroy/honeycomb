@@ -21,5 +21,7 @@ DEFAULT_HOST = 'localhost'
 DEFAULT_PORT = '3000'
 
 PING_COMMAND = '/sbin/ping -c1 -t2'
+ARP_COMMAND = 'echo'
+NMAP_COMMAND = 'echo'
 
-DHCP_LOG = File.dirname(__FILE__) + '/../db/data/dhcplog.txt'
+DHCP_LOG = File.dirname(__FILE__) + '/../../db/data/dhcplog.txt'
