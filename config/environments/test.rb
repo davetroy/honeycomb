@@ -24,3 +24,7 @@ config.action_mailer.delivery_method = :test
 # For URL generation in ActionMailer
 DEFAULT_HOST = 'localhost'
 DEFAULT_PORT = '3000'
+
+config.after_initialize do
+  ActiveMerchant::Billing::Base.mode = :test
+end

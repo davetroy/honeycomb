@@ -34,3 +34,4 @@ ARP_COMMAND = '/sbin/arp'
 NMAP_COMMAND = '/usr/bin/nmap'
 
 DHCP_LOG = '/var/log/messages'
+PAYPAL_CREDS = {} # YAML.load("/path/to/paypalcreds")

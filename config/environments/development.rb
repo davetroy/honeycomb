@@ -25,3 +25,7 @@ ARP_COMMAND = 'echo'
 NMAP_COMMAND = 'echo'
 
 DHCP_LOG = File.dirname(__FILE__) + '/../../db/data/dhcplog.txt'
+
+config.after_initialize do
+  ActiveMerchant::Billing::Base.mode = :test
+end

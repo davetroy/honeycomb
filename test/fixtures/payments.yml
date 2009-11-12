@@ -1,0 +1,11 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  amount: 1
+  person_id: 1
+  token: MyString
+
+two:
+  amount: 1
+  person_id: 1
+  token: MyString
