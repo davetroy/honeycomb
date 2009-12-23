@@ -42,5 +42,12 @@ class Person < ActiveRecord::Base
   def is_anniversary_day?
     memberships.active.select {|m| m.is_anniversary_day?}.size > 0
   end
+  
+  # Collapse from another person into us; good for duplicate records only
+  def merge_from(person_id)
+    from_person = Person.find(person_id)
+    from_person.devices.each { |d| d.update_attribute(:person_id, self.id) }
+    from_person.destroy
+  end
 
 end
