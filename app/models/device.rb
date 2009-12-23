@@ -21,4 +21,12 @@ class Device < ActiveRecord::Base
   def confirmation_key
     Digest::MD5.hexdigest("#{mac}#{id}#{person.email}")
   end
+  
+  def manufacturer_name
+    manufacturer.name if manufacturer
+  end
+  
+  def appearance_date_range
+    "#{appearances.first.first_seen_at.strftime('%m/%d/%y')}-#{appearances.last.last_seen_at.strftime('%m/%d/%y')}"
+  end
 end

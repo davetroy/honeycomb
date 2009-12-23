@@ -11,10 +11,12 @@ class Person < ActiveRecord::Base
   
   validates_uniqueness_of :email, :allow_null => true
     
-  def gravatar_url
+  def gravatar_url(size=91)
     gravatar_hash = Digest::MD5.hexdigest(email)
-    "http://www.gravatar.com/avatar/#{gravatar_hash}.jpg?s=91"
+    "http://www.gravatar.com/avatar/#{gravatar_hash}.jpg?s=#{size}"
   end
+  
+  alias_method :image, :gravatar_url
   
   def show_name
     namestring = "#{first_name} #{last_name}".strip

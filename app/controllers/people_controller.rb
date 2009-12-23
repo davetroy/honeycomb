@@ -24,4 +24,18 @@ class PeopleController < ApplicationController
     redirect_to root_path
   end
   
+  # member directory
+  def index
+    @people = Person.find(:all)
+  end
+  
+  def show
+    @person = Person.find(params[:id])
+  end
+  
+  def destroy
+    Person.find(params[:id]).destroy
+    redirect_to people_path
+  end
+  
 end
