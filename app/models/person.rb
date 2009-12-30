@@ -8,6 +8,8 @@ class Person < ActiveRecord::Base
 
   has_many :memberships
   has_many :invoices, :through => :memberships
+
+  has_many :payments
   
   validates_uniqueness_of :email, :allow_null => true
     
@@ -47,6 +49,7 @@ class Person < ActiveRecord::Base
   def merge_from(person_id)
     from_person = Person.find(person_id)
     from_person.devices.each { |d| d.update_attribute(:person_id, self.id) }
+    from_person.payments.each { |d| d.update_attribute(:person_id, self.id) }
     from_person.destroy
   end
 
