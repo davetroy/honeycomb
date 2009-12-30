@@ -53,4 +53,7 @@ class Person < ActiveRecord::Base
     from_person.destroy
   end
 
+  def grouped_appearances
+    appearances.group_by { |a| Date.civil(a.first_seen_at.year,a.first_seen_at.month) }
+  end
 end

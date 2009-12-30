@@ -13,7 +13,8 @@ hive:
 greg:
   first_name: Greg
   last_name: Gershman
-
+  email: greg@example.com
+  
 mikeb:
   first_name: Mike
   last_name: Brenner
