@@ -1,6 +1,6 @@
 <div class="appearance">
   <b>MAC</b>: <%=device.mac%><br/>
-  <b>Manufacturer</b>: <%=truncate(device.manufacturer_name,20)%><br/>
+  <b>Manufacturer</b>: <%=truncate(device.manufacturer_name,:length => 20)%><br/>
   <b>Appearances</b>: <%=device.appearances.size%><br/>
   <b>First Seen</b>: <%=device.first_appearance.to_s(:short_date) %><br/>
   <b>Last Seen</b>: <%=device.last_appearance.to_s(:short_date) %>
