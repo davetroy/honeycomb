@@ -1,7 +1,7 @@
 require 'digest/md5'
 class Person < ActiveRecord::Base
   has_many :devices
-  has_many :appearances, :through => :devices
+  has_many :appearances, :through => :devices, :order => "first_seen_at ASC"
 
   has_many :people_prizes
   has_many :prizes, :through => :people_prizes
@@ -53,7 +53,26 @@ class Person < ActiveRecord::Base
     from_person.destroy
   end
 
-  def grouped_appearances
-    appearances.group_by { |a| Date.civil(a.first_seen_at.year,a.first_seen_at.month) }
+  # flattens multiple device appearances in a given day to count as just one daily apperance
+  def daily_appearance_dates(month,year)
+    apps = appearances.find(:all,:conditions => ["MONTH(first_seen_at) = ? AND YEAR(first_seen_at) = ?",month,year],:group => "day_number")
+    apps.collect(&:first_seen_at)
+  end
+
+  # returns an ordered hash with keys = week number, values = appearance dates in that week
+  def daily_appearances_by_week(month,year)
+    daily_appearance_dates(month,year).group_by { |a| a.strftime("%W") } # ruby doesn't have a "week number" function and I don't want to screw up writing my own
+  end
+
+  # returns an array of months for which the user has appearances, example: [[2009,10],[2009,11],[2010,1]]
+  def appearance_range
+    first = appearances.first && appearances.first.first_seen_at
+    last = appearances.last && appearances.last.first_seen_at
+    if first && last
+      range = (Date.civil(first.year,first.month)..(Date.civil(last.year,last.month)))
+      range.collect { |d| [d.month,d.year] }.uniq
+    else
+      []
+    end
   end
 end
