@@ -6,7 +6,12 @@ class Person < ActiveRecord::Base
   has_many :people_prizes
   has_many :prizes, :through => :people_prizes
 
-  has_many :memberships
+  has_many :memberships do
+    def active_in_month(month,year)
+      find(:first,:conditions => ["start_date <= ?",Date.new(year,month,1)],:order => "start_date ASC")
+    end
+  end
+  
   has_many :invoices, :through => :memberships
 
   has_many :payments
@@ -74,5 +79,9 @@ class Person < ActiveRecord::Base
     else
       []
     end
+  end
+  
+  def compute_monthly_bill(month,year)
+    
   end
 end
