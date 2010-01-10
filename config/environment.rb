@@ -18,7 +18,7 @@ Rails::Initializer.run do |config|
 
   config.action_controller.session = {
     :session_key => '_honeycomb_session',
-    :secret      => '47e103f92dc56c50c5c52e69c3f4de7dcab201893745ee0ecac68a720d518298f0b9429ea8213b13d15979304bba6b223b9ad949182f9cfb28d14cf606938734'
+    :secret      => '47f103f92dc56c50c5c52e69c3f4de7dcab201893745ee0ecac68a720d518298f0b9429ea8213b13d15979304bba6b223b9ad949182f9cfb28d14cf606938734'
   }
 end
 

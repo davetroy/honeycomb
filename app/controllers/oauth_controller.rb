@@ -25,7 +25,7 @@ class OauthController < ApplicationController
   end
   
   def setup_twitter
-    access_token = TwitterOauth.finish(session[:foursquare_token])
+    access_token = TwitterOauth.finish(session[:twitter_token], params[:oauth_verifier])
     person = Person.find(session[:person_id])
     tu = person.twitter_user || person.build_twitter_user
     tu.update_attributes(:token => access_token.token, :secret => access_token.secret)
