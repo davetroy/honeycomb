@@ -13,7 +13,7 @@ class OauthController < ApplicationController
   
   # Callback from foursquare oauth
   def setup_foursquare
-    person = FoursquareOauth.complete(params[:oauth_token])
+    person = FoursquareOauth.finish(params[:oauth_token])
     redirect_to person_path(person)
   end
   
