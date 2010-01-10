@@ -20,4 +20,9 @@ class TwitterOauth
     final_request_token = OAuth::RequestToken.new(API, request_token[:token], request_token[:secret])
     final_request_token.get_access_token(:oauth_verifier => oauth_verifier)
   end
+  
+  def self.get_user(tu)
+    access_token = OAuth::AccessToken.new(API, tu.token, tu.secret)
+    Hash.from_xml(access_token.get("users/show.xml"))[:user]
+  end
 end

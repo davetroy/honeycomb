@@ -28,8 +28,8 @@ class FoursquareOauth
     final_request_token.get_access_token
   end
   
-  def check_in(fu)
+  def self.check_in(fu)
     access_token = OAuth::AccessToken.new(API, fu.token, fu.secret)
-    access_token.post("/v1/checkin?vid=#{VENUE_ID}&twitter=#{fu.update_twitter}")
+    access_token.post("/v1/checkin?vid=#{VENUE_ID}&twitter=#{fu.update_twitter}&facebook=#{fu.update_facebook}")
   end
 end
