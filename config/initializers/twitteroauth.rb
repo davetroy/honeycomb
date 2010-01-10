@@ -16,7 +16,7 @@ class TwitterOauth
     API.get_request_token(:oauth_callback => "http://hive.beehivebaltimore.org/oauth/setup_twitter")
   end
   
-  def self.finish
+  def self.finish(oauth_token)
     tu = TwitterUser.find_by_token(oauth_token)
     request_token = OAuth::RequestToken.new(API, tu.token, tu.secret)
     access_token=request_token.get_access_token
