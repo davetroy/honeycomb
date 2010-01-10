@@ -7,6 +7,7 @@ class AddFoursquareUsers < ActiveRecord::Migration
       t.string :arrival_status_text
       t.boolean :update_twitter
       t.boolean :update_facebook
+      t.timestamps
     end
     
     add_index :foursquare_users, :token

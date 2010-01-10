@@ -4,7 +4,8 @@ class OauthController < ApplicationController
   def foursquare
     request_token = FoursquareOauth.get_request_token
     puts "storing #{request_token.token} and #{request_token.secret}"
-    fu = Person.find(params[:person_id]).build_foursquare_user
+    person = Person.find(params[:person_id])
+    fu = person.foursquare_user || person.build_foursquare_user
     fu.token = request_token.token
     fu.secret = request_token.secret
     fu.save
@@ -20,7 +21,8 @@ class OauthController < ApplicationController
   def twitter
     request_token = TwitterOauth.get_request_token
     puts "storing #{request_token.token} and #{request_token.secret}"
-    tu = Person.find(params[:person_id]).build_twitter_user
+    person = Person.find(params[:person_id])
+    tu = person.twitter_user || person.build_twitter_user
     tu.token = request_token.token
     tu.secret = request_token.secret
     tu.save

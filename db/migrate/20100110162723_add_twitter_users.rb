@@ -5,6 +5,7 @@ class AddTwitterUsers < ActiveRecord::Migration
       t.string :token, :limit => 50
       t.string :secret, :limit => 50
       t.string :arrival_status_text
+      t.timestamps
     end
     
     add_index :twitter_users, :token
