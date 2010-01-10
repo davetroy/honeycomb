@@ -13,7 +13,7 @@ class TwitterOauth
         })
             
   def self.get_request_token
-    API.get_request_token
+    API.get_request_token(:oauth_callback => "http://hive.beehivebaltimore.org/oauth/setup_twitter")
   end
   
   def self.finish
