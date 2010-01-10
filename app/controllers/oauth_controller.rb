@@ -3,18 +3,17 @@ class OauthController < ApplicationController
   # Connect a particular user to foursquare
   def foursquare
     request_token = FoursquareOauth.get_request_token
-    puts "storing #{request_token.token} and #{request_token.secret}"
-    person = Person.find(params[:person_id])
-    fu = person.foursquare_user || person.build_foursquare_user
-    fu.token = request_token.token
-    fu.secret = request_token.secret
-    fu.save
+    session[:person_id] = params[:person_id]
+    session[:foursquare_token]s = request_token
     redirect_to request_token.authorize_url
   end
   
   # Callback from foursquare oauth
   def setup_foursquare
-    person = FoursquareOauth.finish(params[:oauth_token])
+    access_token = FoursquareOauth.finish(session[:foursquare_token])
+    person = Person.find(session[:person_id])
+    fu = person.foursquare_user || person.build_foursquare_user
+    fu.update_attributes(:token => access_token.token, :secret => access_token.secret)
     redirect_to person_path(person)
   end
   

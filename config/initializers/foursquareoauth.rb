@@ -23,18 +23,13 @@ class FoursquareOauth
     AUTH.get_request_token
   end
   
-  def self.finish(oauth_token)
-    fu = FoursquareUser.find_by_token(oauth_token)
-    request_token = OAuth::RequestToken.new(AUTH, fu.token, fu.secret)
-    access_token=request_token.get_access_token
-    fu.token = access_token.token
-    fu.secret = access_token.secret
-    fu.save
-    fu.person
+  def self.finish(request_token)
+    request_token = OAuth::RequestToken.new(AUTH, request_token.token, request_token.secret)
+    request_token.get_access_token
   end
   
   def check_in(fu)
-    access_token = OAuth::AccessToken.new(@consumer, fu.token, fu.secret)
+    access_token = OAuth::AccessToken.new(API, fu.token, fu.secret)
     access_token.post("/v1/checkin?vid=#{BEEHIVE_VENUEID}&twitter=#{fu.update_twitter}")
   end
 end
