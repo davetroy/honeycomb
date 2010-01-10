@@ -16,6 +16,13 @@ class TwitterOauth
     API.get_request_token
   end
   
-  def self.finish_authentication
+  def self.finish
+    tu = TwitterUser.find_by_token(oauth_token)
+    request_token = OAuth::RequestToken.new(API, tu.token, tu.secret)
+    access_token=request_token.get_access_token
+    tu.token = access_token.token
+    tu.secret = access_token.secret
+    tu.save
+    tu.person
   end
 end
