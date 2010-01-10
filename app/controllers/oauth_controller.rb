@@ -4,7 +4,7 @@ class OauthController < ApplicationController
   def foursquare
     request_token = FoursquareOauth.get_request_token
     session[:person_id] = params[:person_id]
-    session[:foursquare_token]s = request_token
+    session[:foursquare_token] = request_token
     redirect_to request_token.authorize_url
   end
   
