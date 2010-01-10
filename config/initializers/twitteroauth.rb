@@ -18,6 +18,6 @@ class TwitterOauth
   
   def self.finish(request_token, oauth_verifier)
     final_request_token = OAuth::RequestToken.new(API, request_token[:token], request_token[:secret])
-    final_access_token=request_token.get_access_token(:oauth_verifier => oauth_verifier)
+    final_request_token.get_access_token(:oauth_verifier => oauth_verifier)
   end
 end
