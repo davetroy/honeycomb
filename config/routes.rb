@@ -3,6 +3,6 @@ ActionController::Routing::Routes.draw do |map|
 
   map.root :controller => "appearances"
   map.resources :devices, :member => {:claim => :get, :assign => :post}
-  map.resources :people, :member => {:confirm_device_for => :get}
-  
+  map.resources :people, :collection => { :oauth_foursquare => :get },
+                         :member => {:confirm_device_for => :get, :foursquare => :get, :activity => :get, :devices => :get }  
 end

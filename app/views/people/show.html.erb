@@ -1,12 +1,8 @@
-<h1><%=image_tag(@person.image)%>&nbsp;<%=@person.show_name%></h1>
-<p>Member since <%= @person.created_at.to_s(:short_date) %></p>
-<hr/>
+<div id="form_panel">
+  <h2><%=image_tag(@person.image)%>&nbsp;<%=@person.show_name%></h2>
+  <p>Member since <%= @person.created_at.to_s(:short_date) %></p>
+  <p><%=link_to "Connect to Foursquare", foursquare_person_path %></p>
+  <p><%=link_to "#{@person.grouped_appearances.size} Appearances", person_path(:type => :activity) %></p>
+  <p><%=link_to "#{@person.devices.size} Devices", person_path(:type => :devices) %></p>
+</div>
 
-<%=link_to ( 'Destroy', person_path(@person), :confirm => 'Are you sure?', :method => :delete ) if @person.devices.empty?%>
-
-<h2 style='color: #black'>Devices</h2>
-<%= render :partial => 'devices/device', :collection => @person.devices %>
-
-<br clear='all'>
-<h2 style='color: #black'>Monthly Activity</h2>
-<%= iterate_appearances_by_month(@person) %>

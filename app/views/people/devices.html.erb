@@ -1,0 +1,7 @@
+<h2 style='color: #black'>Devices for <%=@person.show_name%></h2>
+<div>
+<%= render :partial => 'devices/device', :collection => @person.devices %>
+</div>
+<p>
+<%=link_to 'Back', person_path %>
+</p>
