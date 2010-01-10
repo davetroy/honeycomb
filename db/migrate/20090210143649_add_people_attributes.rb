@@ -1,6 +1,5 @@
 class AddPeopleAttributes < ActiveRecord::Migration
   def self.up
-    add_column :people, :twitter_username, :string, :limit => 20
     add_column :people, :password_hash, :string, :limit => 50
     add_column :people, :company_name, :string
     add_column :people, :phone_number, :string

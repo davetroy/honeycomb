@@ -4,7 +4,7 @@ class OauthController < ApplicationController
   def foursquare
     request_token = FoursquareOauth.get_request_token
     session[:person_id] = params[:person_id]
-    session[:foursquare_token] = request_token
+    session[:foursquare_token] = { :token => request_token.token, :secret => request_token.secret }
     redirect_to request_token.authorize_url
   end
   
@@ -19,17 +19,16 @@ class OauthController < ApplicationController
   
   def twitter
     request_token = TwitterOauth.get_request_token
-    puts "storing #{request_token.token} and #{request_token.secret}"
-    person = Person.find(params[:person_id])
-    tu = person.twitter_user || person.build_twitter_user
-    tu.token = request_token.token
-    tu.secret = request_token.secret
-    tu.save
+    session[:person_id] = params[:person_id]
+    session[:twitter_token] = { :token => request_token.token, :secret => request_token.secret }
     redirect_to request_token.authorize_url
   end
   
   def setup_twitter
-    person = TwitterOauth.finish(params[:oauth_token], params[:oauth_verifier])
+    access_token = TwitterOauth.finish(session[:foursquare_token])
+    person = Person.find(session[:person_id])
+    tu = person.twitter_user || person.build_twitter_user
+    tu.update_attributes(:token => access_token.token, :secret => access_token.secret)
     redirect_to person_path(person)
   end
   

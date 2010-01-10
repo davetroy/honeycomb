@@ -24,8 +24,8 @@ class FoursquareOauth
   end
   
   def self.finish(request_token)
-    request_token = OAuth::RequestToken.new(AUTH, request_token.token, request_token.secret)
-    request_token.get_access_token
+    final_request_token = OAuth::RequestToken.new(AUTH, request_token[:token], request_token[:secret])
+    final_request_token.get_access_token
   end
   
   def check_in(fu)

@@ -7,10 +7,9 @@ class AddFoursquareUsers < ActiveRecord::Migration
       t.string :arrival_status_text
       t.boolean :update_twitter, :default => 0
       t.boolean :update_facebook, :default => 0
+      t.datetime :checked_in_at
       t.timestamps
     end
-    
-    add_index :foursquare_users, :token
   end
 
   def self.down
