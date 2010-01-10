@@ -30,7 +30,7 @@ class OauthController < ApplicationController
   end
   
   def setup_twitter
-    person = TwitterOauth.finish(params[:oauth_token])
+    person = TwitterOauth.finish(params[:oauth_token], params[:oauth_verifier])
     redirect_to person_path(person)
   end
   
