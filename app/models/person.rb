@@ -44,6 +44,11 @@ class Person < ActiveRecord::Base
     from_person.destroy
   end
   
+  def check_in
+    FoursquareOauth.check_in(self) if self.foursquare_user
+    #TwitterOauth.check_in(self) if self.twitter_user
+  end
+  
   def days
     appearances.group_by { |a| a.day_number }
   end

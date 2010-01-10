@@ -2,7 +2,8 @@ class FoursquareOauth
   
   CONSUMER_TOKEN = "G13C2EUPJHCZWFXK2YP1DZGHY4NLZCE3J2KJNTCDL3S3R0WX"
   CONSUMER_KEY = "AGBVZRBSM3GUAEQ4UZZV3WHDO3QCOWCM4WN1S1DA03AIZIYF"
-
+  BEEHIVE_VENUEID = 131287
+  
   AUTH = OAuth::Consumer.new(CONSUMER_TOKEN, CONSUMER_KEY, {
          :site               => "http://foursquare.com",
          :scheme             => :header,
@@ -30,5 +31,10 @@ class FoursquareOauth
     fu.secret = access_token.secret
     fu.save
     fu.person
+  end
+  
+  def check_in(person)
+    access_token = OAuth::AccessToken.new(@consumer, fu.token, fu.secret)
+    access_token.post("/v1/checkin?vid=#{BEEHIVE_VENUEID}&twitter=#{fu.update_twitter}")
   end
 end

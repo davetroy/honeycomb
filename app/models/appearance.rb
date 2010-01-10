@@ -9,6 +9,8 @@ class Appearance < ActiveRecord::Base
   before_save :set_timefields
   #after_save :record_billing
   
+  after_create :update_external_sites
+  
   named_scope :current, lambda { { :conditions => ['last_seen_at > ?', 2.minutes.ago] } }
   named_scope :today, lambda { { :conditions => ['day_number=?', Time.now.day_number] } }
   named_scope :recent, :order => 'id DESC'
@@ -53,14 +55,6 @@ class Appearance < ActiveRecord::Base
       end
     end
   end
-  
-  def record_billing
-    self.device.update_attribute(:appearance_id, self.id)
-    # determine if appearance is billable (match an active membership?)
-    # membership generates the bill
-    m = self.device.person.memberships.find(:all, :conditions => ['start_date <= ? AND (end_date IS NULL OR end_date > ?)', saw_at, saw_at]).first
-    m.invoice_appearance(self)
-  end
 
   def image
     device.image
@@ -74,5 +68,9 @@ class Appearance < ActiveRecord::Base
     self.day_number = saw_at.day_number
     self.first_seen_at = saw_at if first_seen_at.nil? || saw_at < first_seen_at
     self.last_seen_at = saw_at if last_seen_at.nil? || saw_at > last_seen_at
+  end
+  
+  def update_external_sites
+    device.person.check_in if device.person.appearances.today.size == 1
   end
 end

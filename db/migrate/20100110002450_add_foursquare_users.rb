@@ -5,8 +5,8 @@ class AddFoursquareUsers < ActiveRecord::Migration
       t.string :token, :limit => 50
       t.string :secret, :limit => 50
       t.string :arrival_status_text
-      t.boolean :update_twitter
-      t.boolean :update_facebook
+      t.boolean :update_twitter, :default => 0
+      t.boolean :update_facebook, :default => 0
       t.timestamps
     end
     
