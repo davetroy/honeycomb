@@ -11,7 +11,7 @@ RAILS_GEM_VERSION = '2.3.5' unless defined? RAILS_GEM_VERSION
 require File.join(File.dirname(__FILE__), 'boot')
 
 Rails::Initializer.run do |config|
-  config.gem "oauth"
+  config.gem "oauth", :version => "0.3.6"
   config.gem "activemerchant", :version => "1.4.2", :lib => 'active_merchant'
   config.time_zone = 'UTC'
   ENV['TZ'] = 'GMT'
@@ -25,3 +25,5 @@ end
 ActionController::Base.asset_host = "http://#{DEFAULT_HOST}:#{DEFAULT_PORT}"
 
 Time::STARTING_DAY = (Time.parse('2009-2-1 0:0:0 UTC').to_i / 86400)
+
+require 'digest/md5'

@@ -1,4 +1,3 @@
-require 'digest/md5'
 class Person < ActiveRecord::Base
   has_many :devices
   has_many :appearances, :through => :devices
@@ -12,6 +11,7 @@ class Person < ActiveRecord::Base
   has_many :payments
   
   has_one :foursquare_user
+  has_one :twitter_user
   
   validates_uniqueness_of :email, :allow_null => true
     
@@ -42,6 +42,10 @@ class Person < ActiveRecord::Base
     from_person.devices.each { |d| d.update_attribute(:person_id, self.id) }
     from_person.payments.each { |d| d.update_attribute(:person_id, self.id) }
     from_person.destroy
+  end
+  
+  def days
+    appearances.group_by { |a| a.day_number }
   end
 
   def grouped_appearances

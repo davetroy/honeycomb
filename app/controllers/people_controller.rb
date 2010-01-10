@@ -27,7 +27,7 @@ class PeopleController < ApplicationController
   
   # member directory
   def index
-    @people = Person.find(:all)
+    @people = Person.find(:all).sort { |a,b| b.days.size <=> a.days.size }
   end
   
   def show
@@ -39,23 +39,5 @@ class PeopleController < ApplicationController
     Person.find(params[:id]).destroy
     redirect_to people_path
   end
-  
-  # Connect a particular user to foursquare
-  def foursquare
-    request_token = Foursquare.get_request_token
-    puts "storing #{request_token.token} and #{request_token.secret}"
-    fu = Person.find(params[:id]).build_foursquare_user
-    fu.token = request_token.token
-    fu.secret = request_token.secret
-    fu.save
-    redirect_to request_token.authorize_url
-  end
-  
-  # Callback from foursquare oauth
-  def oauth_foursquare
-    if params[:oauth_token]
-      Foursquare.finish_authentication
-    end
-  end
-    
+      
 end

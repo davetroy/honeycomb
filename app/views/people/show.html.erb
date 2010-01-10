@@ -1,8 +1,9 @@
 <div id="form_panel">
-  <h2><%=image_tag(@person.image)%>&nbsp;<%=@person.show_name%></h2>
+  <h2><%=image_tag(@person.image, :class => :left_heading)%>&nbsp;<%=@person.show_name%></h2>
   <p>Member since <%= @person.created_at.to_s(:short_date) %></p>
-  <p><%=link_to "Connect to Foursquare", foursquare_person_path %></p>
-  <p><%=link_to "#{@person.grouped_appearances.size} Appearances", person_path(:type => :activity) %></p>
+  <p><%=link_to "Connect to Foursquare", oauth_connect_path(:action => :foursquare, :person_id => @person) %></p>
+  <p><%=link_to "Connect to Twitter", oauth_connect_path(:action => :twitter, :person_id => @person) %></p>
+  <p><%=link_to "#{@person.days.size} Days", person_path(:type => :activity) %></p>
   <p><%=link_to "#{@person.devices.size} Devices", person_path(:type => :devices) %></p>
 </div>
 
