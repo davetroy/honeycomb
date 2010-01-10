@@ -45,7 +45,7 @@ class Person < ActiveRecord::Base
   end
   
   def check_in
-    FoursquareOauth.check_in(self) if self.foursquare_user
+    FoursquareOauth.check_in(self.foursquare_user) if self.foursquare_user
     #TwitterOauth.check_in(self) if self.twitter_user
   end
   

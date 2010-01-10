@@ -33,7 +33,7 @@ class FoursquareOauth
     fu.person
   end
   
-  def check_in(person)
+  def check_in(fu)
     access_token = OAuth::AccessToken.new(@consumer, fu.token, fu.secret)
     access_token.post("/v1/checkin?vid=#{BEEHIVE_VENUEID}&twitter=#{fu.update_twitter}")
   end
