@@ -13,7 +13,7 @@ class TwitterOauth
         })
   
   API = OAuth::Consumer.new(CONSUMER_TOKEN, CONSUMER_KEY, {
-         :site               => "http://api.foursquare.com",
+         :site               => "http://api.twitter.com",
          :scheme             => :header,
          :http_method        => :post
         })
