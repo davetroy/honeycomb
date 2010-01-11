@@ -5,7 +5,7 @@ class PaymentsController < ApplicationController
   
   # NB amount is always in pennies
   def new
-    @payment = Payment.new(:person_id => params[:person_id],:amount => params[:amount] || 0)
+    @payment = Payment.new(:person_id => params[:person_id],:amount => params[:amount].blank? ? 0.0 : params[:amount].to_f / 100.0)
     @person_id = params[:person_id]
   end
   
