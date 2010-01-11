@@ -6,18 +6,43 @@ class Person < ActiveRecord::Base
   has_many :people_prizes
   has_many :prizes, :through => :people_prizes
 
-  has_many :memberships do
-    def active_in_month(month,year)
-      find(:first,:conditions => ["start_date <= ?",Date.new(year,month,1)],:order => "start_date ASC")
+  has_many :memberships, :order => "start_date ASC" do
+    # return the membership active at the beginning of the current month, or of the month specified 
+    def active_in_month(month = nil,year = nil)
+      today = Date.today
+      month ||= today.month
+      year ||= today.year
+      date = Date.new(year,month,1)
+      find(:first,:conditions => ["start_date <= ? AND (end_date IS NULL OR end_date >= ?)",date,date])
     end
   end
   
-  has_many :invoices, :through => :memberships
+  has_many :invoices do
+    def descending
+      find(:all,:order => 'created_at DESC')
+    end
 
-  has_many :payments
+    def total
+      sum('amount').to_f / 100
+    end
+  end
+
+  has_many :payments do
+    def descending
+      find(:all,:order => 'created_at DESC')
+    end
+    
+    def total
+      sum('amount').to_f / 100
+    end
+  end
   
   validates_uniqueness_of :email, :allow_null => true
-    
+
+  def balance_due
+    owed_payments - payments.total
+  end
+  
   def gravatar_url(size=91)
     gravatar_hash = Digest::MD5.hexdigest(email)
     "http://www.gravatar.com/avatar/#{gravatar_hash}.jpg?s=#{size}"
@@ -30,6 +55,24 @@ class Person < ActiveRecord::Base
     namestring.blank? ? email : namestring
   end
   
+  def active_plan(month = nil,year = nil)
+    mem = memberships.active_in_month(month,year)
+    mem ? mem.plan : nil
+  end
+  
+  # calculate how much a user owes for all months prior to this one
+  def owed_payments
+    range = appearance_range
+    today = Date.today
+    range.delete([today.month,today.year])
+    owed = 0 
+    range.each do |month,year|
+      next unless active_plan(month,year) # skip the Beehive Baltimore user who has gaps
+      owed += compute_bill(month,year)
+    end
+    owed
+  end
+
   # TODO: replace
   def bill_total
     invoices.inject(0) { |s, b| s += b.amount }
@@ -81,10 +124,12 @@ class Person < ActiveRecord::Base
     end
   end
   
-  def compute_monthly_bill(month,year)
-    
+  def compute_bill(month,year)
+    # plan = active_plan(month,year)
+    # plan ? active_plan(month,year).compute_bill(monthly_appearances,excess_weekly_appearances) : -1.0
+    active_plan(month,year).compute_bill(daily_appearance_dates(month,year))  
   end
-  
+    
   def first_seen_at
     appearances.first.first_seen_at unless appearances.empty?
   end
