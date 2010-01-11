@@ -1,4 +1,5 @@
 class Membership < ActiveRecord::Base
+  validates_presence_of :start_date
   belongs_to :person
   belongs_to :plan
   has_many :invoices
