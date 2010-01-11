@@ -4,7 +4,6 @@ class Membership < ActiveRecord::Base
   has_many :invoices
 
   before_save :set_defaults
-  after_create :do_billing
   
   named_scope :active, lambda { { :conditions => ['start_date <= ? AND ((end_date IS NULL) OR (end_date > ?))', Time.now, Time.now] } }
   named_scope :unbilled, lambda { { :conditions => ['(billed_through < ?) OR (billed_through IS NULL)', Time.now] } }
