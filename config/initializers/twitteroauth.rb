@@ -26,6 +26,7 @@ class TwitterOauth
   end
   
   def self.get_user(tu)
-    Hash.from_xml(self.access_token(tu).get("users/show.xml"))[:user]
+    jsondata = self.access_token(tu).get('http://twitter.com/account/verify_credentials.json').body
+    JSON.parse(body)
   end
 end
