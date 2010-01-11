@@ -29,8 +29,9 @@ class OauthController < ApplicationController
     person = Person.find(session[:person_id])
     tu = person.twitter_user || person.build_twitter_user
     tu.update_attributes(:token => access_token.token, :secret => access_token.secret)
-    screen_name = access_token.get('show/user').body[:user][:screen_name]
-    tu.update_attribute(:user, screen_name)
+    logger.info access_token.get('show/user').body
+    #screen_name = access_token.get('show/user').body[:user][:screen_name]
+    #tu.update_attribute(:user, screen_name)
     redirect_to person_path(person)
   end
   
