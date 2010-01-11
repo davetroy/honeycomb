@@ -27,6 +27,6 @@ class TwitterOauth
   
   def self.get_user(tu)
     jsondata = self.access_token(tu).get('http://twitter.com/account/verify_credentials.json').body
-    JSON.parse(body)
+    JSON.parse(jsondata)
   end
 end
