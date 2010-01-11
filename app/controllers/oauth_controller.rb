@@ -30,7 +30,7 @@ class OauthController < ApplicationController
     tu = person.twitter_user || person.build_twitter_user
     tu.update_attributes(:token => access_token.token, :secret => access_token.secret)
     user = TwitterOauth.get_user(tu)
-    tu.update_attribute(:username, user[:screen_name])
+    tu.update_attribute(:username, user['screen_name'])
     redirect_to person_path(person)
   end
   
