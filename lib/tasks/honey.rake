@@ -1,4 +1,22 @@
 namespace :honey do
+  namespace :billing do
+    desc "Generate invoices for the first time"
+    task :initial => :environment do
+      Person.find_each do |person|
+        owed = person.owed_payments
+        paid = person.payments.total
+        due = owed - paid
+        if due > 0
+          puts "Generating an invoice for #{person.show_name} for $#{due}"
+          person.invoices.create!(:amount => due)
+          # possibly send out email here?
+        else
+          puts "#{person.show_name} does not owe any balance at this time (current balance $#{due})."
+        end
+      end
+    end
+  end
+  
   namespace :load do
     desc "Seed the database with membership plans"
     task :plans => :environment do
@@ -14,7 +32,7 @@ namespace :honey do
       
       ["Dave Troy","Mike Brenner","Alan Grover","Greg Gershman","Michael Jovel"].each do |name|
         person = Person.find_by_first_name_and_last_name(*name.split)
-        person.memberships.create!(:plan => basic,:start_date => Date.new(2009,2,1))
+        person.memberships.create!(:plan => worker,:start_date => Date.new(2009,2,1))
       end
 
       mike = Person.find_by_first_name_and_last_name("Mike","Subelsky")
@@ -42,7 +60,7 @@ namespace :honey do
       paul.memberships.create!(:plan => basic,:start_date => Date.new(2009,8,1))
 
       Person.find_each do |person|
-        person.memberships.create!(:plan => basic,:start_date => person.first_seen_at) if person.memberships.empty?
+        person.memberships.create!(:plan => basic,:start_date => person.first_seen_at || Date.new(2009,2,1)) if person.memberships.empty?
       end
     end
     
