@@ -84,4 +84,8 @@ class Person < ActiveRecord::Base
   def compute_monthly_bill(month,year)
     
   end
+  
+  def first_seen_at
+    appearances.first.first_seen_at unless appearances.empty?
+  end
 end
