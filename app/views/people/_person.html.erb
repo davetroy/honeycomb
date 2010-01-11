@@ -1,7 +1,6 @@
 <div class="appearance">
   <%=link_to image_tag(person.image), person_url(person)%><br/>
-  <%=person.show_name%><br/>
-  <%=person.email%><br/>
+  <%=truncate(person.show_name, :length =>25)%><br/>
   <%=person.devices.size%> devices
 </div>
 

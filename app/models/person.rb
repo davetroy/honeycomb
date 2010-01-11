@@ -1,4 +1,3 @@
-require 'digest/md5'
 class Person < ActiveRecord::Base
   has_many :devices
   has_many :appearances, :through => :devices, :order => "first_seen_at ASC"
@@ -37,6 +36,9 @@ class Person < ActiveRecord::Base
     end
   end
   
+  has_one :foursquare_user
+  has_one :twitter_user
+  
   validates_uniqueness_of :email, :allow_null => true
 
   def balance_due
@@ -49,7 +51,12 @@ class Person < ActiveRecord::Base
   end
   
   alias_method :image, :gravatar_url
-  
+
+  # sent to a user to enable them to setup their account; key good for one day
+  def temporary_key
+    Digest::MD5.hexdigest("#{Time.now.day_number}#{id}#{person.email}")
+  end
+
   def show_name
     namestring = "#{first_name} #{last_name}".strip
     namestring.blank? ? email : namestring
@@ -82,23 +89,21 @@ class Person < ActiveRecord::Base
     !"#{first_name} #{last_name}".strip.blank?
   end
   
-  def self.by_day(day_number=Time.now.day_number)
-    summary_sql = "select distinct p.id,min(first_seen_at) first_seen_at,max(last_seen_at) last_seen_at,count(DISTINCT d.id) device_count,a.day_number FROM appearances a, people p, devices d where a.device_id=d.id and d.person_id=p.id GROUP BY email,a.day_number HAVING a.day_number=#{day_number}"
-    Person.connection.select_all(summary_sql).map { |s| s.merge(:person => Person.find(s.delete('id'))) }
-    #Person.find(:all, :select => 'id, email, min(first_seen_at) first_seen_at, max(last_seen_at) last_seen_at, count(devices.id) device_count', :group => 'people.id', :include => [:appearances, :devices])
-  end
-  
-  # Return true if *any* plan that this person is on has an anniversary today.
-  def is_anniversary_day?
-    memberships.active.select {|m| m.is_anniversary_day?}.size > 0
-  end
-  
   # Collapse from another person into us; good for duplicate records only
   def merge_from(person_id)
     from_person = Person.find(person_id)
     from_person.devices.each { |d| d.update_attribute(:person_id, self.id) }
     from_person.payments.each { |d| d.update_attribute(:person_id, self.id) }
     from_person.destroy
+  end
+  
+  def check_in
+    FoursquareOauth.check_in(self.foursquare_user) if self.foursquare_user
+    #TwitterOauth.check_in(self) if self.twitter_user
+  end
+  
+  def days
+    appearances.group_by { |a| a.day_number }
   end
 
   # flattens multiple device appearances in a given day to count as just one daily apperance

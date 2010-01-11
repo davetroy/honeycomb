@@ -23,7 +23,7 @@ class Device < ActiveRecord::Base
   end
   
   def manufacturer_name
-    manufacturer.name if manufacturer
+    manufacturer ? manufacturer.name : "Unknown Manufacturer"
   end
   
   def first_appearance

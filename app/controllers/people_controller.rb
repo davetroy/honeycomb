@@ -15,6 +15,7 @@ class PeopleController < ApplicationController
 
   def edit
     @person = Person.find(params[:id])
+    render :status => 404 unless params[:key]==@person.temporary_key
   end
   
   def update
@@ -26,16 +27,17 @@ class PeopleController < ApplicationController
   
   # member directory
   def index
-    @people = Person.find(:all)
+    @people = Person.find(:all).sort { |a,b| b.days.size <=> a.days.size }
   end
   
   def show
     @person = Person.find(params[:id])
+    render params[:type] if params[:type]
   end
-  
+    
   def destroy
     Person.find(params[:id]).destroy
     redirect_to people_path
   end
-  
+      
 end
