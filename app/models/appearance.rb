@@ -11,7 +11,7 @@ class Appearance < ActiveRecord::Base
   
   after_create :update_external_sites
   
-  named_scope :current, lambda { { :conditions => ['last_seen_at > ?', 2.minutes.ago] } }
+  named_scope :current, lambda { { :conditions => ['last_seen_at > ?', 5.minutes.ago] } }
   named_scope :today, lambda { { :conditions => ['day_number=?', Time.now.day_number] } }
   named_scope :recent, :order => 'id DESC'
 

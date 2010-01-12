@@ -25,6 +25,7 @@ pre code{ line-height: 1.3em;}
 abbr, acronym{ border-bottom: 1px dotted #333;}
 
 img {
+	border: 0px;
 	-moz-border-radius-topleft: 4px; -webkit-border-top-left-radius: 4px;
 	-moz-border-radius-topright: 4px; -webkit-border-top-right-radius: 4px;
 	-moz-border-radius-bottomleft: 4px; -webkit-border-bottom-left-radius: 4px;
