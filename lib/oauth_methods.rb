@@ -1,7 +1,7 @@
 module OauthMethods
   private
   def access_token
-    OAuth::AccessToken.new(API, self.token, self.secret)
+    OAuth::AccessToken.new("#{self.class}::API".constantize, self.token, self.secret)
   end
 
   def get(url)
