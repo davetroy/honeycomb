@@ -11,8 +11,6 @@
 
 <hr/>
 
-<%=link_to ( 'Destroy', person_path(@person), :confirm => 'Are you sure?', :method => :delete ) if @person.devices.empty?%>
-
 <h2 style='color: #black'>Devices</h2>
 <%= render :partial => 'devices/device', :collection => @person.devices %>
 
