@@ -87,7 +87,7 @@ class PeopleController < ApplicationController
   
   # Login as a particular user
   def login
-    render :reset_password if session[:person_id]
+    render :reset_password if session[:person_id]==@person.id
   end
   
   def confirm_login
