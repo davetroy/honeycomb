@@ -23,14 +23,27 @@ class FoursquareUser < ActiveRecord::Base
   def self.get_request_token
     AUTH.get_request_token
   end
-
-  def self.finish(request_token)
-    final_request_token = OAuth::RequestToken.new(AUTH, request_token[:token], request_token[:secret])
-    final_request_token.get_access_token
+  
+  # Use request token info from session to get an access token, then store that info
+  def update_access_token(token_info)
+    request_token = OAuth::RequestToken.new(AUTH, token_info[:token], token_info[:secret])
+    atoken = request_token.get_access_token
+    update_attributes(:token => atoken.token, :secret => atoken.secret)
   end
   
+  # Wrappers for foursquare API method calls
   def check_in
-    access_token = OAuth::AccessToken.new(API, self.token, self.secret)
-    access_token.post("/v1/checkin?vid=#{VENUE_ID}&twitter=#{fu.update_twitter}&facebook=#{fu.update_facebook}")
+    post("/v1/checkin?vid=#{VENUE_ID}&twitter=#{fu.update_twitter}&facebook=#{fu.update_facebook}")
+    update_attribute(:checked_in_at, Time.now)
   end
+
+  private
+  def access_token
+    OAuth::AccessToken.new(API, self.token, self.secret)
+  end
+
+  def post(url)
+    access_token.post(url)
+  end
+  
 end

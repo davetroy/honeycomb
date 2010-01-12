@@ -10,10 +10,10 @@ class OauthController < ApplicationController
   
   # Callback from foursquare oauth
   def setup_foursquare
-    access_token = FoursquareUser.finish(session[:foursquare_token])
     person = Person.find(session[:person_id])
     fu = person.foursquare_user || person.build_foursquare_user
-    fu.update_attributes(:token => access_token.token, :secret => access_token.secret)
+    fu.update_access_token(session[:foursquare_token])
+    flash.now[:notice] = "Foursquare authentication complete!"
     redirect_to person_path(person)
   end
   
@@ -31,6 +31,7 @@ class OauthController < ApplicationController
     tu.update_attributes(:token => access_token.token, :secret => access_token.secret)
     user = tu.get_user
     tu.update_attribute(:username, user['screen_name'])
+    flash.now[:notice] = "Twitter authentication complete!"
     redirect_to person_path(person)
   end
   
