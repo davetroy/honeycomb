@@ -94,8 +94,8 @@ class Person < ActiveRecord::Base
   end
   
   def check_in
-    FoursquareOauth.check_in(self.foursquare_user) if self.foursquare_user
-    #TwitterOauth.check_in(self) if self.twitter_user
+    self.foursquare_user.check_in if self.foursquare_user
+    #self.twitter_user.check_in if self.twitter_user
   end
   
   def days
@@ -135,6 +135,7 @@ class Person < ActiveRecord::Base
     appearances.first.first_seen_at unless appearances.empty?
   end
   
+  # array of all email addresses we have on file
   def payment_aliases
     list = self.aliases.map { |a| a.email }
     list << self.email
