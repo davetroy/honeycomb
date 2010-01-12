@@ -1,6 +1,8 @@
 class TwitterUser < ActiveRecord::Base
   belongs_to :person
   
+  include OauthMethods
+  
   CONSUMER_TOKEN = "aVSiSKcPrLC27CDqe14cCg"
   CONSUMER_KEY = "UkRztJCb90YA4pHumzNoWMc4g4YEGR0mFqu9s6n6G8"
 
@@ -16,18 +18,17 @@ class TwitterUser < ActiveRecord::Base
   def self.get_request_token
     API.get_request_token(:oauth_callback => "http://hive.beehivebaltimore.org/oauth/setup_twitter")
   end
-  
-  def self.finish(request_token, oauth_verifier)
-    final_request_token = OAuth::RequestToken.new(API, request_token[:token], request_token[:secret])
-    final_request_token.get_access_token(:oauth_verifier => oauth_verifier)
-  end
-  
-  def access_token
-    OAuth::AccessToken.new(API, self.token, self.secret)
+    
+  def update_access_token(token_info, oauth_verifier)
+    request_token = OAuth::RequestToken.new(API, token_info[:token], token_info[:secret])
+    atoken = request_token.get_access_token(:oauth_verifier => oauth_verifier)
+    update_attributes(:token => atoken.token, :secret => atoken.secret)
+    user = self.get_user
+    update_attribute(:username, user['screen_name'])
   end
   
   def get_user
-    jsondata = self.access_token.get('http://twitter.com/account/verify_credentials.json').body
+    jsondata = get('http://twitter.com/account/verify_credentials.json').body
     JSON.parse(jsondata)
   end
   

@@ -25,12 +25,9 @@ class OauthController < ApplicationController
   end
   
   def setup_twitter
-    access_token = TwitterUser.finish(session[:twitter_token], params[:oauth_verifier])
     person = Person.find(session[:person_id])
     tu = person.twitter_user || person.build_twitter_user
-    tu.update_attributes(:token => access_token.token, :secret => access_token.secret)
-    user = tu.get_user
-    tu.update_attribute(:username, user['screen_name'])
+    tu.update_access_token(session[:twitter_token], params[:oauth_verifier])
     flash.now[:notice] = "Twitter authentication complete!"
     redirect_to person_path(person)
   end

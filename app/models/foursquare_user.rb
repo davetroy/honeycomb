@@ -1,6 +1,8 @@
 class FoursquareUser < ActiveRecord::Base
   belongs_to :person
   
+  include OauthMethods
+  
   CONSUMER_TOKEN = "G13C2EUPJHCZWFXK2YP1DZGHY4NLZCE3J2KJNTCDL3S3R0WX"
   CONSUMER_KEY = "AGBVZRBSM3GUAEQ4UZZV3WHDO3QCOWCM4WN1S1DA03AIZIYF"
   VENUE_ID = 131287
@@ -37,13 +39,4 @@ class FoursquareUser < ActiveRecord::Base
     update_attribute(:checked_in_at, Time.now)
   end
 
-  private
-  def access_token
-    OAuth::AccessToken.new(API, self.token, self.secret)
-  end
-
-  def post(url)
-    access_token.post(url)
-  end
-  
 end
