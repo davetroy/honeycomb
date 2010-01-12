@@ -10,7 +10,7 @@
   It first appeared on our network <%=time_ago_in_words(@device.appearances.first.first_seen_at)%> ago.</p>
 
   <p>If you are the owner of this device, please <%=link_to 'click here',
-      confirm_device_for_person_url(@device.person, :key => @device.confirmation_key, :device_id => @device) %>
+      confirm_device_for_person_url(@device.person, :key => @device.person.temporary_key, :device_id => @device) %>
       to confirm this claim.</p>
 
   <p>Also, if you don't see your picture in the box to the left, it means you also need to setup a <a href="http://gravatar.com">Gravatar</a> for this email address so we can show you in our directory!</p>

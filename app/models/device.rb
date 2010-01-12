@@ -17,11 +17,7 @@ class Device < ActiveRecord::Base
     self.update_attribute(:person_id, person.id)
     PersonMailer.deliver_confirmation(self)
   end
-  
-  def confirmation_key
-    Digest::MD5.hexdigest("#{mac}#{id}#{person.email}")
-  end
-  
+    
   def manufacturer_name
     manufacturer ? manufacturer.name : "Unknown Manufacturer"
   end
