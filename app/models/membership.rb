@@ -1,10 +1,10 @@
 class Membership < ActiveRecord::Base
+  validates_presence_of :start_date
   belongs_to :person
   belongs_to :plan
   has_many :invoices
 
   before_save :set_defaults
-  after_create :do_billing
   
   named_scope :active, lambda { { :conditions => ['start_date <= ? AND ((end_date IS NULL) OR (end_date > ?))', Time.now, Time.now] } }
   named_scope :unbilled, lambda { { :conditions => ['(billed_through < ?) OR (billed_through IS NULL)', Time.now] } }

@@ -1,45 +1,40 @@
 module PeopleHelper
 
   def iterate_appearances_by_month(person)
-    groups = person.grouped_appearances
-    
-    by_month = groups.keys.sort.reverse_each do |date|
-      concat("<h3 style='color:black'>#{date.strftime('%B %Y')}</h3>")
-      concat("<div id='form_panel'>")
-      appearances = groups[date] 
-      concat("<p>#{appearances.group_by { |a| a.day_number }.keys.size } appearances</p>")
+    # groups = person.daily_appearance_dates
+    # 
+    # by_month = groups.keys.sort.reverse_each do |date|
+    #   concat("<h3 style='color:black'>#{date.strftime('%B %Y')}</h3>")
+    #   concat("<div id='form_panel'>")
+    #   appearances = groups[date] 
+    #   concat("<p>#{appearances.group_by { |a| a.day_number }.keys.size } appearances</p>")
+    #   concat("<ul>")
+    #   
+    #   person.daily_appearances_by_week(month,year).each do |week,appearances|
+    #     weekly_appearances = appearances.size
+    #     concat("<li>Week #{week}: #{weekly_appearances}</li>")
+    #   end
+    # 
+    #   concat("</ul>")
+    #   
+    #   plan = person.active_plan(month,year)
+    #   amount = person.compute_bill(month,year)
+    #   concat("<p>At the beginning of this month, you were on the #{plan.name} plan. You owe #{number_to_currency(amount)} for this month.</p>")
+    # 
+    #   concat("</div>")
+    # end
+    # return
+  end
 
-      concat("<ul>")
-
-      weeks = groups[date].group_by { |d| d.first_seen_at.strftime("%W") }
-
-      monthly_appearances = 0
-      excess_weekly_appearances = 0
-      
-      weeks.keys.sort.reverse_each do |week|
-        appearances_this_week = weeks[week].group_by { |a| a.day_number }.keys.size
-        concat("<li>Week #{week}: #{appearances_this_week}</li>")
-        monthly_appearances += appearances_this_week
-
-        if appearances_this_week > 3
-          excess_weekly_appearances += (appearances_this_week-3)
-        end
-      end
-
-      concat("</ul>")
-      concat("<p>")
-
-      fee = 25 + (monthly_appearances > 1 ? (monthly_appearances-1)*15 : 0)
-      concat("As a Basic Member, you would owe: #{number_to_currency(fee)}.<br/>")
-
-      fee = 175+(excess_weekly_appearances*15)
-      concat("As a Worker Bee, you would owe: #{number_to_currency(fee)}.<br/>")
-
-      fee = 275
-      concat("As a Beehive Resident, you would owe: #{number_to_currency(fee)}.</p>")
-    
-      concat("</div>")
+  def pay_invoice_cue(person)
+    if person.balance_due > 0 && person.invoices.any?
+      amount = person.invoices.last.amount
+      text = <<-TEXT
+      Your most recent invoice was for #{number_to_currency(amount)}. 
+      #{link_to("Pay this invoice",new_payment_path(:amount => amount,:person_id => person.id))}
+      TEXT
+    else
+      "You do not owe a balance at this time."
     end
-    return
   end
 end

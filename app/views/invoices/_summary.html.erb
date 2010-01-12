@@ -1,0 +1,4 @@
+<h3 style='color:black'><%= "#{invoice.id}: #{invoice.created_at.to_s(:short_date)}" %></h3>
+<div style='background-color: white;color: black;padding:0.25em 0 0.25em 0.5em;width:50%;'>
+<p><strong>Amount due</strong>: <%= number_to_currency(invoice.amount) %></p>
+</div>

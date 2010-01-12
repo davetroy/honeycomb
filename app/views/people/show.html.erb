@@ -5,5 +5,23 @@
   <p><%=link_to @person.foursquare_user ? "Connected to Twitter (#{@person.twitter_user.username})" : "Connect to Twitter", oauth_connect_path(:action => :twitter, :person_id => @person) %></p>
   <p><%=link_to "#{@person.days.size} Days", person_path(:type => :activity) %></p>
   <p><%=link_to "#{@person.devices.size} Devices", person_path(:type => :devices) %></p>
+  <p>You have paid <%= number_to_currency(@person.payments.total) %> of <%= number_to_currency(@person.owed_payments) %> owed to the Hive. 
+  <%= pay_invoice_cue(@person) %>.</p>
 </div>
 
+<hr/>
+
+<%=link_to ( 'Destroy', person_path(@person), :confirm => 'Are you sure?', :method => :delete ) if @person.devices.empty?%>
+
+<h2 style='color: #black'>Devices</h2>
+<%= render :partial => 'devices/device', :collection => @person.devices %>
+
+<br clear='all'>
+<h2 style='color: #black'>Invoices by Month</h2>
+<%= render :partial => 'invoices/summary', :collection => @person.invoices.descending, :as => :invoice %>
+
+<h2 style='color: #black'>Monthly Activity</h2>
+<%= iterate_appearances_by_month(@person) %>
+
+<h2 id='payment_history'>Payment History</h2>
+<%= render :partial => 'payments/payments', :object => @person.payments.descending %>
