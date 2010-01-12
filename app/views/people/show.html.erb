@@ -9,11 +9,6 @@
   <%= pay_invoice_cue(@person) %>.</p>
 </div>
 
-<hr/>
-
-<h2 style='color: #black'>Devices</h2>
-<%= render :partial => 'devices/device', :collection => @person.devices %>
-
 <br clear='all'>
 <h2 style='color: #black'>Invoices by Month</h2>
 <%= render :partial => 'invoices/summary', :collection => @person.invoices.descending, :as => :invoice %>
