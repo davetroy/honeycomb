@@ -55,7 +55,7 @@ class Person < ActiveRecord::Base
 
   # sent to a user to enable them to setup their account; key good for one day
   def temporary_key
-    Digest::MD5.hexdigest("#{Time.now.day_number}#{id}#{person.email}")
+    Digest::MD5.hexdigest("#{Time.now.day_number}#{id}#{self.email}")
   end
 
   def show_name
@@ -79,11 +79,6 @@ class Person < ActiveRecord::Base
       owed += compute_bill(month,year)
     end
     owed
-  end
-
-  # TODO: replace
-  def bill_total
-    invoices.inject(0) { |s, b| s += b.amount }
   end
   
   def is_setup?

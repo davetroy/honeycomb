@@ -23,7 +23,6 @@ module PeopleHelper
     # 
     #   concat("</div>")
     # end
-    # return
   end
 
   def pay_invoice_cue(person)

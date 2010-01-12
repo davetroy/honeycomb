@@ -1,0 +1,13 @@
+<div id="form_panel">
+  <p>You have paid <%= number_to_currency(@person.payments.total) %> of <%= number_to_currency(@person.owed_payments) %> owed to the Hive.</p>
+  <p><%= pay_invoice_cue(@person) %></p>
+
+  <h2 style='color: #black'>Invoices by Month</h2>
+  <%= render :partial => 'invoices/summary', :collection => @person.invoices.descending, :as => :invoice %>
+
+  <h2 style='color: #black'>Monthly Activity</h2>
+  <%= iterate_appearances_by_month(@person) %>
+
+  <h2 id='payment_history'>Payment History</h2>
+  <%= render :partial => 'payments/payments', :object => @person.payments.descending %>
+</div>

@@ -65,10 +65,10 @@ namespace :honey do
     end
     
     task :payments => :environment do
-      IO.readlines("#{RAILS_ROOT}/tmp/2009payments.csv").each do |line|
+      IO.readlines("#{RAILS_ROOT}/db/payments_2009/2009payments.csv").each do |line|
         person_id,email,date,amount,type = line.split(/,/)
-        details = { :email => email, :date => date, :type => type, :description => "Loaded manually" }
-        Payment.create!(:person_id => person_id,:amount => amount,:state => "Success",:details => details)
+        details = { :email => email, :date => date, :type => type, :description => "Imported from #{type}" }
+        Payment.create!(:created_at => date, :person_id => person_id,:amount => amount,:state => "Success",:details => details)
       end
     end
     

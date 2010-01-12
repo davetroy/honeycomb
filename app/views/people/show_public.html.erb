@@ -1,0 +1,12 @@
+<div id="form_panel">
+  <h2><%=image_tag(@person.image, :class => :left_heading)%>&nbsp;<%=@person.show_name%></h2>
+  
+  <h3>About <%=@person.show_name%></h3>
+  <%=@person.profile || "#{@person.show_name} has not yet completed a public profile."%>
+  <p/>
+  <%=link_to "#{@person.company_name || 'Website'}<br/>", @person.website if @person.website%>
+  <%="Phone: #{@person.phone_number}<br/>" if @person.phone_number%>
+  <%=link_to "Contact #{@person.show_name}", contact_person_path %>
+  <p/>
+  <%=link_to "Are you #{@person.show_name}?", person_path(:key => @person.temporary_key)%>
+</div>

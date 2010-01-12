@@ -1,4 +1,5 @@
 class PeopleController < ApplicationController
+  before_filter :authenticate
   
   def confirm_device_for
     if (@person = Person.find(params[:id])) && (@device = Device.find(params[:device_id]))
@@ -9,17 +10,15 @@ class PeopleController < ApplicationController
     if @person.is_setup?
       redirect_to root_path
     else
-      redirect_to edit_person_path(@person)
+      redirect_to edit_person_path(@person, :key => @person.temporary_key)
     end
   end
 
   def edit
-    @person = Person.find(params[:id])
-    render :status => 404 unless params[:key]==@person.temporary_key
+    render :status => 404 unless session[:person_id]
   end
   
   def update
-    @person = Person.find(params[:id])
     @person.update_attributes(params[:person])
     flash.now[:notice] = "Updates saved!"
     redirect_to root_path
@@ -31,13 +30,30 @@ class PeopleController < ApplicationController
   end
   
   def show
-    @person = Person.find(params[:id])
-    render params[:type] if params[:type]
+    if @person.id == session[:person_id]
+      render params[:type] if params[:type]
+    else
+      render 'show_public'
+    end
   end
     
   def destroy
-    Person.find(params[:id]).destroy
+    @person.destroy
     redirect_to people_path
   end
-      
+    
+  def authenticate
+    if params[:id]
+      @person = Person.find(params[:id])
+      if params[:key]
+        if params[:key] == @person.temporary_key
+          session[:person_id] = @person.id
+        else
+          session[:person_id] = nil
+          render :status => 404
+        end
+      end      
+    end
+  end
+  
 end
