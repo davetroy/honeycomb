@@ -134,4 +134,9 @@ class Person < ActiveRecord::Base
   def first_seen_at
     appearances.first.first_seen_at unless appearances.empty?
   end
+  
+  def payment_aliases
+    list = self.aliases.map { |a| a.email }
+    list << self.email
+  end
 end
