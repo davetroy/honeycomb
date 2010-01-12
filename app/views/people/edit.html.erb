@@ -1,8 +1,10 @@
-<%=image_tag(url_for(@person.gravatar_url))%>
-<p>Please enter your name so we can make a nice display.</p>
+<div id="form_panel">
+  <%=image_tag(url_for(@person.gravatar_url))%>
+  <p>Please enter your name so we can make a nice display.</p>
 
-<% form_for @person, :html => {:method => :put} do |f| %>
-  First Name: <%=f.text_field :first_name%><p/>
-  Last Name: <%=f.text_field :last_name%><p/>
-  <%=f.submit 'Finish'%>
-<% end %>
+  <% form_for @person, :html => {:method => :put} do |f| %>
+    First Name: <%=f.text_field :first_name%><p/>
+    Last Name: <%=f.text_field :last_name%><p/>
+    <%=f.submit 'Finish'%>
+  <% end %>
+</div>

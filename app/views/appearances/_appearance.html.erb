@@ -1,11 +1,11 @@
 <div class="appearance">
   <% if appearance.device.person && appearance.device.person_verified %>
     <%=link_to image_tag(appearance.image), person_url(appearance.device.person)%><br/>
-    <%= appearance.show_name %>
+    <%= appearance.show_name %><br/>
   <% else %>
      <%= link_to image_tag(appearance.image), claim_device_url(appearance.device) %><br/>
      <%= link_to(truncate(appearance.show_name, :length => 20), claim_device_url(appearance.device)) %>
-     <%= "*" if appearance.device.person %>
+     <%= "*" if appearance.device.person %><br/>
   <% end %>
   <%=appearance.ip_address%><br/>
   <%=appearance.device.name%><br/>
