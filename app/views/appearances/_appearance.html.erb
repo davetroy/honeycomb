@@ -1,5 +1,5 @@
 <div class="appearance">
-  <% if appearance.device.person.verified %>
+  <% if appearance.device.person && appearance.device.person.verified %>
     <%=link_to image_tag(appearance.image), person_url(appearance.device.person)%><br/>
     <%= appearance.show_name %>
   <% else %>
