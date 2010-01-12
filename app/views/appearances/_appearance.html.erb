@@ -1,7 +1,12 @@
 <div class="appearance">
-  <%=link_to image_tag(appearance.image), person_url(appearance.device.person)%><br/>
-  <%=appearance.device.person_verified ? appearance.show_name : link_to(truncate(appearance.show_name, :length => 20), claim_device_url(appearance.device)) %>
-  <%="*" unless appearance.device.person_verified %><br/>
+  <% if appearance.device.person %>
+    <%=link_to image_tag(appearance.image), person_url(appearance.device.person)%><br/>
+    <%= appearance.show_name %>
+    <%="*" unless appearance.device.person_verified %><br/>
+  <% else %>
+     <%= link_to image_tag(appearance.image), claim_device_url(appearance.device) %><br/>
+     <%= link_to(truncate(appearance.show_name, :length => 20), claim_device_url(appearance.device)) %>
+  <% end %>
   <%=appearance.ip_address%><br/>
   <%=appearance.device.name%><br/>
 </div>
