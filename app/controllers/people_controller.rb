@@ -15,7 +15,6 @@ class PeopleController < ApplicationController
   end
 
   def edit
-    render :status => 404 unless session[:person_id]
   end
   
   def update
