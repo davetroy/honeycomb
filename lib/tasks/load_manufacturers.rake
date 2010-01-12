@@ -1,4 +1,4 @@
-namespace :db do
+namespace :honey do
   namespace :load do
     desc 'Load manufacturer data'
     task :manufacturers => :environment do

@@ -71,5 +71,19 @@ namespace :honey do
         Payment.create!(:person_id => person_id,:amount => amount,:state => "Success",:details => details)
       end
     end
+    
+    desc "Load email aliases"
+    task :aliases => :environment do
+      IO.readlines("#{RAILS_ROOT}/db/aliases.txt").each do |line|
+        aliases = line.strip.split
+        person = nil
+        aliases.find { |a| person=Person.find_by_email(a) }
+        add_aliases = aliases - [person.email]
+        add_aliases.each do |a|
+          person.aliases.find_or_create_by_email(a)
+          puts "#{person.id} = #{a}"
+        end
+      end
+    end
   end
 end

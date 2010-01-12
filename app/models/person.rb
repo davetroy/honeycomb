@@ -1,6 +1,7 @@
 class Person < ActiveRecord::Base
   has_many :devices
   has_many :appearances, :through => :devices, :order => "first_seen_at ASC"
+  has_many :aliases
 
   has_many :people_prizes
   has_many :prizes, :through => :people_prizes
