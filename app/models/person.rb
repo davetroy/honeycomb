@@ -6,6 +6,9 @@ class Person < ActiveRecord::Base
   has_many :people_prizes
   has_many :prizes, :through => :people_prizes
 
+  attr :password
+  attr :password_confirmation
+
   has_many :memberships, :order => "start_date ASC" do
     # return the membership active at the beginning of the current month, or of the month specified 
     def active_in_month(month = nil,year = nil)

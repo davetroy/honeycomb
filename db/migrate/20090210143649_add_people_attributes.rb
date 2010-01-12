@@ -10,7 +10,5 @@ class AddPeopleAttributes < ActiveRecord::Migration
   end
 
   def self.down
-    remove_column :people, :twitter_username
-    remove_column :people, :membership_plan
   end
 end

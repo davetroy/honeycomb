@@ -12,5 +12,5 @@
   <%="Phone: #{@person.phone_number}<br/>" if @person.phone_number%>
   <%=link_to "Contact #{@person.show_name}", contact_person_path %>
   <p/>
-  <%=link_to "Are you #{@person.show_name}?", person_path(:key => @person.temporary_key)%>
+  <%=link_to "Login", login_person_path %>
 </div>

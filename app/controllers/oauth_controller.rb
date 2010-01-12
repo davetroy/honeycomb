@@ -3,7 +3,6 @@ class OauthController < ApplicationController
   # Connect a particular user to foursquare
   def foursquare
     request_token = FoursquareUser.get_request_token
-    session[:person_id] = params[:person_id]    # TODO: this should be set by authentication
     session[:foursquare_token] = { :token => request_token.token, :secret => request_token.secret }
     redirect_to request_token.authorize_url
   end
@@ -19,7 +18,6 @@ class OauthController < ApplicationController
   
   def twitter
     request_token = TwitterUser.get_request_token
-    session[:person_id] = params[:person_id]    # TODO: this should be set by authentication
     session[:twitter_token] = { :token => request_token.token, :secret => request_token.secret }
     redirect_to request_token.authorize_url
   end

@@ -1,5 +1,5 @@
 class PeopleController < ApplicationController
-  before_filter :authenticate
+  before_filter :authenticate, :except => :logout
   
   def confirm_device_for
     if (@person = Person.find(params[:id])) && (@device = Device.find(params[:device_id]))
@@ -18,9 +18,19 @@ class PeopleController < ApplicationController
   end
   
   def update
-    @person.update_attributes(params[:person])
+    pparams = params[:person]
+    if pparams[:password]
+      if pparams[:password]==pparams[:password_confirmation]
+        pparams[:password_hash] = Digest::MD5.hexdigest(pparams[:password])
+        [:password, :password_confirmation].each { |a| pparams.delete(a) }
+      else
+        flash.now[:notice] = "Password did not match!"
+        render :reset_password
+      end
+    end 
+    @person.update_attributes(pparams)
     flash.now[:notice] = "Updates saved!"
-    redirect_to root_path
+    redirect_to person_path
   end
   
   # member directory
@@ -40,7 +50,13 @@ class PeopleController < ApplicationController
     @person.destroy
     redirect_to people_path
   end
-    
+  
+  def email_password
+    PersonMailer.deliver_login_link(@person)
+    flash.now[:notice] = "Sent login link to #{@person.email}"
+    render 'show_public'
+  end
+  
   def authenticate
     if params[:id]
       @person = Person.find(params[:id])
@@ -51,8 +67,31 @@ class PeopleController < ApplicationController
           session[:person_id] = nil
           render :status => 404
         end
-      end      
+      end
+      
+      if params[:person] && params[:person][:password]
+        if Digest::MD5.hexdigest(params[:person][:password])==@person.password_hash
+          session[:person_id] = @person.id
+        else
+          session[:person_id] = nil
+        end
+      end
+      
     end
+  end
+  
+  def logout
+    session[:person_id] = nil
+    redirect_to people_path
+  end
+  
+  # Login as a particular user
+  def login
+    render :reset_password if session[:person_id]
+  end
+  
+  def confirm_login
+    redirect_to person_path(@person)
   end
   
 end
