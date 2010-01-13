@@ -106,11 +106,19 @@ class Person < ActiveRecord::Base
   end
 
   # flattens multiple device appearances in a given day to count as just one daily apperance
-  def daily_appearance_dates(month,year)
-    apps = appearances.find(:all,:conditions => ["MONTH(first_seen_at) = ? AND YEAR(first_seen_at) = ?",month,year],:group => "day_number")
-    apps.collect(&:first_seen_at)
+  def daily_appearance_dates(month = nil,year = nil)
+    daily_appearances(month,year).collect(&:first_seen_at)
   end
 
+  def daily_appearances(month = nil,year = nil)
+    cond = ["MONTH(first_seen_at) = ? AND YEAR(first_seen_at) = ?",month,year] if month && year
+    apps = appearances.find(:all,:conditions => cond,:group => "day_number")
+  end
+
+  def daily_appearances_by_month
+    daily_appearances.group_by { |a| Date.new(a.first_seen_at.year,a.first_seen_at.month) }
+  end
+  
   # returns an ordered hash with keys = week number, values = appearance dates in that week
   def daily_appearances_by_week(month,year)
     daily_appearance_dates(month,year).group_by { |a| a.strftime("%W") } # ruby doesn't have a "week number" function and I don't want to screw up writing my own
