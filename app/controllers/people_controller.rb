@@ -35,7 +35,8 @@ class PeopleController < ApplicationController
   
   # member directory
   def index
-    @people = Person.find(:all).sort { |a,b| b.days.size <=> a.days.size }
+    # TODO: cache sort on this
+    @people = Person.find(:all, :include => :devices) #.sort { |a,b| b.days.size <=> a.days.size }
   end
   
   def show
