@@ -6,5 +6,6 @@
   <p><%=link_to "#{@person.days.size} Days", person_show_path(:type => :activity) %></p>
   <p><%=link_to "#{@person.devices.size} Devices", person_show_path(:type => :devices) %></p>
   <!--<p><%=link_to pay_invoice_cue(@person), person_path(:type => :billing) %></p>-->
+  <p><%=link_to "Edit", edit_person_path %></p>
   <p><%=link_to "Log out", logout_path %></p>
 </div>

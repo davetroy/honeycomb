@@ -1,7 +1,7 @@
 <div id="form_panel">
   <h2 style='color: #black'>Devices for <%=@person.show_name%></h2>
   <%= render :partial => 'devices/device', :collection => @person.devices %>
-  <p>
+  <p style="clear:both">
   <%=link_to 'Back', person_path %>
   </p>
 </div>

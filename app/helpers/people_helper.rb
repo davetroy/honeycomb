@@ -7,9 +7,9 @@ module PeopleHelper
       month = date.month
       year = date.year
       concat("<div id='inner_panel'>")
-      concat("<h3 style='color:black'>#{date.strftime('%B %Y')}</h3>")
       appearances = groups[date] 
-      concat("<p>#{appearances.group_by { |a| a.day_number }.keys.size } appearances</p>")
+      day_count = appearances.group_by { |a| a.day_number }.keys.size
+      concat("<h3 style='color:black'>#{date.strftime('%B %Y')}: #{day_count} Days</h3>")
       concat("<ul>")
       
       person.daily_appearances_by_week(month,year).each do |week,appearances|

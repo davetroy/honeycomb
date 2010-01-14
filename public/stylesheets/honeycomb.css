@@ -43,7 +43,7 @@ div.appearance { background-color: white; border: 1px solid grey; margin: 10px; 
 	-moz-border-radius-bottomright: 10px; -webkit-border-bottom-right-radius: 10px;
 }
 
-div.appearance:hover { background-color: #eee;}
+div.appearance:hover { background-color: #eee; }
 
 #single_device_appearance { background-color: #eee; width: 700px; height: 200px; margin: 0px; padding: 10px;
 	-moz-border-radius-topleft: 10px; -webkit-border-top-left-radius: 10px;
@@ -61,7 +61,7 @@ div.appearance:hover { background-color: #eee;}
 }
 
 #inner_panel {
-	background-color: #eee; margin: 0px 0px 0px 20px; padding: 1px 20px 10px 20px;
+	background-color: #eee; margin: 0px 20px 15px 20px; padding: 1px 20px 10px 20px;
 	-moz-border-radius-topleft: 10px; -webkit-border-top-left-radius: 10px;
 	-moz-border-radius-topright: 10px; -webkit-border-top-right-radius: 10px;
 	-moz-border-radius-bottomleft: 10px; -webkit-border-bottom-left-radius: 10px;
