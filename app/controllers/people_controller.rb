@@ -18,6 +18,7 @@ class PeopleController < ApplicationController
   end
 
   def edit
+    redirect_to person_path(@person) if @person.id != session[:person_id]
   end
   
   def update
