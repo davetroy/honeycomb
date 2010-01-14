@@ -1,0 +1,12 @@
+<style type="text/css">
+<%= render :file=>"person_mailer/email.css" %>
+</style>
+
+Greetings!
+<p>
+<p>Please use this link to <%=link_to 'update your Beehive profile', login_person_url(@person, :key => @person.temporary_key)%>.
+</p>
+This link is good for today only!
+<p>
+You will first be prompted to update your password.
+</p>
