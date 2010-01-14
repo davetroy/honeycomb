@@ -6,8 +6,8 @@ module PeopleHelper
     by_month = groups.keys.sort.reverse_each do |date|
       month = date.month
       year = date.year
+      concat("<div id='inner_panel'>")
       concat("<h3 style='color:black'>#{date.strftime('%B %Y')}</h3>")
-      concat("<div>")
       appearances = groups[date] 
       concat("<p>#{appearances.group_by { |a| a.day_number }.keys.size } appearances</p>")
       concat("<ul>")
