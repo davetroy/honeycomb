@@ -2,9 +2,12 @@ class PeopleController < ApplicationController
   before_filter :authenticate, :except => :logout
   
   def confirm_device_for
-    if (@person = Person.find(params[:id])) && (@device = Device.find(params[:device_id]))
-      @device.update_attribute(:person_verified, true) if @device.person_id == @person.id
+    @device = Device.find(params[:device_id])
+    if @device && (@device.person_id == @person.id)
+      @device.update_attribute(:person_verified, true) 
       flash.now[:notice] = "Device #{@device.mac} has been claimed by #{@person.email}!"
+    else
+      flash.now[:notice] = "Error! Device has been claimed by another user!"
     end
     
     if @person.is_setup?

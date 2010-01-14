@@ -1,10 +1,58 @@
 <div id="form_panel">
-  <%=image_tag(url_for(@person.gravatar_url))%>
-  <p>Please enter your name so we can make a nice display.</p>
+  <%= render :partial => 'person' %>
+  <div id="member_profile" style="width:650px;">
+    <p>
+    <b>Please update your membership details.</b>
+    </p>
+    <p>
+    Your name and company information will appear in our member directory.
+    </p>
+    <% form_for @person, :html => {:method => :put} do |f| %>
+    <table>
+      <tr>
+        <td class="form_label">First Name:</td>
+        <td class="form_field"><%=f.text_field :first_name, :size => 20%> *</td>
+      </tr>
+      <tr>
+        <td class="form_label">Last Name:</td>
+        <td class="form_field"><%=f.text_field :last_name, :size => 20%> *</td>
+      </tr>
+      <tr>
+        <td class="form_label">Company Name:
+        <td class="form_field"><%=f.text_field :company_name, :size => 30%></td>
+      </tr>
+      <tr>
+        <td class="form_label">Web site:
+        <td class="form_field"><%=f.text_field :website, :size => 30%></td>
+      </tr>
+      <tr>
+        <td class="form_label">Phone Number:
+        <td class="form_field"><%=f.text_field :phone_number, :size => 20%></td>
+      </tr>
+      <tr>
+        <td class="form_label">Brief Bio:</td>
+        <td class="form_field"><%=f.text_area :profile, :columns => 45, :rows => 6%></td>
+      </tr>
+      <tr><td colspan=2><p><b>Beehive Baltimore Membership</b></p>
+        <p><%=f.radio_button :membership_plan, 1, :checked => true %>&nbsp;<b>Basic Member &ndash; $25.00/month</b><br/>
+        I'm helping to support the tech/startup community in Baltimore. Includes one day per month of time at the Hive, and additional days are $15 per day.
+        Because I'm part of the community, I'll be kept informed about cool events and news.</p>
 
-  <% form_for @person, :html => {:method => :put} do |f| %>
-    First Name: <%=f.text_field :first_name%><p/>
-    Last Name: <%=f.text_field :last_name%><p/>
-    <%=f.submit 'Finish'%>
-  <% end %>
+        <p><%=f.radio_button :membership_plan, 2 %>&nbsp;<b>Worker Bee &ndash; $175.00/month</b><br/>
+        I'm a pillar of the Baltimore tech/startup community. I may also spend up to three days per week at Beehive. Everyone will know my name, and I'm
+        in the loop on all the cool stuff that's going on.</p>
+
+        <p><%=f.radio_button :membership_plan, 3 %>&nbsp;<b>Beehive Resident &ndash; $275.00/month</b><br/>
+        I embody the Baltimore tech/arts/startup scene. I literally <b>live</b> at the Hive. (OK, except without a bed; we don't have insurance for that.)
+        There's nothing cool that goes on that I don't know about, and people seek me out for my knowledge of all things awesome. I have a full-time desk and
+        am there most days.</p>
+        
+        <p><%=f.radio_button :membership_plan, 0 %>&nbsp;<b>Drop In Only</b><br/>
+        While I can't support the scene with a regular membership at this time I plan to drop by from time-to-time.
+        I'll chip in $25/day when I do, but hey, it's something, right?
+        <center><%=f.submit 'Update'%></center>
+        </td></tr>
+    </table>
+    <% end %>
+  </div>
 </div>

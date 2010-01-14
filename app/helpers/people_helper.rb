@@ -7,7 +7,7 @@ module PeopleHelper
       month = date.month
       year = date.year
       concat("<h3 style='color:black'>#{date.strftime('%B %Y')}</h3>")
-      concat("<div id='form_panel'>")
+      concat("<div>")
       appearances = groups[date] 
       concat("<p>#{appearances.group_by { |a| a.day_number }.keys.size } appearances</p>")
       concat("<ul>")
@@ -20,8 +20,8 @@ module PeopleHelper
       concat("</ul>")
       
       plan = person.active_plan(month,year)
-      amount = person.compute_bill(month,year)
-      concat("<p>At the beginning of this month, you were on the #{plan.name} plan. You owe #{number_to_currency(amount)} for this month.</p>")
+      #amount = person.compute_bill(month,year)
+      #concat("<p>At the beginning of this month, you were on the #{plan.name} plan. You owe #{number_to_currency(amount)} for this month.</p>")
     
       concat("</div>")
     end
