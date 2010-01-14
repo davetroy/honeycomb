@@ -1,6 +1,6 @@
 <div id="form_panel" style="height:220px;padding:10px 0px 3px 10px">
   <%= render :partial => 'person' %>
-  <h2><%=@person.show_name%></h2>
+  <h1><%=@person.show_name%></h1>
   <% form_for @person, :url => confirm_login_path(@person), :html => {:method => :post} do |f| %>
     Password: <%=f.password_field :password%><p/>
     <%=f.submit 'Login'%>

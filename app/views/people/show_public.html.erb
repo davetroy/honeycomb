@@ -1,5 +1,5 @@
 <div id="form_panel">
-  <h2><%=image_tag(@person.image, :class => :left_heading)%>&nbsp;<%=@person.show_name%></h2>
+  <h1><%=image_tag(@person.image, :class => :left_heading)%>&nbsp;<%=@person.show_name%></h1>
   
   <h3>About <%=@person.show_name%></h3>
   <%=@person.profile || "#{@person.show_name} has not yet completed a public profile."%>

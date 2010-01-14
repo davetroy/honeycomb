@@ -6,9 +6,11 @@ a:link, a:visited{ color: #d90; text-decoration: none; font-weight: bold;}
 a:hover{ color: #f60; text-decoration: underline; }
 
 h1, h2, h3, h4, h5{ font-weight: bold;}
-h2, h3{ color: #dfa907; text-transform: uppercase; font-family: Calibri, Arial, Helvetica, sans-serif; line-height: 1em;}
-h1{ font-size: 300%; } 
-h2{ font-size: 300%; padding-top: .25em; }
+h1 { color: #555; text-transform: uppercase; font-family: Calibri, Arial, Helvetica, sans-serif; line-height: 1em;}
+h3{ color: #dfa907; text-transform: uppercase; font-family: Calibri, Arial, Helvetica, sans-serif; line-height: 1em;}
+
+h1{ font-size: 300%; }
+h2{ color: red; font-size: 150%; padding-top: .25em; }
 h3{ font-size: 150%; }
 h4{ font-size: 100%; }
 h5{ }
@@ -35,6 +37,9 @@ img {
 td.form_label { vertical-align: top; width:140px; }
 
 img.left_heading { vertical-align:middle; margin:0px 10px 0px 0px;}
+
+div.errorExplanation { background-color: #eee; padding:10px; }
+div.fieldWithErrors { border: 2px solid red;}
 
 div.appearance { background-color: white; border: 1px solid grey; margin: 10px; text-align: center; width: 150px; height: 150px; padding: 15px; float: left;
 	-moz-border-radius-topleft: 10px; -webkit-border-top-left-radius: 10px;

@@ -1,21 +1,24 @@
 <div id="form_panel">
   <%= render :partial => 'person' %>
   <div id="member_profile" style="width:650px;">
-    <p>
-    <b>Please update your membership details.</b>
-    </p>
-    <p>
-    Your name and company information will appear in our member directory.
-    </p>
     <% form_for @person, :html => {:method => :put} do |f| %>
     <table>
+      <tr><td colspan=2>
+        <p><b><%= error_messages_for 'person' %></b><br/>
+          <b>Please update your membership details.</b>
+          </p>
+          <p>
+          Your name and company information will appear in our member directory.
+        </td>
+      </tr>
+
       <tr>
         <td class="form_label">First Name:</td>
-        <td class="form_field"><%=f.text_field :first_name, :size => 20%> *</td>
+        <td class="form_field"><%=f.text_field :first_name, :size => 20%></td>
       </tr>
       <tr>
         <td class="form_label">Last Name:</td>
-        <td class="form_field"><%=f.text_field :last_name, :size => 20%> *</td>
+        <td class="form_field"><%=f.text_field :last_name, :size => 20%></td>
       </tr>
       <tr>
         <td class="form_label">Company Name:
@@ -49,7 +52,7 @@
         
         <p><%=f.radio_button :membership_plan, 0 %>&nbsp;<b>Drop In Only</b><br/>
         While I can't support the scene with a regular membership at this time I plan to drop by from time-to-time.
-        I'll chip in $25/day when I do, but hey, it's something, right?
+        I'll chip in $25/day when I do. Hey, it's something, right?
         <center><%=f.submit 'Update'%></center>
         </td></tr>
     </table>

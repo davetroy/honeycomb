@@ -22,19 +22,13 @@ class PeopleController < ApplicationController
   end
   
   def update
-    pparams = params[:person]
-    if pparams[:password]
-      if pparams[:password]==pparams[:password_confirmation]
-        pparams[:password_hash] = Digest::MD5.hexdigest(pparams[:password])
-        [:password, :password_confirmation].each { |a| pparams.delete(a) }
-      else
-        flash.now[:notice] = "Password did not match!"
-        render :reset_password
-      end
-    end 
-    @person.update_attributes(pparams)
-    flash.now[:notice] = "Updates saved!"
-    redirect_to person_path
+    store_password(params[:person])
+    if @person.update_attributes(params[:person])
+      flash[:notice] = 'Updates saved!'
+      redirect_to person_path
+    else
+      render :action => 'edit'
+    end
   end
   
   # member directory
@@ -98,5 +92,18 @@ class PeopleController < ApplicationController
   def confirm_login
     redirect_to person_path(@person)
   end
+  
+  private
+  def store_password(pparams)
+    return unless pparams[:password]
+    if pparams[:password]==pparams[:password_confirmation]
+      pparams[:password_hash] = Digest::MD5.hexdigest(pparams[:password])
+      [:password, :password_confirmation].each { |a| pparams.delete(a) }
+    else
+      flash.now[:notice] = "Password did not match!"
+      render :reset_password
+    end
+  end
+  
   
 end
