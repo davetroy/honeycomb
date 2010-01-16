@@ -2,8 +2,10 @@
 <%= render :file=>"person_mailer/email.css" %>
 </style>
 <div id="form_panel">
-Hi <%=@person.first_name%>,
-<p>We are off to a great 2010 at Beehive Baltimore, and several of us have been buzzing, making enhancements to our membership system.</p>
+<img src="http://twitter.com/account/profile_image/bhivebmore?hreflang=en"/>
+<p>
+Hi <%=@person.first_name%>,</p>
+<p>We are off to a great 2010 at Beehive Baltimore and several of us have been buzzing making enhancements to our membership system.</p>
 
 <p>As part of this process, we'd like to ask you to <%=link_to 'use this link', login_person_url(@person, :key => @person.temporary_key)%>
   to sign in and update your member profile information so we can include you in the upcoming member directory page,
@@ -15,10 +17,13 @@ Hi <%=@person.first_name%>,
 <p>See you around the Hive soon!
   </p>
   
-Best,
+Best,<p/>
 
 Dave Troy<br/>
 Organizer<br/>
 Beehive Baltimore
-
+<p>
+P.S. &ndash; If you have any trouble with the link above (which is time limited to one day), please
+<%=link_to 'use this link', email_password_person_url(@person, :key => @person.temporary_key)%>
+to get a new email with a link to change your password.
 </div>
