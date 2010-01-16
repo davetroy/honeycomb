@@ -1,12 +1,24 @@
 <style type="text/css">
 <%= render :file=>"person_mailer/email.css" %>
 </style>
+<div id="form_panel">
+Hi <%=@person.first_name%>,
+<p>We are off to a great 2010 at Beehive Baltimore, and several of us have been buzzing, making enhancements to our membership system.</p>
 
-Greetings!
-<p>
-<p>Please use this link to <%=link_to 'update your Beehive profile', login_person_url(@person, :key => @person.temporary_key)%>.
-</p>
-This link is good for today only!
-<p>
-You will first be prompted to update your password.
-</p>
+<p>As part of this process, we'd like to ask you to <%=link_to 'use this link', login_person_url(@person, :key => @person.temporary_key)%>
+  to sign in and update your member profile information so we can include you in the upcoming member directory page,
+  as well as enable new features like automatic Foursquare check-in integration and more.</p>
+
+<p>We are also adding integration with Paypal, and we will be in touch in the next day or two with details about that. In the meantime,
+  if you can please update your profile that will help out a lot.</p>
+  
+<p>See you around the Hive soon!
+  </p>
+  
+Best,
+
+Dave Troy<br/>
+Organizer<br/>
+Beehive Baltimore
+
+</div>

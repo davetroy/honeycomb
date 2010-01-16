@@ -10,7 +10,6 @@
 
   <%=link_to "#{@person.company_name || 'Website'}<br/>", @person.website if @person.website%>
   <%="Phone: #{@person.phone_number}<br/>" if @person.phone_number%>
-  <%=link_to "Contact #{@person.show_name}", person_show_path(:type => :contact) %>
   <p/>
   <%=link_to "Login", login_person_path %>
 </div>
