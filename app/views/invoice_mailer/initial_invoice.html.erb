@@ -1,0 +1,7 @@
+Hello <%= @person.show_name %>,
+
+According to our records, you have paid Beehive Baltimore <%= number_to_currency(@paid) %> out of <%= number_to_currency(@owed) %> owed.
+Your balance due is <%= number_to_currency(@due) %>.  You can pay this amount by visiting 
+<%= link_to("this link",new_payment_url(:person_id => @person.id, :amount => @due)) %>.  Thanks!
+
+-Beehive Baltimore

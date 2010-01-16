@@ -1,0 +1,3 @@
+InvoiceMailer#invoice
+
+Find me in app/views/invoice_mailer/invoice.erb

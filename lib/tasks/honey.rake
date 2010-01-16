@@ -8,8 +8,8 @@ namespace :honey do
         due = owed - paid
         if due > 0
           puts "Generating an invoice for #{person.show_name} for $#{due}"
-          person.invoices.create!(:amount => due)
-          # possibly send out email here?
+          invoice = person.invoices.create!(:amount => due)
+          InvoiceMailer.deliver_initial_invoice(person,owed,paid,due)
         else
           puts "#{person.show_name} does not owe any balance at this time (current balance $#{due})."
         end
