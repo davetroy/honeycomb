@@ -6,9 +6,11 @@ a:link, a:visited{ color: #d90; text-decoration: none; font-weight: bold;}
 a:hover{ color: #f60; text-decoration: underline; }
 
 h1, h2, h3, h4, h5{ font-weight: bold;}
-h2, h3{ color: #dfa907; text-transform: uppercase; font-family: Calibri, Arial, Helvetica, sans-serif; line-height: 1em;}
-h1{ font-size: 300%; } 
-h2{ font-size: 300%; padding-top: .25em; }
+h1 { color: #555; text-transform: uppercase; font-family: Calibri, Arial, Helvetica, sans-serif; line-height: 1em;}
+h3{ color: #dfa907; text-transform: uppercase; font-family: Calibri, Arial, Helvetica, sans-serif; line-height: 1em;}
+
+h1{ font-size: 300%; }
+h2{ color: red; font-size: 150%; padding-top: .25em; }
 h3{ font-size: 150%; }
 h4{ font-size: 100%; }
 h5{ }
@@ -24,18 +26,49 @@ code{ font-family: monospace; }
 pre code{ line-height: 1.3em;}
 abbr, acronym{ border-bottom: 1px dotted #333;}
 
-div.appearance { background-color: white; border: 1px solid grey; margin: 10px; text-align: center; width: 150px; height: 150px; float: left; padding: 15px;
+img {
+	border: 0px;
+	-moz-border-radius-topleft: 4px; -webkit-border-top-left-radius: 4px;
+	-moz-border-radius-topright: 4px; -webkit-border-top-right-radius: 4px;
+	-moz-border-radius-bottomleft: 4px; -webkit-border-bottom-left-radius: 4px;
+	-moz-border-radius-bottomright: 4px; -webkit-border-bottom-right-radius: 4px;
+}
+
+td.form_label { vertical-align: top; width:140px; }
+
+img.left_heading { vertical-align:middle; margin:0px 10px 0px 0px;}
+
+div.errorExplanation { background-color: #eee; padding:10px; }
+div.fieldWithErrors { border: 2px solid red;}
+
+div.appearance { background-color: white; border: 1px solid grey; margin: 10px; text-align: center; width: 150px; height: 150px; padding: 15px; float: left;
 	-moz-border-radius-topleft: 10px; -webkit-border-top-left-radius: 10px;
 	-moz-border-radius-topright: 10px; -webkit-border-top-right-radius: 10px;
 	-moz-border-radius-bottomleft: 10px; -webkit-border-bottom-left-radius: 10px;
 	-moz-border-radius-bottomright: 10px; -webkit-border-bottom-right-radius: 10px;
 }
 
-div.appearance:hover { background-color: #eee;}
+div.appearance:hover { background-color: #eee; }
 
 #single_device_appearance { background-color: #eee; width: 700px; height: 200px; margin: 0px; padding: 10px;
 	-moz-border-radius-topleft: 10px; -webkit-border-top-left-radius: 10px;
 	-moz-border-radius-topright: 10px; -webkit-border-top-right-radius: 10px;
 	-moz-border-radius-bottomleft: 10px; -webkit-border-bottom-left-radius: 10px;
 	-moz-border-radius-bottomright: 10px; -webkit-border-bottom-right-radius: 10px;
+}
+
+#form_panel {
+	background-color: white; width: 700px; margin: 0px 0px 0px 20px; padding: 1px 20px 10px 20px;
+	-moz-border-radius-topleft: 10px; -webkit-border-top-left-radius: 10px;
+	-moz-border-radius-topright: 10px; -webkit-border-top-right-radius: 10px;
+	-moz-border-radius-bottomleft: 10px; -webkit-border-bottom-left-radius: 10px;
+	-moz-border-radius-bottomright: 10px; -webkit-border-bottom-right-radius: 10px;	
+}
+
+#inner_panel {
+	background-color: #eee; margin: 0px 20px 15px 20px; padding: 1px 20px 10px 20px;
+	-moz-border-radius-topleft: 10px; -webkit-border-top-left-radius: 10px;
+	-moz-border-radius-topright: 10px; -webkit-border-top-right-radius: 10px;
+	-moz-border-radius-bottomleft: 10px; -webkit-border-bottom-left-radius: 10px;
+	-moz-border-radius-bottomright: 10px; -webkit-border-bottom-right-radius: 10px;	
 }
