@@ -1,11 +1,11 @@
 <div id="form_panel">
   <h1><%=image_tag(@person.image, :class => :left_heading)%>&nbsp;<%=@person.show_name%></h1>
   <p>Member since <%= @person.created_at.to_s(:short_date) %></p>
+  <p><%=link_to "Update Profile", edit_person_path %></p>
   <p><%=link_to @person.foursquare_user ? "Connected to Foursquare" : "Connect to Foursquare", oauth_connect_path(:action => :foursquare, :person_id => @person) %></p>
   <p><%=link_to @person.twitter_user ? "Connected to Twitter (@#{@person.twitter_user.username})" : "Connect to Twitter", oauth_connect_path(:action => :twitter, :person_id => @person) %></p>
   <p><%=link_to "#{@person.days.size} Days", person_show_path(:type => :activity) %></p>
   <p><%=link_to "#{@person.devices.size} Devices", person_show_path(:type => :devices) %></p>
   <!--<p><%=link_to pay_invoice_cue(@person), person_path(:type => :billing) %></p>-->
-  <p><%=link_to "Edit", edit_person_path %></p>
   <p><%=link_to "Log out", logout_path %></p>
 </div>
