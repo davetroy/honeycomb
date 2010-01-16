@@ -1,9 +1,11 @@
 <style type="text/css">
 <%= render :file=>"person_mailer/email.css" %>
 </style>
-<p><strong>Beware!</strong>
-  A Beehive Baltimore user, probably you, requested that an email be sent to <%=@person.email%> so you can reset your password.
-</p>
-<p>Well, <%=link_to 'here it is.', login_person_url(@person, :key => @person.temporary_key)%></p>
+<div id="form_panel">
+  <p><strong>Beware!</strong>
+    A Beehive Baltimore user, probably you, requested that an email be sent to <%=@person.email%> so you can reset your password.
+  </p>
+  <p>Well, <%=link_to 'here it is.', login_person_url(@person, :key => @person.temporary_key)%></p>
 
-<p>If you are still having trouble, you might consider asking another Beehive member for help.</p>
+  <p>If you are still having trouble, you might consider asking another Beehive member for help.</p>
+</div>
