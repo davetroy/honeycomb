@@ -23,7 +23,7 @@ class PersonMailer < ActionMailer::Base
   def update_profile(person)
     content_type "text/html"
     recipients  person.email
-    from        'Honeycomb <info@beehivebaltimore.org>'
+    from        'Dave Troy <davetroy@gmail.com>'
     subject     "[Beehive Baltimore] Welcome to 2010 - Please setup your profile"
     body        :person => person
   end
