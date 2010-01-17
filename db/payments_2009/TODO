@@ -1,0 +1,1 @@
+Set people.created_at date to be first payment date if earlier than already set

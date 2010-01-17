@@ -1,0 +1,9 @@
+insert into people (first_name,last_name,email) values ('Sean', 'Gallagher', 'packetrat@mac.com');
+insert into people (first_name,last_name,email) values ('Shawn', 'Theodore', 'payments@adjektiv.net');
+insert into people (first_name,last_name,email) values ('Patti', 'Chan', 'paypal@fizzel.net');
+insert into people (first_name,last_name,email) values ('Scott', 'Palmer', 'spalmer47@gmail.com');
+insert into people (first_name,last_name,email) values ('Zac', 'Gordon', 'hello@wideskydesigns.com');
+insert into people (first_name,last_name,email) values ('Bob', 'Blonchek', 'bblonchek@stravora.com');
+insert into people (first_name,last_name,email) values ('Plato', 'Hieronimus', 'business@thesellingwell.com');
+insert into people (first_name,last_name,email) values ('David', 'Beaudouin', 'david.beaudouin@gmail.com');	
+insert into people (first_name,last_name,email) values ('Mario', 'Armstrong', 'marioarmstrong@gmail.com');	
