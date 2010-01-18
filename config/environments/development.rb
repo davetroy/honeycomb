@@ -29,3 +29,8 @@ DHCP_LOG = File.dirname(__FILE__) + '/../../db/data/dhcplog.txt'
 config.after_initialize do
   ActiveMerchant::Billing::Base.mode = :test
 end
+
+ActionMailer::Base.smtp_settings = {
+  :address  => "127.0.0.1",
+  :port  => 2525
+}
