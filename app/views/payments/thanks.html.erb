@@ -1,0 +1,11 @@
+<h1>Thank you!</h1>
+
+<p>Your payment has been received by Beehive Baltimore.</p>
+
+<ul>
+  <li>Name: <%= @payment.person_show_name %></li>
+  <li>Amount: <%= number_to_currency(@payment.amount) %></li>
+  <li>Time: <%= @payment.created_at.to_s %></li>
+</ul>
+
+<p><%= link_to("Back to your profile page",person_path(@payment.person)) %>

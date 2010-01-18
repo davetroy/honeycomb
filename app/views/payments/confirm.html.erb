@@ -13,7 +13,7 @@
   </table>
 
   <%= f.label :amount, 'Amount' %>
-  <%= f.text_field :amount %>
+  <%= f.text_field :amount, :value => @payment.amount %>
   <%= hidden_field_tag :token, params[:token] %>
   <%= hidden_field_tag :payer_id, params[:PayerID] %>
   <%= submit_tag 'Complete Payment' %>
