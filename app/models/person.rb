@@ -45,8 +45,9 @@ class Person < ActiveRecord::Base
   
   validates_uniqueness_of :email, :allow_null => true
   validates_presence_of :email
-  validates_presence_of :first_name
-  validates_presence_of :last_name
+  # TODO: below needs fixed
+  # validates_presence_of :first_name
+  # validates_presence_of :last_name
   
 
   def balance_due

@@ -35,3 +35,9 @@ NMAP_COMMAND = '/usr/bin/nmap'
 
 DHCP_LOG = '/var/log/messages'
 PAYPAL_CREDS = {} # YAML.load("/path/to/paypalcreds")
+
+ActionMailer::Base.smtp_settings = {
+  :address  => "66.159.72.207",
+  :port  => 25,
+	:domain => 'popvox.com'
+}

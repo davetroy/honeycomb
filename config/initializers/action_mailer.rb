@@ -1,5 +1,4 @@
 ActionMailer::Base.smtp_settings = {
-  :address  => "66.159.72.207",
-  :port  => 25,
-	:domain => 'popvox.com'
+  :address  => "127.0.0.1",
+  :port  => 2525
 }
