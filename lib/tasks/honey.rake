@@ -2,6 +2,7 @@ namespace :honey do
   namespace :billing do
     desc "Generate invoices for the first time"
     task :initial => :environment do
+      sent = 0
       Person.find_each do |person|
         owed = person.owed_payments
         paid = person.payments.total
@@ -10,9 +11,11 @@ namespace :honey do
           puts "Generating an invoice for #{person.show_name} for $#{due}"
           invoice = person.invoices.create!(:amount => due)
           InvoiceMailer.deliver_initial_invoice(person,owed,paid,due)
+          sent += 1
         else
           puts "#{person.show_name} does not owe any balance at this time (current balance $#{due})."
         end
+        break if sent==5
       end
     end
   end

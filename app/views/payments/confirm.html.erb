@@ -1,20 +1,22 @@
-<h1>Please Confirm Your Payment Details</h1>
+<div id="form_panel">
+  <h1>Please Confirm Your Payment Details</h1>
 
-<% form_for :payment, :url => complete_payment_path(@payment) do |f| %>
-  <table>
-    <tr><td>Name</td><td><%= @address['name'] %></td></tr>
-    <tr><td>Company</td><td><%= @address['company'] %></td></tr>
-    <tr><td>Address 1</td><td><%= @address['address1'] %></td></tr>
-    <tr><td>Address 2</td><td><%= @address['address2'] %></td></tr>
-    <tr><td>City</td><td><%= @address['city'] %></td></tr>
-    <tr><td>State</td><td><%= @address['state'] %></td></tr>
-    <tr><td>Country</td><td><%= @address['country'] %></td></tr>
-    <tr><td>Zip</td><td><%= @address['zip'] %></td></tr>
-  </table>
+  <% form_for :payment, :url => complete_payment_path(@payment) do |f| %>
+    <table>
+      <tr><td>Name</td><td><%= @address['name'] %></td></tr>
+      <tr><td>Company</td><td><%= @address['company'] %></td></tr>
+      <tr><td>Address 1</td><td><%= @address['address1'] %></td></tr>
+      <tr><td>Address 2</td><td><%= @address['address2'] %></td></tr>
+      <tr><td>City</td><td><%= @address['city'] %></td></tr>
+      <tr><td>State</td><td><%= @address['state'] %></td></tr>
+      <tr><td>Country</td><td><%= @address['country'] %></td></tr>
+      <tr><td>Zip</td><td><%= @address['zip'] %></td></tr>
+    </table>
 
-  <%= f.label :amount, 'Amount' %>
-  <%= f.text_field :amount, :value => @payment.amount %>
-  <%= hidden_field_tag :token, params[:token] %>
-  <%= hidden_field_tag :payer_id, params[:PayerID] %>
-  <%= submit_tag 'Complete Payment' %>
-<% end %>
+    <%= f.label :amount, 'Amount' %>
+    <%= f.text_field :amount, :value => @payment.amount %>
+    <%= hidden_field_tag :token, params[:token] %>
+    <%= hidden_field_tag :payer_id, params[:PayerID] %>
+    <%= submit_tag 'Complete Payment' %>
+  <% end %>
+</div>
