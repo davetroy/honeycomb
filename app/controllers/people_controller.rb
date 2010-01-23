@@ -10,7 +10,7 @@ class PeopleController < ApplicationController
       flash.now[:notice] = "Device has been claimed by another user!"
     end
     
-    redirect_to @person.is_setup? root_path : edit_person_path(@person, :key => @person.temporary_key)
+    redirect_to @person.is_setup? ? root_path : edit_person_path(@person, :key => @person.temporary_key)
   end
 
   def edit
