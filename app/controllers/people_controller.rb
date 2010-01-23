@@ -1,6 +1,6 @@
 class PeopleController < ApplicationController
-  before_filter :authenticate, :except => :logout
-  
+  before_filter :load_person
+
   def confirm_device_for
     @device = Device.find(params[:device_id])
     if @device && (@device.person_id == @person.id)
@@ -56,29 +56,6 @@ class PeopleController < ApplicationController
     render 'show_public'
   end
   
-  def authenticate
-    if params[:id]
-      @person = Person.find(params[:id])
-      if params[:key]
-        if params[:key] == @person.temporary_key
-          session[:person_id] = @person.id
-        else
-          session[:person_id] = nil
-          render :status => 404
-        end
-      end
-      
-      if params[:person] && params[:person][:password]
-        if Digest::MD5.hexdigest(params[:person][:password])==@person.password_hash
-          session[:person_id] = @person.id
-        else
-          session[:person_id] = nil
-        end
-      end
-      
-    end
-  end
-  
   def logout
     session[:person_id] = nil
     redirect_to people_path
@@ -90,10 +67,15 @@ class PeopleController < ApplicationController
   end
   
   def confirm_login
+    authenticate_person
     redirect_to person_path(@person)
   end
   
   private
+  def load_person
+    @person = Person.find(params[:id]) if params[:id]
+  end
+  
   def store_password(pparams)
     return unless pparams[:password]
     if pparams[:password]==pparams[:password_confirmation]

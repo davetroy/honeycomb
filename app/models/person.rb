@@ -9,6 +9,8 @@ class Person < ActiveRecord::Base
   attr :password
   attr :password_confirmation
 
+  %w(foursquare twitter facebook).each { |site| has_one "#{site}_user".to_sym }
+
   has_many :memberships, :order => "start_date ASC" do
     # return the membership active at the beginning of the current month, or of the month specified 
     def active_in_month(month = nil,year = nil)
@@ -39,8 +41,6 @@ class Person < ActiveRecord::Base
       sum('amount').to_f / 100
     end
   end
-  
-  %w(foursquare twitter facebook).each { |site| has_one "#{site}_user".to_sym }
   
   validates_uniqueness_of :email, :allow_null => true
   validates_presence_of :email

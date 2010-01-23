@@ -15,7 +15,7 @@ class FbConnectController < ApplicationController
       if facebook_user
         if user = FacebookUser.find_by_fb_uid(facebook_user.uid)
           login_user(user)
-          return redirect_to('/')
+          return redirect_to '/'
         end
 
         # not a linked user, try to match a user record by email_hash
