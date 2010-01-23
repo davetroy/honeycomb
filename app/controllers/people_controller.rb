@@ -7,14 +7,10 @@ class PeopleController < ApplicationController
       @device.update_attribute(:person_verified, true) 
       flash.now[:notice] = "Device #{@device.mac} has been claimed by #{@person.email}!"
     else
-      flash.now[:notice] = "Error! Device has been claimed by another user!"
+      flash.now[:notice] = "Device has been claimed by another user!"
     end
     
-    if @person.is_setup?
-      redirect_to root_path
-    else
-      redirect_to edit_person_path(@person, :key => @person.temporary_key)
-    end
+    redirect_to @person.is_setup? root_path : edit_person_path(@person, :key => @person.temporary_key)
   end
 
   def edit
@@ -45,10 +41,10 @@ class PeopleController < ApplicationController
     end
   end
     
-  def destroy
-    @person.destroy
-    redirect_to people_path
-  end
+  # def destroy
+  #   @person.destroy
+  #   redirect_to people_path
+  # end
   
   def email_password
     PersonMailer.deliver_login_link(@person)

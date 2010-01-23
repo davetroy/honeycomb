@@ -33,14 +33,14 @@ class FbConnectController < ApplicationController
 
     # facebook quite often craps out and gives us no data
     rescue Curl::Err::GotNothingError => e
-      return redirect_to(:action => 'authenticate')
+      return render :text => 'Got nothing from FB!' # redirect_to(:action => 'authenticate')
 
     # it seems sometimes facebook gives us a useless auth token, so retry
     rescue Facebooker::Session::MissingOrInvalidParameter => e
-      return redirect_to(:action => 'authenticate')
+      return render :text => 'Got bad token!' # redirect_to(:action => 'authenticate')
     end
 
-    render(:nothing => true)
+    render :text => 'Connect failed!'  # (:nothing => true)
   end
 
   # callbacks, no session
