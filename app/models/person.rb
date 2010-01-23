@@ -144,7 +144,7 @@ class Person < ActiveRecord::Base
   def compute_bill(month,year)
     # plan = active_plan(month,year)
     # plan ? active_plan(month,year).compute_bill(monthly_appearances,excess_weekly_appearances) : -1.0
-    active_plan(month,year).compute_bill(daily_appearance_dates(month,year))  
+    active_plan(month,year).compute_bill(daily_appearance_dates(month,year))  || 0
   end
     
   def first_seen_at

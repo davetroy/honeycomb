@@ -4,13 +4,14 @@ namespace :honey do
     task :initial => :environment do
       sent = 0
       Person.find_each do |person|
+        next if person.invoices.any?
         owed = person.owed_payments
         paid = person.payments.total
         due = owed - paid
         if due > 0
           puts "Generating an invoice for #{person.show_name} for $#{due}"
-          invoice = person.invoices.create!(:amount => due)
-          InvoiceMailer.deliver_initial_invoice(person,owed,paid,due)
+          #invoice = person.invoices.create!(:amount => due)
+          #InvoiceMailer.deliver_initial_invoice(person,owed,paid,due)
           sent += 1
         else
           puts "#{person.show_name} does not owe any balance at this time (current balance $#{due})."
