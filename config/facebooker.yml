@@ -7,24 +7,25 @@
 # This should only be necessary until the final version of the new profile is released.
 
 development:
-  api_key: 372a309c5a14dd1078e7ea91efdae4cb
-  secret_key: 825480bb6d7bddca01ca17286d35dcf6
+  api_key: a5680962b896d9cd0aa8672243848f9c
+  secret_key: d524ea0e22b900fc609683c75234c7d7
   canvas_page_name: trr
   callback_url: 
   pretty_errors: true
   set_asset_host_to_callback_url: false
 
 test:
-  api_key: 372a309c5a14dd1078e7ea91efdae4cb
-  secret_key: 825480bb6d7bddca01ca17286d35dcf6
+  api_key: a5680962b896d9cd0aa8672243848f9c
+  secret_key: d524ea0e22b900fc609683c75234c7d7
   canvas_page_name: trr
   callback_url:
 
 production:
-  api_key: 372a309c5a14dd1078e7ea91efdae4cb
-  secret_key: 825480bb6d7bddca01ca17286d35dcf6
+  api_key: a5680962b896d9cd0aa8672243848f9c
+  secret_key: d524ea0e22b900fc609683c75234c7d7
   canvas_page_name: 
   callback_url:
   pretty_errors: true
   set_asset_host_to_callback_url: false
+  
     
