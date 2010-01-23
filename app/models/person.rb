@@ -40,8 +40,7 @@ class Person < ActiveRecord::Base
     end
   end
   
-  has_one :foursquare_user
-  has_one :twitter_user
+  %w(foursquare twitter facebook).each { |site| has_one "#{site}_user".to_sym }
   
   validates_uniqueness_of :email, :allow_null => true
   validates_presence_of :email
