@@ -9,7 +9,6 @@
      <% else %>
       <%=render :partial => '/shared/fbconnect_button'%>
      <% end %>
-  <p><%=link_to @person.facebook_user.fb_uid ? "Connected to Facebook" : "Connect to Facebook",  %></p>
   <p><%=link_to "#{@person.days.size} Days", person_show_path(:type => :activity) %></p>
   <p><%=link_to "#{@person.devices.size} Devices", person_show_path(:type => :devices) %></p>
   <p><%=link_to "Your Account", person_path(:type => :billing) %></p>
