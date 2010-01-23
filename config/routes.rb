@@ -10,6 +10,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :people, :member => { :confirm_device_for => :get, :login => :get, :email_password => :get }
   map.person_show 'people/:id/:type', :controller => 'people', :action => 'show'
     
-  map.oauth_connect 'oauth/:action', :controller => "oauth"
-  map.oauth 'oauth/:action', :controller => "oauth"
+  map.oauth_connect 'oauth/:action', :controller => 'oauth'
+  map.fb_connect '/fb/:action', :controller => 'fb_connect'
+  
 end
