@@ -4,7 +4,11 @@
   <p><%=link_to "Update Profile", edit_person_path %></p>
   <p><%=link_to @person.foursquare_user ? "Connected to Foursquare" : "Connect to Foursquare", oauth_connect_path(:action => :foursquare, :person_id => @person) %></p>
   <p><%=link_to @person.twitter_user ? "Connected to Twitter (@#{@person.twitter_user.username})" : "Connect to Twitter", oauth_connect_path(:action => :twitter, :person_id => @person) %></p>
-  <p><%=@person.facebook_user && @person.facebook_user.fb_uid? ? "Connected to Facebook" : render :partial => '/shared/fbconnect_button' %>
+  <p><% if @person.facebook_user && @person.facebook_user.fb_uid %>
+      Connected to Facebook
+     <% else %>
+      <%=render :partial => '/shared/fbconnect_button'%>
+     <% end %>
   <p><%=link_to @person.facebook_user.fb_uid ? "Connected to Facebook" : "Connect to Facebook",  %></p>
   <p><%=link_to "#{@person.days.size} Days", person_show_path(:type => :activity) %></p>
   <p><%=link_to "#{@person.devices.size} Devices", person_show_path(:type => :devices) %></p>
