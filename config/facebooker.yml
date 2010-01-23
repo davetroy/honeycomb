@@ -21,7 +21,7 @@ test:
   callback_url:
 
 production:
-  api_key: 
-  secret_key: 
+  api_key: a5680962b896d9cd0aa8672243848f9c
+  secret_key: 1acf99b741192b2fc9564275f376ea3a
   canvas_page_name: 
   callback_url:  
