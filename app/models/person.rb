@@ -11,6 +11,8 @@ class Person < ActiveRecord::Base
 
   %w(foursquare twitter facebook).each { |site| has_one "#{site}_user".to_sym }
 
+  after_create :create_facebook_user
+
   has_many :memberships, :order => "start_date ASC" do
     # return the membership active at the beginning of the current month, or of the month specified 
     def active_in_month(month = nil,year = nil)
@@ -155,4 +157,12 @@ class Person < ActiveRecord::Base
     list = self.aliases.map { |a| a.email }
     list << self.email
   end
+    
+  def before_save
+    # re-register with facebook if email address changed
+    if !new_record? && email_changed?
+      self.facebook_user.register_with_facebook
+    end
+  end
+
 end
