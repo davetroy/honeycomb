@@ -2,9 +2,9 @@
   <h1><%=image_tag(@person.image, :class => :left_heading)%>&nbsp;<%=@person.show_name%></h1>
   <p>Member since <%= @person.created_at.to_s(:short_date) %></p>
   <p><%=link_to "Update Profile", edit_person_path %></p>
-  <p><%=link_to @person.foursquare_user ? "Connected to Foursquare (@#{@person.foursquare_user.name})" : "Connect to Foursquare", oauth_connect_path(:action => :foursquare, :person_id => @person) %></p>
-  <p><%=link_to @person.twitter_user ? "Connected to Twitter (@#{@person.twitter_user.username})" : "Connect to Twitter", oauth_connect_path(:action => :twitter, :person_id => @person) %></p>
-  <p><%=link_to @person.facebook_user.fb_uid ? "Connected to Facebook (#{@person.facebook_user.name})" : "Connect To Facebook", fb_connect_path(:action => :authenticate, :person_id => @person)%></p>
+  <p><%=link_to @person.foursquare_user ? "#{@person.foursquare_user.name} on Foursquare" : "Connect to Foursquare", oauth_connect_path(:action => :foursquare, :person_id => @person) %></p>
+  <p><%=link_to @person.twitter_user ? "@#{@person.twitter_user.username} on Twitter" : "Connect to Twitter", oauth_connect_path(:action => :twitter, :person_id => @person) %></p>
+  <p><%=link_to @person.facebook_user.fb_uid ? "#{@person.facebook_user.name} on Facebook" : "Connect To Facebook", fb_connect_path(:action => :authenticate, :person_id => @person)%></p>
   <p><%=link_to "#{@person.days.size} Days", person_show_path(:type => :activity) %></p>
   <p><%=link_to "#{@person.devices.size} Devices", person_show_path(:type => :devices) %></p>
   <p><%=link_to "Your Account", person_path(:type => :billing) %></p>
