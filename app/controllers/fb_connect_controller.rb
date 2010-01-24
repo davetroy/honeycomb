@@ -13,13 +13,12 @@ class FbConnectController < ApplicationController
     logger.debug "facebook session in connect: #{facebook_session.inspect}"
 
     raise unless facebook_user
-    p facebook_user
-    
+        
     user = FacebookUser.find_by_fb_uid(facebook_user.uid)
     facebook_user.email_hashes.find { |h| user = FacebookUser.find_by_email_hash(h) } unless user
 
     raise unless user
-    user.update_attribute(:fb_uid, facebook_user.uid)
+    user.update_attributes(:fb_uid => facebook_user.uid, :pic_square => facebook_user.pic_square, :name => facebook_user.name)
     login_user(user)
     redirect_to person_path(user.person)
 
