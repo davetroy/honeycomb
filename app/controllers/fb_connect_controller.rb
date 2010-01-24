@@ -14,8 +14,9 @@ class FbConnectController < ApplicationController
 
     raise unless facebook_user
         
-    user = FacebookUser.find_by_fb_uid(facebook_user.uid)
-    facebook_user.email_hashes.find { |h| user = FacebookUser.find_by_email_hash(h) } unless user
+    unless user = FacebookUser.find_by_fb_uid(facebook_user.uid)
+      facebook_user.email_hashes.find { |h| user = FacebookUser.find_by_email_hash(h) }
+    end
 
     raise unless user
     user.update_attributes(:fb_uid => facebook_user.uid, :pic_square => facebook_user.pic_square, :name => facebook_user.name)

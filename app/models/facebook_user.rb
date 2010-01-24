@@ -7,4 +7,7 @@ class FacebookUser < ActiveRecord::Base
     Facebooker::Session.create.post('facebook.connect.registerUsers', :accounts => [{:email_hash => self.email_hash, :account_id => self.id}].to_json)
   end
 
+  def publish_feed_story(params)
+    "facebook_publish_feed_story(#{RunPublisher.new_run_template_id}, #{params.to_json});"
+  end
 end
