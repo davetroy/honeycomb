@@ -17,16 +17,16 @@ class FbConnectController < ApplicationController
     
     user = FacebookUser.find_by_fb_uid(facebook_user.uid)
     facebook_user.email_hashes.find { |h| user = FacebookUser.find_by_email_hash(hash) } unless user
-    user.update_attribute(:fb_uid, facebook_user.uid) unless user.fb_uid==facebook_user.uid
 
     raise unless user
+    user.update_attribute(:fb_uid, facebook_user.uid)
     login_user(user)
     redirect_to person_path(user.person)
 
   rescue Facebooker::Session::MissingOrInvalidParameter => e
     render :text => 'Got bad token!'
-  rescue
-    render :text => 'Connect failed!'
+  # rescue
+  #   render :text => 'Connect failed!'
   end
 
   # callbacks, no session
