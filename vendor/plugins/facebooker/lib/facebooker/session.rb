@@ -155,6 +155,8 @@ module Facebooker
       optional_parameters << "&hide_checkbox=true" if options[:hide_checkbox]
       optional_parameters << "&canvas=true" if options[:canvas]
       optional_parameters << "&fbconnect=true" if options[:fbconnect]
+      optional_parameters << "&return_session=true" if options[:return_session]
+      optional_parameters << "&session_key_only=true" if options[:session_key_only]
       optional_parameters << "&req_perms=#{options[:req_perms]}" if options[:req_perms]
       optional_parameters.join
     end
@@ -206,7 +208,7 @@ module Facebooker
     def secure_with!(session_key, uid = nil, expires = nil, secret_from_session = nil)
       @session_key = session_key
       @uid = uid ? Integer(uid) : post('facebook.users.getLoggedInUser', :session_key => session_key)
-      @expires = Integer(expires)
+      @expires = expires ? Integer(expires) : 0
       @secret_from_session = secret_from_session
     end
 
@@ -239,9 +241,12 @@ module Facebooker
     def fql_query(query, format = 'XML')
       post('facebook.fql.query', :query => query, :format => format) do |response|
         type = response.shift
-        return [] if type.nil?
-        response.shift.map do |hash|
-          fql_build_object(type, hash)
+        if type.nil?
+          []
+        else
+          response.shift.map do |hash|
+            fql_build_object(type, hash)
+          end
         end
       end
     end
@@ -285,10 +290,33 @@ module Facebooker
       end
     end
 
-    # Creates an event with the event_info hash and an optional Net::HTTP::MultipartPostFile for the event picture
+    # Creates an event with the event_info hash and an optional Net::HTTP::MultipartPostFile for the event picture.
+    # If ActiveSupport::TimeWithZone is installed (it's in Rails > 2.1), and start_time or end_time are given as
+    # ActiveSupport::TimeWithZone, then they will be assumed to represent local time for the event. They will automatically be
+    # converted to the expected timezone for Facebook, which is PST or PDT depending on when the event occurs.
     # Returns the eid of the newly created event
     # http://wiki.developers.facebook.com/index.php/Events.create
     def create_event(event_info, multipart_post_file = nil)
+      if defined?(ActiveSupport::TimeWithZone) && defined?(ActiveSupport::TimeZone)
+        # Facebook expects all event local times to be in Pacific Time, so we need to take the actual local time and 
+        # send it to Facebook as if it were Pacific Time converted to Unix epoch timestamp. Very confusing...
+        facebook_time = ActiveSupport::TimeZone["Pacific Time (US & Canada)"]
+        
+        start_time = event_info.delete(:start_time) || event_info.delete('start_time')
+        if start_time && start_time.is_a?(ActiveSupport::TimeWithZone)
+          event_info['start_time'] = facebook_time.parse(start_time.strftime("%Y-%m-%d %H:%M:%S")).to_i
+        else
+          event_info['start_time'] = start_time
+        end
+        
+        end_time = event_info.delete(:end_time) || event_info.delete('end_time')
+        if end_time && end_time.is_a?(ActiveSupport::TimeWithZone)
+          event_info['end_time'] = facebook_time.parse(end_time.strftime("%Y-%m-%d %H:%M:%S")).to_i
+        else
+          event_info['end_time'] = end_time
+        end
+      end
+      
       post_file('facebook.events.create', :event_info => event_info.to_json, nil => multipart_post_file)
     end
     
@@ -681,6 +709,7 @@ module Facebooker
       end
 
       def signature_for(params)
+        params.delete_if { |k,v| v.nil? }
         raw_string = params.inject([]) do |collection, pair|
           collection << pair.map { |x|
             Array === x ? Facebooker.json_encode(x) : x

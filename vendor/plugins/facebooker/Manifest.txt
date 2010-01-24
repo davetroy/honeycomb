@@ -47,6 +47,7 @@ lib/facebooker.rb
 lib/facebooker/adapters/adapter_base.rb
 lib/facebooker/adapters/bebo_adapter.rb
 lib/facebooker/adapters/facebook_adapter.rb
+lib/facebooker/attachment.rb
 lib/facebooker/admin.rb
 lib/facebooker/application.rb
 lib/facebooker/batch_request.rb
@@ -94,6 +95,7 @@ lib/facebooker/rails/facebook_url_helper.rb
 lib/facebooker/rails/facebook_url_rewriting.rb
 lib/facebooker/rails/helpers.rb
 lib/facebooker/rails/helpers/fb_connect.rb
+lib/facebooker/rails/helpers/stream_publish.rb
 lib/facebooker/rails/integration_session.rb
 lib/facebooker/rails/profile_publisher_extensions.rb
 lib/facebooker/rails/publisher.rb
@@ -108,10 +110,13 @@ lib/facebooker/service/net_http_service.rb
 lib/facebooker/service/typhoeus_service.rb
 lib/facebooker/service/typhoeus_multi_service.rb
 lib/facebooker/session.rb
+lib/facebooker/stream_post.rb
 lib/facebooker/version.rb
 lib/net/http_multipart_post.rb
 lib/rack/facebook.rb
+lib/rack/facebook_session.rb
 lib/tasks/facebooker.rake
+lib/tasks/facebooker.rb
 lib/tasks/tunnel.rake
 rails/init.rb
 setup.rb
@@ -119,6 +124,7 @@ templates/layout.erb
 test/facebooker/adapters_test.rb
 test/facebooker/admin_test.rb
 test/facebooker/application_test.rb
+test/facebooker/attachment_test.rb
 test/facebooker/batch_request_test.rb
 test/facebooker/data_test.rb
 test/facebooker/logging_test.rb
@@ -139,5 +145,6 @@ test/fixtures/multipart_post_body_with_single_file.txt
 test/fixtures/multipart_post_body_with_single_file_that_has_nil_key.txt
 test/net/http_multipart_post_test.rb
 test/rack/facebook_test.rb
+test/rack/facebook_session_test.rb
 test/rails_test_helper.rb
 test/test_helper.rb

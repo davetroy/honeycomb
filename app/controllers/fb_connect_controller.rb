@@ -20,10 +20,10 @@ class FbConnectController < ApplicationController
 
         # not a linked user, try to match a user record by email_hash
         facebook_user.email_hashes.each do |hash|
-          if user = User.find_by_email_hash(hash)
+          if user = FacebookUser.find_by_email_hash(hash)
             user.update_attribute(:fb_uid, facebook_user.uid)
             login_user(user)
-            return redirect_to('/')
+            return redirect_to person_path(user.person)
           end
         end
         
