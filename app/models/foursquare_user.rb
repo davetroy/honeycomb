@@ -26,12 +26,20 @@ class FoursquareUser < ActiveRecord::Base
     AUTH.get_request_token
   end
   
+  def name
+    "#{firstname} #{lastname}"
+  end
+  
   # Use request token info from session to get an access token, then store that info
   def update_access_token(token_info)
     request_token = OAuth::RequestToken.new(AUTH, token_info[:token], token_info[:secret])
     atoken = request_token.get_access_token
     update_attributes(:token => atoken.token, :secret => atoken.secret)
-    user = self.get_user
+    sync
+  end
+
+  def sync
+    user = get_user
     update_attributes(:firstname => user['firstname'], :lastname => user['lastname'], :photo => user['photo'])
   end
   
