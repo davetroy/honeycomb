@@ -42,6 +42,6 @@ class FoursquareUser < ActiveRecord::Base
   end
 
   def get_user
-    get("http://api.foursquare.com/v1/user.json")
+    get("http://api.foursquare.com/v1/user.json")['user']
   end
 end
