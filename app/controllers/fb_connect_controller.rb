@@ -1,6 +1,7 @@
 class FbConnectController < ApplicationController
 
   def authenticate
+    @user.facebook_user || @user.create_facebook_user
     @facebook_session = Facebooker::Session.create(Facebooker.api_key, Facebooker.secret_key)
     logger.debug "facebook session in authenticate: #{facebook_session.inspect}"
     redirect_to @facebook_session.login_url
@@ -15,20 +16,17 @@ class FbConnectController < ApplicationController
       if facebook_user
         if user = FacebookUser.find_by_fb_uid(facebook_user.uid)
           login_user(user)
-          return redirect_to '/'
+          return redirect_to person_path(user.person)
         end
 
         # not a linked user, try to match a user record by email_hash
-        facebook_user.email_hashes.each do |hash|
+        facebook_user.email_hashes.find do |hash|
           if user = FacebookUser.find_by_email_hash(hash)
             user.update_attribute(:fb_uid, facebook_user.uid)
             login_user(user)
             return redirect_to person_path(user.person)
           end
         end
-        
-        # joining facebook user, send to fill in username/email
-        return redirect_to(:controller => 'login', :action => 'register', :fb_user => 1)
       end
 
     # it seems sometimes facebook gives us a useless auth token, so retry

@@ -14,28 +14,32 @@ class ApplicationController < ActionController::Base
   def load_current_user
     @user = Person.find(session[:person_id]) if session[:person_id]
   end
+
+  def login_user(person)
+    session[:person_id] = person.id
+    @user = person
+  end
   
   def logout_user
     session[:person_id] = nil
     session[:facebook_session] = nil
-  end
+    @user = nil
+  end  
   
-  def authenticate_person
+  def authenticate(person)
     if params[:key]
-      if params[:key] == @person.temporary_key
-        session[:person_id] = @person.id
-        load_current_user
+      if params[:key] == person.temporary_key
+        login_user(person)
       else
-        session[:person_id] = nil
-        render :status => 404
+        logout_user
       end
     end
     
     if params[:person] && params[:person][:password]
-      if Digest::MD5.hexdigest(params[:person][:password])==@person.password_hash
-        session[:person_id] = @person.id
+      if Digest::MD5.hexdigest(params[:person][:password])==person.password_hash
+        login_user(person)
       else
-        session[:person_id] = nil
+        logout_user
       end
     end      
   end

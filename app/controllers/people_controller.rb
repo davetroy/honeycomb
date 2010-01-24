@@ -63,7 +63,7 @@ class PeopleController < ApplicationController
   end
   
   def confirm_login
-    authenticate_person
+    authenticate(@person)
     redirect_to person_path(@person)
   end
   
