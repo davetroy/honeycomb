@@ -5,10 +5,10 @@ module OauthMethods
   end
 
   def get(url)
-    access_token.get(url)
+    JSON.parse(access_token.get(url).body)
   end
 
   def post(url)
-    access_token.post(url)
+    JSON.parse(access_token.post(url).body)
   end
 end

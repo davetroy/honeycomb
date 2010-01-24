@@ -31,6 +31,8 @@ class FoursquareUser < ActiveRecord::Base
     request_token = OAuth::RequestToken.new(AUTH, token_info[:token], token_info[:secret])
     atoken = request_token.get_access_token
     update_attributes(:token => atoken.token, :secret => atoken.secret)
+    user = self.get_user
+    update_attributes(:firstname => user['firstname'], :lastname => user['lastname'], :photo => user['photo'])
   end
   
   # Wrappers for foursquare API method calls
@@ -39,4 +41,7 @@ class FoursquareUser < ActiveRecord::Base
     update_attribute(:checked_in_at, Time.now)
   end
 
+  def get_user
+    get("http://api.foursquare.com/v1/user")
+  end
 end

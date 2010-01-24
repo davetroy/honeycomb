@@ -28,8 +28,7 @@ class TwitterUser < ActiveRecord::Base
   end
   
   def get_user
-    jsondata = get('http://twitter.com/account/verify_credentials.json').body
-    JSON.parse(jsondata)
+    get('http://twitter.com/account/verify_credentials.json')
   end
   
 end
