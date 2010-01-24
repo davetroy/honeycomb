@@ -39,6 +39,6 @@ production:
   api_key: a5680962b896d9cd0aa8672243848f9c
   secret_key: d524ea0e22b900fc609683c75234c7d7
   canvas_page_name: beehivebaltimore
-  callback_url: http://hive.beehivebaltimore.org/
+  callback_url: http://hive.beehivebaltimore.org/fb/connect/
   pretty_errors: true
   set_asset_host_to_callback_url: false
