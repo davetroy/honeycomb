@@ -21,7 +21,11 @@ class FbConnectController < ApplicationController
     raise unless user
     user.update_attributes(:fb_uid => facebook_user.uid, :pic_square => facebook_user.pic_square, :name => facebook_user.name)
     login_user(user)
-    redirect_to person_path(user.person)
+    if user.has_permission('status_update')
+      redirect_to person_path(user.person)
+    else
+      redirect_to FacebookUser.session.permission_url
+    end
 
   rescue Facebooker::Session::MissingOrInvalidParameter => e
     render :text => 'Got bad token!'
