@@ -24,8 +24,7 @@ class FbConnectController < ApplicationController
     if user.user.has_permission?(:publish_stream)
       redirect_to person_path(user.person)
     else
-      #redirect_to FacebookUser.session.permission_url(:publish_stream, :read_stream)
-      render :template => 'get_permissions'
+      redirect_to FacebookUser.session.permission_url(:publish_stream)
     end
 
   rescue Facebooker::Session::MissingOrInvalidParameter => e
