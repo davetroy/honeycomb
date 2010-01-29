@@ -21,10 +21,11 @@ class FbConnectController < ApplicationController
     raise unless user
     user.update_attributes(:fb_uid => facebook_user.uid, :pic_square => facebook_user.pic_square, :name => facebook_user.name)
     login_user(user)
-    if user.user.has_permission?('status_update')
+    if user.user.has_permissions?(:publish_stream, :read_stream)
       redirect_to person_path(user.person)
     else
-      redirect_to FacebookUser.session.permission_url('status_update')
+      #redirect_to FacebookUser.session.permission_url(:publish_stream, :read_stream)
+      render :template => 'get_permissions'
     end
 
   rescue Facebooker::Session::MissingOrInvalidParameter => e
@@ -33,15 +34,15 @@ class FbConnectController < ApplicationController
     render :text => 'Connect failed!'
   end
 
-  # callbacks, no session
+  # callback, no session
   def post_authorize
-    if linked_account_ids = params[:fb_sig_linked_account_ids].to_s.gsub(/\[|\]/,'').split(',')
-      linked_account_ids.each do |user_id|
-        if user = Person.find_by_id(user_id)
-          user.facebook_user.create!(:fb_uid => params[:fb_sig_user])
-        end
-      end
-    end
+    # if linked_account_ids = params[:fb_sig_linked_account_ids].to_s.gsub(/\[|\]/,'').split(',')
+    #   linked_account_ids.each do |user_id|
+    #     if user = Person.find_by_id(user_id)
+    #       user.facebook_user.create!(:fb_uid => params[:fb_sig_user])
+    #     end
+    #   end
+    # end
 
     render :nothing => true
   end
