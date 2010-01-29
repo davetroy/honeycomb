@@ -21,7 +21,7 @@ class FbConnectController < ApplicationController
     raise unless user
     user.update_attributes(:fb_uid => facebook_user.uid, :pic_square => facebook_user.pic_square, :name => facebook_user.name)
     login_user(user)
-    if user.has_permission?('status_update')
+    if user.user.has_permission?('status_update')
       redirect_to person_path(user.person)
     else
       redirect_to FacebookUser.session.permission_url('status_update')
