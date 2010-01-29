@@ -30,8 +30,8 @@ class FbConnectController < ApplicationController
 
   rescue Facebooker::Session::MissingOrInvalidParameter => e
     render :text => 'Got bad token!'
-  rescue => e
-    render :text => 'Connect failed!'
+  # rescue => e
+  #   render :text => 'Connect failed!'
   end
 
   # callback, no session
