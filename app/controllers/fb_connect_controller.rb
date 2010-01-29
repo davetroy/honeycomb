@@ -24,7 +24,7 @@ class FbConnectController < ApplicationController
     if user.has_permission('status_update')
       redirect_to person_path(user.person)
     else
-      redirect_to FacebookUser.session.permission_url
+      redirect_to FacebookUser.session.permission_url('status_update')
     end
 
   rescue Facebooker::Session::MissingOrInvalidParameter => e
