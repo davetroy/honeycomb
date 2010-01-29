@@ -10,4 +10,9 @@ class FacebookUser < ActiveRecord::Base
   def publish_feed_story(params)
     "facebook_publish_feed_story(#{RunPublisher.new_run_template_id}, #{params.to_json});"
   end
+  
+  def user
+    session = Facebooker::Session.create(Facebooker.api_key, Facebooker.secret_key)
+    Facebooker::User.new(self.fb_uid, session)
+  end
 end
