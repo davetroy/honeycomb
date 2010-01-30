@@ -2,6 +2,9 @@
 body{ font-family: 'Lucida Grande', Arial, Helvetica, Verdana,sans-serif; color: #333; font-size: 12px; background: #dfa907;} }
 p, td { line-height: 1.5em;}
 
+tr.even { background-color: #eef;}
+tr.odd { background-color: white;}
+
 a:link, a:visited{ color: #d90; text-decoration: none; font-weight: bold;}
 a:hover{ color: #f60; text-decoration: underline; }
 

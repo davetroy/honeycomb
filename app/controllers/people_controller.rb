@@ -33,6 +33,10 @@ class PeopleController < ApplicationController
     @people = Person.find(:all, :include => :devices) #.sort { |a,b| b.days.size <=> a.days.size }
   end
   
+  def members
+    @people = Person.all.select { |person| person.memberships && person.memberships.active_in_month }
+  end
+  
   def show
     if @person.id == session[:person_id]
       render params[:type] if params[:type]

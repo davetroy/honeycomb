@@ -7,7 +7,9 @@ ActionController::Routing::Routes.draw do |map|
   map.logout '/logout', :controller => :people, :action => :logout
   map.confirm_login '/confirm_login/:id', :controller => :people, :action => :confirm_login, :conditions => {:method => :post}
 
-  map.resources :people, :member => { :confirm_device_for => :get, :login => :get, :email_password => :get }
+  map.resources :people, :member => { :confirm_device_for => :get, :login => :get, :email_password => :get },
+                         :collection => { :members => :get }
+                         
   map.person_show 'people/:id/:type', :controller => 'people', :action => 'show'
     
   map.oauth_connect 'oauth/:action', :controller => 'oauth'

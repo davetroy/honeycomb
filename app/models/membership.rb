@@ -13,28 +13,12 @@ class Membership < ActiveRecord::Base
     self.start_date ||= Time.now
   end
 
-  def do_billing
-    base_date = billed_through || start_date
-    stop_date = end_date || Time.now
-    monthcount = 0
-    bill_date = base_date
-    while (bill_date <= stop_date)
-      invoices.create(:amount => plan.price, :created_at => bill_date)
-      monthcount += 1
-      bill_date = base_date + monthcount.month
-    end
-  end
-
   def invoice_appearance(a)
     p "billing appearance"
   end
   
-  def anniversary_day
-    self.start_date.day
-  end
-
-  def is_anniversary_day?
-    anniversary_day == Date.today.day
+  def date_range
+    "#{start_date.to_s(:short_date)} &ndash; #{(end_date || Time.now).to_s(:short_date)}"
   end
 
 end
