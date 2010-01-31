@@ -46,11 +46,6 @@ class Person < ActiveRecord::Base
   # validates_presence_of :first_name
   # validates_presence_of :last_name
   
-
-  def balance_due
-    memberships.total_due - payments.total
-  end
-  
   def gravatar_url(size=91)
     gravatar_hash = Digest::MD5.hexdigest(email)
     "http://www.gravatar.com/avatar/#{gravatar_hash}.jpg?s=#{size}"
@@ -70,6 +65,10 @@ class Person < ActiveRecord::Base
   
   def is_setup?
     !"#{first_name} #{last_name}".strip.blank?
+  end
+  
+  def total_due
+    memberships.any? ? memberships.total_due : (DAY_PRICE * days.size)
   end
   
   # Collapse from another person into us; good for duplicate records only

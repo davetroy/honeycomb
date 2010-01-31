@@ -1,16 +1,12 @@
 <table width="800px">
   <tr>
-    <th>Member</th>
+    <th>Name</th>
     <th>Owed</th>
     <th>Paid</th>
   </tr>
 <% @people.each do |person| %>
   <tr class="<%=cycle('even', 'odd')%>">
-    <td><%=person.show_name%><br/>
-      <% person.memberships.each do |m| %>
-        <%=m.plan.name%>, <%=format_date_range(m.date_range)%> (<%=m.id%>)<br/>
-      <% end %>
-      </td>
+    <td><%=person.show_name%></td>
     <td><%=number_to_currency(person.total_due)%></td>
     <td><%=number_to_currency(person.payments.total)%></td>
   </tr>

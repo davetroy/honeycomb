@@ -36,6 +36,10 @@ class PeopleController < ApplicationController
   def members
     @people = Person.all.select { |person| person.memberships.any? }
   end
+
+  def drop_ins
+    @people = Person.all.select { |person| person.memberships.none? }
+  end
   
   def show
     if @person.id == session[:person_id]

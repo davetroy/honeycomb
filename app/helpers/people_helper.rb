@@ -24,15 +24,4 @@ module PeopleHelper
     nil
   end
 
-  def pay_invoice_cue(person)
-    if person.balance_due > 0 && person.invoices.any?
-      amount = person.invoices.last.amount
-      text = <<-TEXT
-      Your most recent invoice was for #{number_to_currency(amount)}. 
-      #{link_to("Pay this invoice",new_payment_path(:amount => amount,:person_id => person.id))}
-      TEXT
-    else
-      "You do not owe a balance at this time."
-    end
-  end
 end
