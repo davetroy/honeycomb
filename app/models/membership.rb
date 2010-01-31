@@ -52,11 +52,12 @@ class Membership < ActiveRecord::Base
   end
 
   def deposit
-    end_date ? 0 : plan.deposit
+    self[:end_date] ? 0 : plan.deposit
   end
   
   def update_amount_due
-    self.update_attributes(:amount_due => (deposit + monthly_charges + day_charges)*100, :billed_through => end_date)
+    amount = deposit + monthly_charges + day_charges
+    self.update_attributes(:amount_due => amount*100, :billed_through => end_date)
   end
   
   def amount_due
