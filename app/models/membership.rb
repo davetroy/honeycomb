@@ -9,7 +9,7 @@ class Membership < ActiveRecord::Base
   named_scope :unbilled, lambda { { :conditions => ['(billed_through < ?) OR (billed_through IS NULL)', Time.now] } }
 
   def end_date
-    self[:end_date] || Time.now
+    self[:end_date] || Date.today
   end
   
   def date_range
@@ -55,13 +55,18 @@ class Membership < ActiveRecord::Base
     end_date ? 0 : plan.deposit
   end
   
+  def update_amount_due
+    self.update_attributes(:amount_due => deposit + monthly_charges + day_charges, :billed_through => end_date)
+  end
+      
   def amount_due
-     deposit + monthly_charges + day_charges
+    update_amount_due unless billed_through == end_date
+    self[:amount_due]
   end
 
   private
   def set_defaults
-    self.start_date ||= Time.now
+    self.start_date ||= Date.today
   end
 
 end

@@ -9,7 +9,7 @@
   <tr class="<%=cycle('even', 'odd')%>">
     <td><%=person.show_name%><br/>
       <% person.memberships.each do |m| %>
-        <%=m.plan.name%>, <%=display_date_range(m.date_range)%> (<%=m.id%>)<br/>
+        <%=m.plan.name%>, <%=format_date_range(m.date_range)%> (<%=m.id%>)<br/>
       <% end %>
       </td>
     <td><%=person.memberships.active_in_month.plan.name%></td>

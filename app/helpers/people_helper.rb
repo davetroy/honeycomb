@@ -1,8 +1,4 @@
 module PeopleHelper
-  
-  def display_date_range(r)
-    "#{r.first.to_s(:short_date)} &ndash; #{r.last.to_s(:short_date)}"
-  end
 
   def iterate_appearances_by_month(person)
     groups = person.daily_appearances_by_month
