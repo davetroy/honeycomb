@@ -34,7 +34,7 @@ class PeopleController < ApplicationController
   end
   
   def members
-    @people = Person.all.select { |person| person.memberships && person.memberships.active_in_month }
+    @people = Person.all.select { |person| person.memberships }
   end
   
   def show

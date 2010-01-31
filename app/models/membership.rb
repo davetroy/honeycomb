@@ -56,12 +56,12 @@ class Membership < ActiveRecord::Base
   end
   
   def update_amount_due
-    self.update_attributes(:amount_due => deposit + monthly_charges + day_charges, :billed_through => end_date)
+    self.update_attributes(:amount_due => (deposit + monthly_charges + day_charges)*100, :billed_through => end_date)
   end
-      
+  
   def amount_due
     update_amount_due unless billed_through == end_date
-    self[:amount_due]
+    self[:amount_due].to_f / 100
   end
 
   private
