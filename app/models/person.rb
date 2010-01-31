@@ -9,7 +9,7 @@ class Person < ActiveRecord::Base
   attr :password
   attr :password_confirmation
 
-  %w(foursquare twitter facebook).each { |site| has_one "#{site}_user".to_sym }
+  %w(foursquare twitter facebook).each { |site| has_one "#{site}_user" }
 
   after_create :create_facebook_user
 
@@ -22,23 +22,19 @@ class Person < ActiveRecord::Base
       date = Date.new(year,month,1)
       find(:first,:conditions => ["start_date <= ? AND (end_date IS NULL OR end_date >= ?)",date,date])
     end
+    
+    def total_due
+      all.inject(0) { |accum, m| accum += m.amount_due }
+    end
   end
   
   has_many :invoices do
-    def descending
-      find(:all,:order => 'created_at DESC')
-    end
-
     def total
       sum('amount').to_f / 100
     end
   end
 
   has_many :payments do
-    def descending
-      find(:all,:order => 'created_at DESC')
-    end
-    
     def total
       sum('amount').to_f / 100
     end
@@ -52,7 +48,7 @@ class Person < ActiveRecord::Base
   
 
   def balance_due
-    owed_payments - payments.total
+    memberships.total_due - payments.total
   end
   
   def gravatar_url(size=91)
@@ -72,24 +68,6 @@ class Person < ActiveRecord::Base
     namestring.blank? ? email : namestring
   end
   
-  def active_plan(month = nil,year = nil)
-    mem = memberships.active_in_month(month,year)
-    mem ? mem.plan : nil
-  end
-  
-  # calculate how much a user owes for all months prior to this one
-  def owed_payments
-    range = appearance_range
-    today = Date.today
-    range.delete([today.month,today.year])
-    owed = 0 
-    range.each do |month,year|
-      next unless active_plan(month,year) # skip the Beehive Baltimore user who has gaps
-      owed += compute_bill(month,year)
-    end
-    owed
-  end
-  
   def is_setup?
     !"#{first_name} #{last_name}".strip.blank?
   end
@@ -100,11 +78,6 @@ class Person < ActiveRecord::Base
     from_person.devices.each { |d| d.update_attribute(:person_id, self.id) }
     from_person.payments.each { |d| d.update_attribute(:person_id, self.id) }
     from_person.destroy
-  end
-  
-  def check_in
-    self.foursquare_user.check_in if self.foursquare_user
-    #self.twitter_user.check_in if self.twitter_user
   end
   
   def days
@@ -118,7 +91,7 @@ class Person < ActiveRecord::Base
 
   def daily_appearances(month = nil,year = nil)
     cond = ["MONTH(first_seen_at) = ? AND YEAR(first_seen_at) = ?",month,year] if month && year
-    apps = appearances.find(:all,:conditions => cond,:group => "day_number")
+    appearances.find(:all,:conditions => cond,:group => "day_number")
   end
 
   def daily_appearances_by_month
@@ -127,27 +100,9 @@ class Person < ActiveRecord::Base
   
   # returns an ordered hash with keys = week number, values = appearance dates in that week
   def daily_appearances_by_week(month,year)
-    daily_appearance_dates(month,year).group_by { |a| a.strftime("%W") } # ruby doesn't have a "week number" function and I don't want to screw up writing my own
+    daily_appearance_dates(month,year).group_by { |a| a.strftime("%W") }
   end
-
-  # returns an array of months for which the user has appearances, example: [[2009,10],[2009,11],[2010,1]]
-  def appearance_range
-    first = appearances.first && appearances.first.first_seen_at
-    last = appearances.last && appearances.last.first_seen_at
-    if first && last
-      range = (Date.civil(first.year,first.month)..(Date.civil(last.year,last.month)))
-      range.collect { |d| [d.month,d.year] }.uniq
-    else
-      []
-    end
-  end
-  
-  def compute_bill(month,year)
-    # plan = active_plan(month,year)
-    # plan ? active_plan(month,year).compute_bill(monthly_appearances,excess_weekly_appearances) : -1.0
-    active_plan(month,year).compute_bill(daily_appearance_dates(month,year))  || 0
-  end
-    
+      
   def first_seen_at
     appearances.first.first_seen_at unless appearances.empty?
   end
@@ -156,6 +111,11 @@ class Person < ActiveRecord::Base
   def payment_aliases
     list = self.aliases.map { |a| a.email }
     list << self.email
+  end
+  
+  def check_in
+    self.foursquare_user.check_in if self.foursquare_user
+    #self.twitter_user.check_in if self.twitter_user
   end
     
   def before_save

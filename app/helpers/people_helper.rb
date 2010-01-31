@@ -1,4 +1,8 @@
 module PeopleHelper
+  
+  def display_date_range(r)
+    "#{r.first.to_s(:short_date)} &ndash; #{r.last.to_s(:short_date)}"
+  end
 
   def iterate_appearances_by_month(person)
     groups = person.daily_appearances_by_month
@@ -18,11 +22,7 @@ module PeopleHelper
       end
     
       concat("</ul>")
-      
-      plan = person.active_plan(month,year)
-      #amount = person.compute_bill(month,year)
-      #concat("<p>At the beginning of this month, you were on the #{plan.name} plan. You owe #{number_to_currency(amount)} for this month.</p>")
-    
+          
       concat("</div>")
     end
     nil

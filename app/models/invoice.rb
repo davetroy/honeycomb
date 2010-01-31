@@ -8,6 +8,8 @@ class Invoice < ActiveRecord::Base
   # amount is stored in the database as an integer to avoid floating point issues,
   # so we have a getter and setter to normalize the amounts
   
+  named_scope :descending, :order => 'id DESC'
+    
   def amount
     read_attribute(:amount) / 100.0
   end

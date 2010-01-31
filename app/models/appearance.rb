@@ -7,7 +7,6 @@ class Appearance < ActiveRecord::Base
   attr_accessor :saw_at
   
   before_save :set_timefields
-  #after_save :record_billing
   
   after_create :update_external_sites
   
@@ -71,6 +70,6 @@ class Appearance < ActiveRecord::Base
   end
   
   def update_external_sites
-    device.person.check_in    # Will only happen for the first new appearance of the day
+    device.person.check_in if device.person.appearances.size==1
   end
 end
