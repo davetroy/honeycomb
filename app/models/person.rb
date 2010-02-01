@@ -71,6 +71,10 @@ class Person < ActiveRecord::Base
     !"#{first_name} #{last_name}".strip.blank?
   end
   
+  def total_owed
+    total_due - payments.total
+  end
+  
   def total_due
     memberships.any? ? memberships.total_due : (DAY_PRICE * days.size)
   end

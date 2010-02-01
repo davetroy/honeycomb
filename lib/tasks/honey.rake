@@ -1,22 +1,15 @@
 namespace :honey do
   namespace :billing do
-    desc "Generate invoices for the first time"
-    task :initial => :environment do
-      sent = 0
+    desc "Generate invoices"
+    task :generate => :environment do
       Person.find_each do |person|
-        next if person.invoices.any?
-        owed = person.owed_payments
-        paid = person.payments.total
-        due = owed - paid
-        if due > 0
+        if person.total_owed > 0
           puts "Generating an invoice for #{person.show_name} for $#{due}"
           #invoice = person.invoices.create!(:amount => due)
-          #InvoiceMailer.deliver_initial_invoice(person,owed,paid,due)
-          sent += 1
+          #InvoiceMailer.deliver_invoice(person)
         else
           puts "#{person.show_name} does not owe any balance at this time (current balance $#{due})."
         end
-        break if sent==5
       end
     end
   end
@@ -27,7 +20,7 @@ namespace :honey do
       Plan.find_or_create_by_name("Basic", :deposit => 25, :price => 25, :days_per_month => 1, :price_per_day => 15)
       Plan.find_or_create_by_name("Worker Bee", :deposit => 175, :price => 175, :days_per_week => 3, :price_per_day => 15)
       Plan.find_or_create_by_name("Resident (4 Day)", :deposit => 225, :price => 225, :days_per_week => 4, :price_per_day => 15)
-      Plan.find_or_create_by_name("Resident", :deposit => 275, :price => 275)
+      Plan.find_or_create_by_name("Resident", :deposit => 275, :days_per_week => 7, :price => 275)
     end
     
     task :payments => :environment do

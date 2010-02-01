@@ -48,11 +48,6 @@ class PeopleController < ApplicationController
       render 'show_public'
     end
   end
-    
-  # def destroy
-  #   @person.destroy
-  #   redirect_to people_path
-  # end
   
   def email_password
     PersonMailer.deliver_login_link(@person)
