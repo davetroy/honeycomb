@@ -18,14 +18,5 @@ namespace :honey do
       
     end
     
-    desc 'Publish Templates'
-    task :publish => :environment do
-      puts "Cleaning up any old templates ..."
-      Facebooker::Rails::Publisher::FacebookTemplate.destroy_all
-      puts "Done!"
-
-      FacebookPublisher.register_all_templates
-      puts "Finished registering all templates."
-    end
   end
 end
