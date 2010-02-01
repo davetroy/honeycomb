@@ -34,11 +34,11 @@ class PeopleController < ApplicationController
   end
   
   def members
-    @people = Person.all.select { |person| person.memberships.any? }
+    @people = Person.members
   end
 
   def drop_ins
-    @people = Person.all.select { |person| person.memberships.none? }
+    @people = Person.drop_ins
   end
   
   def show

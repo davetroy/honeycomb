@@ -2,11 +2,11 @@ namespace :honey do
   namespace :billing do
     desc "Generate invoices"
     task :generate => :environment do
-      Person.find_each do |person|
+      Person.members.each do |person|
         if person.total_owed > 0
           puts "Generating an invoice for #{person.show_name} for $#{due}"
-          #invoice = person.invoices.create!(:amount => due)
-          #InvoiceMailer.deliver_invoice(person)
+          invoice = person.invoices.create!(:amount => due)
+          InvoiceMailer.deliver_invoice(person)
         else
           puts "#{person.show_name} does not owe any balance at this time (current balance $#{due})."
         end

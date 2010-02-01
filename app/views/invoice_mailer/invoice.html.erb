@@ -10,15 +10,13 @@
 <p>
 Hi <%=@person.first_name%>,</p>
 
-<p>Your <%=Date.today.strftime('%B')%> invoice is now ready.</p>
-
-<p>Tour current balance is <%= number_to_currency(@owed)%>.</p>
+<p>Your <%=Date.today.strftime('%B, %Y')%> invoice is now ready! Your current balance is <%= number_to_currency(@owed)%>.</p>
 
 <p>Please pay this amount now by visiting <%= link_to("this link",new_payment_url(:person_id => @person, :amount => @owed)) %>.
 </p>
 
 <% if @owed>200 %>
-<p>If you don't think this amount is right, please reply to this email and we'll help sort it out.</p>
+<p>If you don't think this amount is correct, please reply to this email and we'll help sort it out.</p>
 <% end %>
 
 <p>Thanks for supporting community coworking in Baltimore, and we will see you around the Hive soon!</p>

@@ -13,6 +13,9 @@ class Person < ActiveRecord::Base
 
   after_create :create_facebook_user
 
+  named_scope :members, {:include => :memberships, :conditions => 'memberships.person_id IS NOT NULL'}
+  named_scope :drop_ins, {:include => :memberships, :conditions => 'memberships.person_id IS NULL'}
+
   has_many :memberships, :order => "start_date ASC" do
     # return the membership active at the beginning of the current month, or of the month specified 
     def active_in_month(month = nil,year = nil)
