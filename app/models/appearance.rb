@@ -70,6 +70,6 @@ class Appearance < ActiveRecord::Base
   end
   
   def update_external_sites
-    device.person.check_in if device.person.appearances.size==1
+    device.person.check_in if device.person && (device.person.appearances.size==1)
   end
 end
