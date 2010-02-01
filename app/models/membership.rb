@@ -5,9 +5,6 @@ class Membership < ActiveRecord::Base
 
   before_save :set_defaults
   
-  named_scope :active, lambda { { :conditions => ['start_date <= ? AND ((end_date IS NULL) OR (end_date > ?))', Time.now, Time.now] } }
-  named_scope :unbilled, lambda { { :conditions => ['(billed_through < ?) OR (billed_through IS NULL)', Time.now] } }
-
   def end_date
     self[:end_date] || Date.today
   end
@@ -30,12 +27,8 @@ class Membership < ActiveRecord::Base
     list
   end
 
-  def included_days_per_month
-    plan.days_per_month || (plan.days_per_week * 4.5).to_i
-  end
-
   def extra_days_in_month(m)
-    days = person.daily_appearances(m.month,m.year).size - included_days_per_month
+    days = person.daily_appearances(m.month,m.year).size - plan.included_days_per_month
     days > 0 ? days : 0
   end
 

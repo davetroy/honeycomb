@@ -6,8 +6,6 @@ class MembershipTest < ActiveSupport::TestCase
     dave = people(:dave)
     dave.memberships.create(:plan => plans(:worker), :start_date => '2/1/2009')
     assert_equal 1, dave.memberships.size
-    assert_equal 1, dave.memberships.active.size
-    assert_equal 1, dave.memberships.unbilled.size
   end
   
   test "Membership anniversary date is calculated correctly" do

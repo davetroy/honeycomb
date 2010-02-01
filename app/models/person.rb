@@ -38,6 +38,10 @@ class Person < ActiveRecord::Base
     def total
       sum('amount').to_f / 100
     end
+    
+    def issue_credit(amount, dt=Date.today)
+      create(:amount => amount, :created_at=>dt, :details => {:type => :credit})
+    end
   end
   
   validates_uniqueness_of :email, :allow_null => true
