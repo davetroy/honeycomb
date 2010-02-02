@@ -6,7 +6,7 @@ class Membership < ActiveRecord::Base
   before_save :set_defaults
   
   def end_date
-    self[:end_date] || Date.today
+    self[:end_date] || Date.today.to_time
   end
   
   def day_range
