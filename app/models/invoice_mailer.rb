@@ -9,8 +9,7 @@ class InvoiceMailer < ActionMailer::Base
     recipients person.email
     from       'billing@beehivebaltimore.org'
     sent_on    Time.now
-    
-    body       :person => person
+    body       :person => person, :owed => @person.total_owed
   end
 
 end

@@ -4,7 +4,7 @@
   <p>Your payment has been received by Beehive Baltimore.</p>
 
   <ul>
-    <li>Name: <%= @payment.person_show_name %></li>
+    <li>Name: <%= @payment.person.show_name %></li>
     <li>Amount: <%= number_to_currency(@payment.amount) %></li>
     <li>Time: <%= @payment.created_at.to_s %></li>
   </ul>
