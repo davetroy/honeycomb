@@ -8,6 +8,7 @@ class Payment < ActiveRecord::Base
   # amount is stored in the database as an integer to avoid floating point issues,
   # so we have a getter and setter to normalize the amounts
   named_scope :descending, :order => 'created_at DESC'
+  named_scope :completed, :conditions => "state='Complete'"
 
   def amount
     read_attribute(:amount) / 100.0

@@ -17,15 +17,6 @@ class Person < ActiveRecord::Base
   named_scope :drop_ins, {:include => :memberships, :conditions => 'memberships.person_id IS NULL'}
 
   has_many :memberships, :order => "start_date ASC" do
-    # return the membership active at the beginning of the current month, or of the month specified 
-    def active_in_month(month = nil,year = nil)
-      today = Date.today
-      month ||= today.month
-      year ||= today.year
-      date = Date.new(year,month,1)
-      find(:first,:conditions => ["start_date <= ? AND (end_date IS NULL OR end_date >= ?)",date,date])
-    end
-    
     def total_due
       all.inject(0) { |accum, m| accum += m.amount_due }
     end
@@ -43,7 +34,7 @@ class Person < ActiveRecord::Base
     end
     
     def issue_credit(amount, dt=Date.today)
-      create(:amount => amount, :created_at=>dt, :details => {:type => :credit})
+      create(:amount => amount, :created_at=>dt, :state => 'Complete', :details => {:type => :credit})
     end
   end
   
@@ -65,17 +56,20 @@ class Person < ActiveRecord::Base
     Digest::MD5.hexdigest("#{Time.now.day_number}#{id}#{self.email}")
   end
 
-  def show_name
-    namestring = "#{first_name} #{last_name}".strip
-    namestring.blank? ? email : namestring
+  def namestring
+    "#{first_name} #{last_name}".strip
   end
-  
+
   def is_setup?
-    !"#{first_name} #{last_name}".strip.blank?
+    !namestring.blank?
   end
   
+  def show_name
+    is_setup? ? namestring : email
+  end
+    
   def total_owed
-    total_due - payments.total
+    total_due - payments.completed.total
   end
 
   def drop_in_total_due
@@ -94,11 +88,10 @@ class Person < ActiveRecord::Base
     from_person.destroy
   end
   
+  # Number of days outside of membership
   def drop_in_day_count
     day_list = days.keys
-    memberships.each do |m|
-      day_list.delete_if { |d| m.day_range===d }
-    end
+    memberships.each { |m| day_list.delete_if { |d| m.day_range===d } }
     day_list.size
   end
   
