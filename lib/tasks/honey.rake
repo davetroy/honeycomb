@@ -3,14 +3,7 @@ namespace :honey do
     desc "Generate invoices"
     task :generate => :environment do
       Person.members.each do |person|
-        due = person.total_owed
-        if due > 0
-          puts "Generating an invoice for #{person.show_name} for $#{due}"
-          invoice = person.invoices.create!(:amount => due)
-          InvoiceMailer.deliver_invoice(person)
-        else
-          puts "#{person.show_name} does not owe any balance at this time (current balance $#{due})."
-        end
+        person.send_invoice_for_total_owed
       end
     end
   end

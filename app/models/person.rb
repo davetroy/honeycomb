@@ -85,6 +85,11 @@ class Person < ActiveRecord::Base
     from_person = Person.find(person_id)
     from_person.devices.each { |d| d.update_attribute(:person_id, self.id) }
     from_person.payments.each { |d| d.update_attribute(:person_id, self.id) }
+    from_person.memberships.each { |d| d.update_attribute(:person_id, self.id) }
+    from_person.invoices.each { |d| d.update_attribute(:person_id, self.id) }
+    from_person.foursquare_user.each { |d| d.update_attribute(:person_id, self.id) }
+    from_person.twitter_user.each { |d| d.update_attribute(:person_id, self.id) }
+    from_person.facebook_user.each { |d| d.update_attribute(:person_id, self.id) }
     from_person.destroy
   end
   
@@ -131,6 +136,14 @@ class Person < ActiveRecord::Base
   def check_in
     self.foursquare_user.check_in if self.foursquare_user
     #self.twitter_user.check_in if self.twitter_user
+  end
+  
+  def send_invoice_for_total_owed
+    due = self.total_owed
+    if due > 0
+      self.invoices.create!(:amount => due)
+      InvoiceMailer.deliver_invoice(self)
+    end
   end
     
   def before_save
