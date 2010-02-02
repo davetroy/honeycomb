@@ -77,9 +77,13 @@ class Person < ActiveRecord::Base
   def total_owed
     total_due - payments.total
   end
+
+  def drop_in_total_due
+    DAY_PRICE * drop_in_day_count
+  end
   
   def total_due
-    memberships.any? ? memberships.total_due : (DAY_PRICE * days.size)
+    memberships.total_due + drop_in_total_due
   end
   
   # Collapse from another person into us; good for duplicate records only
@@ -88,6 +92,14 @@ class Person < ActiveRecord::Base
     from_person.devices.each { |d| d.update_attribute(:person_id, self.id) }
     from_person.payments.each { |d| d.update_attribute(:person_id, self.id) }
     from_person.destroy
+  end
+  
+  def drop_in_day_count
+    day_list = days.keys
+    memberships.each do |m|
+      day_list.delete_if { |d| m.day_range===d }
+    end
+    day_list.size
   end
   
   def days

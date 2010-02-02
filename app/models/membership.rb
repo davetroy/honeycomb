@@ -9,6 +9,10 @@ class Membership < ActiveRecord::Base
     self[:end_date] || Date.today
   end
   
+  def day_range
+    start_date.to_time.day_number..end_date.to_time.day_number
+  end
+  
   def date_range
     start_date..end_date
   end

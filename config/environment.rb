@@ -28,7 +28,7 @@ end
 ActionController::Base.asset_host = "http://#{DEFAULT_HOST}:#{DEFAULT_PORT}"
 
 # We begin time at midnight EDT on 2/1/2009
-Time::STARTING_DAY = (Time.parse('2009-2-1 05:00:00 UTC').to_i / 86400)
+STARTING_DAY = (Time.parse('2009-2-1 05:00:00 UTC').to_i / 86400)
 DAY_PRICE=25
 
 require 'digest/md5'
