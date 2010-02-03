@@ -1,4 +1,13 @@
 <div id="form_panel">
+  <table width="500">
+    <h1>Membership</h1>
+    <tr>
+      <th>Member</th>
+      <th>Owed</th>
+      <th>Paid</th>
+    </tr>
+    <%= render :partial => 'member', :object => @person %>
+  </table>
 
   <h1 id='payment_history'>Payment History</h1>
   <%= render :partial => 'payments/payments', :object => @person.payments.descending %>

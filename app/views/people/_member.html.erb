@@ -1,0 +1,9 @@
+<tr class="<%=cycle('even', 'odd')%>">
+  <td><%=member.show_name%><br/>
+    <% member.memberships.each do |m| %>
+      <%=m.plan.name%>, <%=format_date_range(m.date_range)%> (<%=m.id%>)<br/>
+    <% end %>
+    </td>
+  <td><%=number_to_currency(member.total_due)%></td>
+  <td><%=number_to_currency(member.payments.total)%></td>
+</tr>
