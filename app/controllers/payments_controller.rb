@@ -18,7 +18,10 @@ class PaymentsController < ApplicationController
       setup_response = gateway.setup_purchase(@payment.integer_amount,
         :ip                => request.remote_ip,
         :return_url        => confirm_payment_url(@payment),
-        :cancel_return_url => new_payment_url(:amount => @payment.amount, :person_id => @payment.person_id)
+        :cancel_return_url => new_payment_url(:amount => @payment.amount, :person_id => @payment.person_id),
+        :order_id => @payment.id,
+        :customer => @payment.person_id,
+        :description => "Beehive Baltimore direct payment from #{@payment.person_show_name}"
       )
       logger.info("Created pending payment #{@payment.id} for person #{@payment.person_id} (#{@payment.person_show_name}) for #{number_to_currency(@payment.amount)}, token #{setup_response.token}")
       @payment.update_attribute(:token,setup_response.token)
