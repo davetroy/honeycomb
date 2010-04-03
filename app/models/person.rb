@@ -44,6 +44,12 @@ class Person < ActiveRecord::Base
   # validates_presence_of :first_name
   # validates_presence_of :last_name
   
+  def self.lookup(email)
+    Person.find_by_email(email) || Alias.find_by_email(email).person
+  rescue
+    nil
+  end
+  
   def gravatar_url(size=91)
     gravatar_hash = Digest::MD5.hexdigest(email)
     "http://www.gravatar.com/avatar/#{gravatar_hash}.jpg?s=#{size}"
