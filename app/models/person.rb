@@ -130,7 +130,7 @@ class Person < ActiveRecord::Base
   end
       
   def first_seen_at
-    appearances ? appearances.first.first_seen_at : created_at
+    appearances.any? ? appearances.first.first_seen_at : created_at
   end
   
   # array of all email addresses we have on file
