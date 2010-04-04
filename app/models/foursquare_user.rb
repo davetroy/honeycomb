@@ -45,11 +45,11 @@ class FoursquareUser < ActiveRecord::Base
   
   # Wrappers for foursquare API method calls
   def check_in
-    post("/v1/checkin?vid=#{VENUE_ID}&twitter=#{self.update_twitter}&facebook=#{self.update_facebook}")
+    post("/v1/checkin.json?vid=#{VENUE_ID}&twitter=#{self.update_twitter}&facebook=#{self.update_facebook}")
     update_attribute(:checked_in_at, Time.now)
   end
 
   def get_user
-    get("http://api.foursquare.com/v1/user.json")['user']
+    get("/v1/user.json")['user']
   end
 end

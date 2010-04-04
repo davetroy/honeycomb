@@ -9,6 +9,7 @@ FasterCSV.foreach("paypal2010.csv") do |row|
   dt = Time.parse("#{date} #{time} #{tz}")
   person = Person.lookup(email) || Person.create(:email => email, :created_at => dt)
   next if person.payments.find(:first, :conditions => ['amount=? AND created_at BETWEEN ? and ?', amt, dt - 3.minutes, dt + 3.minutes])
+  next if person.payments.find(:first, :conditions => ['amount=? AND created_at=?', amt, Time.parse(date)])
   puts "recording #{email} #{name} #{amount} #{trans_id}"
   person.payments.create!(:created_at => dt, :amount => amount.to_f, :state => 'Complete', :details => { :transaction_id => trans_id } )
 end

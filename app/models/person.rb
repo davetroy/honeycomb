@@ -158,5 +158,10 @@ class Person < ActiveRecord::Base
       self.facebook_user.register_with_facebook
     end
   end
+  
+  def join_hive(plan_id=1)
+    memberships.create(:plan_id => plan_id, :start_date => appearances.first.first_seen_at)
+    send_invoice_for_total_owed
+  end
 
 end
