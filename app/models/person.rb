@@ -130,7 +130,7 @@ class Person < ActiveRecord::Base
   end
       
   def first_seen_at
-    appearances.first.first_seen_at unless appearances.empty?
+    appearances ? appearances.first.first_seen_at : created_at
   end
   
   # array of all email addresses we have on file
@@ -160,7 +160,7 @@ class Person < ActiveRecord::Base
   end
   
   def join_hive(plan_id=1)
-    memberships.create(:plan_id => plan_id, :start_date => appearances.first.first_seen_at)
+    memberships.create(:plan_id => plan_id, :start_date => first_seen_at)
     send_invoice_for_total_owed
   end
 
