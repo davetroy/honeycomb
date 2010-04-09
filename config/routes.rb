@@ -1,5 +1,5 @@
 ActionController::Routing::Routes.draw do |map|
-  map.resources :payments, :collection => { :checkout => :post }, :member => { :confirm => :get, :complete => :post, :thanks => :get }
+  map.resources :payments, :collection => { :checkout => :post }, :member => { :confirm => :get, :complete => :post, :thanks => :get, :ipn => :post }
   
   map.root :controller => "appearances"
   map.resources :devices, :member => {:claim => :get, :assign => :post}
