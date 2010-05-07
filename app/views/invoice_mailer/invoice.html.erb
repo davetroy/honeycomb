@@ -7,13 +7,16 @@
 <p>
 Hi <%=@person.first_name%>,</p>
 
-<p>Your <%=Date.today.strftime('%B, %Y')%> invoice is now ready! Your current balance is <%= number_to_currency(@owed)%>.</p>
+<p>Another busy month at the Hive has passed and your suggested membership contribution due now is currently <%= number_to_currency(@owed)%>.</p>
 
-<p>Please pay this amount now by visiting <%= link_to("this link",new_payment_url(:person_id => @person, :amount => @owed)) %>.
-</p>
+<p>You can pay this amount now using Paypal by visiting <%= link_to("this link",new_payment_url(:person_id => @person, :amount => @owed)) %>.</p>
+
+<p>Remember, Beehive is more than just workspace, it's a community! And your contribution helps fuel the
+  <b>entire</b> tech freelance and startup community in Baltimore. The ecosystem relies on your continued support,
+  and in exchange, we'll do our best to keep <b>you</b> in the loop about everything that's happening in Baltimore. 
 
 <% if @owed>200 %>
-<p>If you don't think this amount is correct, please reply to this email and we'll help sort it out.</p>
+<p>If you don't think the amount above is correct, please reply to this email and we'll help sort it out.</p>
 <% end %>
 
 <p>Thanks for supporting community coworking in Baltimore, and we will see you around the Hive soon!</p>
