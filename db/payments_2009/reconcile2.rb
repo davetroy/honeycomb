@@ -1,7 +1,7 @@
 require '../../config/environment.rb'
 require 'fastercsv'
 
-FasterCSV.foreach("paypal2010.csv") do |row|
+FasterCSV.foreach("paypal-20100507.csv") do |row|
   next unless row[4][/received/i]
   date, time, tz, name, amount, email, trans_id = [0,1,2,3,6,9,11].map { |i| row[i] }
   email = email.downcase.strip
