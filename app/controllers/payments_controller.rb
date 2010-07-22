@@ -1,3 +1,5 @@
+require 'money'
+
 class PaymentsController < ApplicationController  
 
   include ActionView::Helpers::NumberHelper # for number_to_currency
@@ -83,12 +85,13 @@ class PaymentsController < ApplicationController
   def ipn
     if @notification.complete?
       Payment.create!(:person_id => @person.id, :amount => @notification.amount) 
+      logger.info("Created payment for person #{@person.id} for #{@notification.amount}")
     else
       logger.warn("Received an incomplete IPN notification from Paypal: #{@notification.inspect}")
     end
     render :nothing => true
   rescue
-    logger.error("Received Paypal IPN notification #{@notification.inspect} for #{@person.inspect} but could not record the payment due to #{$!.message}")
+    logger.error("Received Paypal IPN notification #{@notification.inspect} for #{@person.inspect} but could not record the payment due to #{$!.message} at #{$!.backtrace.join(',')}")
     render :nothing => true, :status => 500
   end
 
@@ -104,8 +107,9 @@ class PaymentsController < ApplicationController
   end
 
   def find_ipn_person
-    unless @person = Person.lookup(@notification.email)
-      logger.warn("Received Paypal IPN payment notification for #{@notification.email} but could not find that Person in our system")
+    payer_email = @notification.params['payer_email']
+    unless @person = Person.lookup(payer_email)
+      logger.warn("Received Paypal IPN payment notification for #{payer_email} but could not find that Person in our system")
       render :nothing => true
     end
   end

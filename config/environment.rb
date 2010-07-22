@@ -14,6 +14,7 @@ Rails::Initializer.run do |config|
   config.gem "json"
   config.gem "oauth", :version => "0.3.6"
   config.gem "activemerchant", :version => "1.4.2", :lib => 'active_merchant'
+  config.gem "money", :version => "3.0.5"
   #config.gem "curb"
   
   config.time_zone = 'UTC'
