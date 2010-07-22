@@ -98,7 +98,7 @@ class PaymentsController < ApplicationController
     @notification = ActiveMerchant::Billing::Integrations::Paypal::Notification.new(request.raw_post)
 
     unless @notification.acknowledge
-      logger.error("Received unverified IPN payment notification, ignoring: #{notify.inspect}")
+      logger.error("Received unverified IPN payment notification, ignoring: #{@notification.inspect}")
       render :nothing => true
     end
   end
