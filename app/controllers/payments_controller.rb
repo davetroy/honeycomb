@@ -7,7 +7,9 @@ class PaymentsController < ApplicationController
   before_filter :find_payment, :only => [:confirm, :complete,:thanks]
   before_filter :validate_ipn, :only => [:ipn]
   before_filter :find_ipn_person, :only => [:ipn]
-  
+
+  skip_before_filter :verify_authenticity_token, :only => [:ipn]
+
   # NB amount is always in pennies
   def new
     @payment = Payment.new(:person_id => params[:person_id],:amount => params[:amount].blank? ? 0.0 : params[:amount].to_f / 100.0)
