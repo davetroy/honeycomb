@@ -1,3 +1,5 @@
+require 'money'
+
 class PaymentsController < ApplicationController  
 
   include ActionView::Helpers::NumberHelper # for number_to_currency
@@ -7,7 +9,9 @@ class PaymentsController < ApplicationController
   before_filter :find_payment, :only => [:confirm, :complete,:thanks]
   before_filter :validate_ipn, :only => [:ipn]
   before_filter :find_ipn_person, :only => [:ipn]
-  
+
+  skip_before_filter :verify_authenticity_token, :only => [:ipn]
+
   # NB amount is always in pennies
   def new
     @payment = Payment.new(:person_id => params[:person_id],:amount => params[:amount].blank? ? 0.0 : params[:amount].to_f / 100.0)
@@ -81,12 +85,13 @@ class PaymentsController < ApplicationController
   def ipn
     if @notification.complete?
       Payment.create!(:person_id => @person.id, :amount => @notification.amount) 
+      logger.info("Created payment for person #{@person.id} for #{@notification.amount}")
     else
       logger.warn("Received an incomplete IPN notification from Paypal: #{@notification.inspect}")
     end
     render :nothing => true
   rescue
-    logger.error("Received Paypal IPN notification #{@notification.inspect} for #{@person.inspect} but could not record the payment due to #{$!.message}")
+    logger.error("Received Paypal IPN notification #{@notification.inspect} for #{@person.inspect} but could not record the payment due to #{$!.message} at #{$!.backtrace.join(',')}")
     render :nothing => true, :status => 500
   end
 
@@ -96,14 +101,15 @@ class PaymentsController < ApplicationController
     @notification = ActiveMerchant::Billing::Integrations::Paypal::Notification.new(request.raw_post)
 
     unless @notification.acknowledge
-      logger.error("Received unverified IPN payment notification, ignoring: #{notify.inspect}")
+      logger.error("Received unverified IPN payment notification, ignoring: #{@notification.inspect}")
       render :nothing => true
     end
   end
 
   def find_ipn_person
-    unless @person = Person.lookup(@notification.email)
-      logger.warn("Received Paypal IPN payment notification for #{@notification.email} but could not find that Person in our system")
+    payer_email = @notification.params['payer_email']
+    unless @person = Person.lookup(payer_email)
+      logger.warn("Received Paypal IPN payment notification for #{payer_email} but could not find that Person in our system")
       render :nothing => true
     end
   end
