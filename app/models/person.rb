@@ -93,15 +93,9 @@ class Person < ActiveRecord::Base
     from_person.payments.each { |d| d.update_attribute(:person_id, self.id) }
     from_person.memberships.each { |d| d.update_attribute(:person_id, self.id) }
     from_person.invoices.each { |d| d.update_attribute(:person_id, self.id) }
-    if foursquare_user
-      from_person.foursquare_user.update_attribute(:person_id, self.id)
-    end
-    if twitter_user
-      from_person.twitter_user.update_attribute(:person_id, self.id)
-    end
-    if facebook_user
-      from_person.facebook_user.update_attribute(:person_id, self.id)
-    end
+    from_person.foursquare_user.update_attribute(:person_id, self.id) if from_person.foursquare_user
+    from_person.twitter_user.update_attribute(:person_id, self.id) if from_person.twitter_user
+    from_person.facebook_user.update_attribute(:person_id, self.id) if from_person.facebook_user
     aliases.create(:email => from_person.email) if from_person.email
     from_person.aliases.each { |a| a.update_attribute(:person_id, self.id) }
     from_person.destroy
