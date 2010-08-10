@@ -8,6 +8,7 @@
      <%= "*" if appearance.device.person %><br/>
   <% end %>
   <%=appearance.ip_address%><br/>
+  <%= "(you)" if appearance.ip_address == request.remote_ip %><br/>
   <%=appearance.device.name%><br/>
 </div>
 
