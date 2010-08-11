@@ -17,8 +17,8 @@ Rails::Initializer.run do |config|
   config.gem "money", :version => "3.0.5"
   #config.gem "curb"
   
-  config.time_zone = 'UTC'
-  ENV['TZ'] = 'GMT'
+  config.time_zone = 'Eastern'
+  #ENV['TZ'] = 'GMT'
 
   config.action_controller.session = {
     :session_key => '_honeycomb_session',
