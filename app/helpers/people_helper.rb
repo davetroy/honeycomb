@@ -12,7 +12,7 @@ module PeopleHelper
       concat("<h3 style='color:black'>#{date.strftime('%B %Y')}: #{day_count} Days</h3>")
       concat("<ul>")
       
-      person.daily_appearances_by_week(month,year).reverse.each do |week,appearances|
+      person.daily_appearances_by_week(month,year).each do |week,appearances|
         weekly_appearances = appearances.size
         concat("<li>Week #{week}: #{weekly_appearances}</li>")
       end
