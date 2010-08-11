@@ -99,7 +99,6 @@ class PaymentsController < ApplicationController
 
   def validate_ipn
     @notification = ActiveMerchant::Billing::Integrations::Paypal::Notification.new(request.raw_post)
-
     unless @notification.acknowledge
       logger.error("Received unverified IPN payment notification, ignoring: #{@notification.inspect}")
       render :nothing => true
@@ -108,10 +107,8 @@ class PaymentsController < ApplicationController
 
   def find_ipn_person
     payer_email = @notification.params['payer_email']
-    unless @person = Person.lookup(payer_email)
-      logger.warn("Received Paypal IPN payment notification for #{payer_email} but could not find that Person in our system")
-      render :nothing => true
-    end
+    @person = Person.lookup(payer_email) || Person.create(:email => payer_email)
+    logger.warn("Received Paypal IPN payment notification for new user: #{payer_email}")
   end
 
   def find_payment
