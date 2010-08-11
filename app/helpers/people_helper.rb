@@ -3,7 +3,7 @@ module PeopleHelper
   def iterate_appearances_by_month(person)
     groups = person.daily_appearances_by_month
     
-    by_month = groups.keys.sort.reverse_each do |date|
+    by_month = groups.keys.sort.reverse.each do |date|
       month = date.month
       year = date.year
       concat("<div id='inner_panel'>")
