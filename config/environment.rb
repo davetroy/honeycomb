@@ -17,7 +17,7 @@ Rails::Initializer.run do |config|
   config.gem "money", :version => "3.0.5"
   #config.gem "curb"
   
-  config.time_zone = 'Eastern'
+  config.time_zone = 'Eastern Time (US & Canada)'
   #ENV['TZ'] = 'GMT'
 
   config.action_controller.session = {
