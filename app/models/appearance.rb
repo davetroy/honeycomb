@@ -19,7 +19,7 @@ class Appearance < ActiveRecord::Base
     device.update_attribute(:name, name) unless name.blank?
     if appearance = find_by_device_id_and_day_number(device.id, saw.day_number)
       appearance.update_attributes(:saw_at => saw, :ip_address => ip)
-    else
+    elsif saw
       appearance = device.appearances.create(:saw_at => saw, :ip_address => ip)
     end
     appearance
