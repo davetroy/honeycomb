@@ -1,7 +1,7 @@
 class Person < ActiveRecord::Base
   has_many :devices
   has_many :appearances, :through => :devices, :order => "first_seen_at ASC" do
-    def during_workday
+    def during_workday()
       all.select { |a| a.first_seen_at.hour < 18 }
     end
   end
@@ -114,7 +114,7 @@ class Person < ActiveRecord::Base
   end
   
   def days
-    appearances.during_workday.group_by { |a| a.day_number }
+    appearances.group_by { |a| a.day_number }
   end
 
   # flattens multiple device appearances in a given day to count as just one daily apperance
@@ -124,7 +124,7 @@ class Person < ActiveRecord::Base
 
   def daily_appearances(month = nil,year = nil)
     cond = ["MONTH(first_seen_at) = ? AND YEAR(first_seen_at) = ?",month,year] if month && year
-    appearances.during_workday.find(:all,:conditions => cond,:group => "day_number")
+    appearances.find(:all,:conditions => cond,:group => "day_number")
   end
 
   def daily_appearances_by_month
