@@ -84,7 +84,7 @@ class PaymentsController < ApplicationController
   
   def ipn
     if @notification.complete?
-      Payment.create!(:person_id => @person.id, :amount => @notification.amount) 
+      Payment.create!(:person_id => @person.id, :amount => @notification.amount,:token => params[:txn_id],:state => "Complete") 
       logger.info("Created payment for person #{@person.id} for #{@notification.amount}")
     else
       logger.warn("Received an incomplete IPN notification from Paypal: #{@notification.inspect}")
