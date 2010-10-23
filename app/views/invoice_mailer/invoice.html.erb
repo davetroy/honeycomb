@@ -7,13 +7,13 @@
 <p>
 Hi <%=@person.first_name%>,</p>
 
-<p>Another busy month at the Hive has passed and your suggested membership contribution due now is currently <%= number_to_currency(@owed)%>.</p>
+<p>Your suggested membership contribution due now is currently <%= number_to_currency(@owed)%>.</p>
 
 <p>You can pay this amount now using Paypal by visiting <%= link_to("this link",new_payment_url(:person_id => @person, :amount => @owed)) %>.</p>
 
 <p>Remember, Beehive is more than just workspace, it's a community! And your contribution helps fuel the
-  <b>entire</b> tech freelance and startup community in Baltimore. The ecosystem relies on your continued support,
-  and in exchange, we'll do our best to keep <b>you</b> in the loop about everything that's happening in Baltimore. 
+  <b>entire</b> tech freelance and startup community in Baltimore. The ecosystem relies on your continued support. Any funds generated in excess of our
+  rent costs go <strong>directly</strong> into building the community here in Baltimore through events and infrastructure.
 
 <% if @owed>200 %>
 <p>If you don't think the amount above is correct, please reply to this email and we'll help sort it out.</p>
@@ -23,7 +23,13 @@ Hi <%=@person.first_name%>,</p>
 
 Sincerely,<p/>
 
-David Troy<br/>
-Organizer<br/>
-Beehive Baltimore
+<strong>Beehive Baltimore</strong>
+
+<p>
+Dave Troy
+Brian Sierakowski
+Paul Kauders
+Community Liasons
+</p>
+
 </div>

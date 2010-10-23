@@ -5,9 +5,9 @@ class InvoiceMailer < ActionMailer::Base
   
   def invoice(person)
     content_type "text/html"
-    subject    '[Beehive Baltimore] Membership Invoice'
+    subject    '[Beehive Baltimore] Membership Contribution'
     recipients person.email
-    from       'billing@beehivebaltimore.org'
+    from       'info@beehivebaltimore.org'
     sent_on    Time.now
     body       :person => person, :owed => person.total_owed
   end
