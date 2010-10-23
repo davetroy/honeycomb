@@ -5,4 +5,5 @@
     Password: <%=f.password_field :password%><p/>
     <%=f.submit 'Login'%>
   <% end %>
+  <%= link_to "Forgot password?", email_password_person_path(@person), :rel => :nofollow %>
 </div>
