@@ -1,10 +1,11 @@
 class Person < ActiveRecord::Base
   has_many :devices
-  has_many :appearances, :through => :devices, :order => "first_seen_at ASC" do
-    def during_workday()
-      all.select { |a| a.first_seen_at.hour < 18 }
-    end
-  end
+  has_many :appearances, :through => :devices, :order => "first_seen_at ASC"
+  # Workday is defined as 6am -> 6pm M-F
+  # MySQL DOW 1..7
+  has_many :appearances_during_workday, :through => :devices, :order => "first_seen_at ASC", 
+    :conditions => "HOUR(first_seen_at) >= #{Time.now.dst? ? 10 : 11} and HOUR(first_seen_at) < #{Time.now.dst? ? 22 : 23} and DAYOFWEEK(first_seen_at) > 1 and DAYOFWEEK(first_seen_at) < 7", 
+    :source => :appearances
   
   has_many :aliases
 
@@ -124,7 +125,7 @@ class Person < ActiveRecord::Base
 
   def daily_appearances(month = nil,year = nil)
     cond = ["MONTH(first_seen_at) = ? AND YEAR(first_seen_at) = ?",month,year] if month && year
-    appearances.find(:all,:conditions => cond,:group => "day_number")
+    appearances_during_workday.find(:all,:conditions => cond,:group => "day_number")
   end
 
   def daily_appearances_by_month

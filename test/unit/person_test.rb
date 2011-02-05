@@ -12,16 +12,31 @@ class PersonTest < ActiveSupport::TestCase
     assert_equal "http://www.gravatar.com/avatar/df4e55573bf5caeaf5f0bb075294aa3b.jpg?s=91", people(:mikeb).gravatar_url
   end
   
-  test "Ensure anniversary day is not a week ago" do
+  test "daily_appearances workday M-F 6a - 6p logic" do
     dave = people(:dave)
-    dave.memberships.create(:plan => plans(:worker), :start_date => Date.today - 1.week)
-    assert_equal false, dave.is_anniversary_day?
-  end
-
-  test "Ensure anniversary day is computed correctly for last month" do
-    dave = people(:dave)
-    dave.memberships.create(:plan => plans(:worker), :start_date => Date.parse("12/#{Date.today.day}/2008"))
-    assert_equal true, dave.is_anniversary_day?
+    dave.devices = [devices(:teflon)]
+    assert dave.devices.size == 1
+    macbook = dave.devices.first
+    # show up for work
+    now = Time.parse('2011-2-3 9:05')
+    macbook.appearances.create(:saw_at => now, :ip_address => "10.0.0.123")
+    assert dave.daily_appearances(now.month, now.year).size == 1
+    # show up for work, early
+    now = Time.parse('2011-2-4 6:05')
+    macbook.appearances.create(:saw_at => now, :ip_address => "10.0.0.123")
+    assert dave.daily_appearances(now.month, now.year).size == 2
+    # show up after 6pm for a meetup
+    now = Time.parse('2011-2-7 18:15')
+    macbook.appearances.create(:saw_at => now, :ip_address => "10.0.0.123")
+    assert dave.daily_appearances(now.month, now.year).size == 2
+    # show up super-late for nightowls: 11pm
+    now = Time.parse('2011-2-8 22:53')
+    macbook.appearances.create(:saw_at => now, :ip_address => "10.0.0.123")
+    assert dave.daily_appearances(now.month, now.year).size == 2
+    # why are you here so early?
+    now = Time.parse('2011-2-9 5:34')
+    macbook.appearances.create(:saw_at => now, :ip_address => "10.0.0.123")
+    assert dave.daily_appearances(now.month, now.year).size == 2
   end
   
 end
