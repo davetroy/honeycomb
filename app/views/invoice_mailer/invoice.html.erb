@@ -7,9 +7,13 @@
 <p>
 Hi <%=@person.first_name%>,</p>
 
-<p>Your suggested membership contribution due now is currently <%= number_to_currency(@owed)%>.</p>
+<p>Your membership contribution due now is currently <%= number_to_currency(@owed)%>.</p>
 
 <p>You can pay this amount now using Paypal by visiting <%= link_to("this link",new_payment_url(:person_id => @person, :amount => @owed)) %>.</p>
+
+<p><b>HEY, THIS IS NEW AND IMPORTANT:</b> Effective February 5, 2011, we are using PayPal Subscriptions to handle payments for
+<b>all</b> Beehive memberships; you will only receive payment requests when your balance exceeds the amount covered by your Paypal subscription.
+Please <a href="http://beehivebaltimore.org">click here</a> to initiate your monthly subscription!
 
 <p>Remember, Beehive is more than just workspace, it's a community! And your contribution helps fuel the
   <b>entire</b> tech freelance and startup community in Baltimore. The ecosystem relies on your continued support. Any funds generated in excess of our
@@ -26,9 +30,9 @@ Sincerely,<p/>
 <strong>Beehive Baltimore</strong>
 
 <p>
-Dave Troy
-Brian Sierakowski
-Paul Kauders
+Dave Troy<br>
+Brian Sierakowski<br>
+Paul Kauders<br>
 Community Liasons
 </p>
 
