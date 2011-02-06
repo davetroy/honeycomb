@@ -5,7 +5,7 @@
   <%=@person.profile || "#{@person.show_name} has not yet completed a public profile."%>
   <p/>
   <% if @person.twitter_user %>
-  <h3>@<%=@person.twitter_user.username%> on Twitter</h3>
+  <h3><%= link_to "@#{@person.twitter_user.username}", "http://twitter.com/#{@person.twitter_user.username}" %> on Twitter</h3>
   <% end %>
 
   <%=link_to "#{@person.company_name || 'Website'}<br/>", @person.website if @person.website%>
